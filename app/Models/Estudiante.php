@@ -24,10 +24,19 @@ class Estudiante extends Model
         'telefono_contacto',
         'eps',
         'grupo_id',
+        'id_subgrupo',
     ];
 
     public function grupo()
     {
         return $this->belongsTo(Grupo::class, 'grupo_id');
+    }
+    public function subgrupo()
+    {
+        return $this->belongsTo(Subgrupo::class, 'id_subgrupo');
+    }
+    public function getNombreCompletoAttribute()
+    {
+        return trim("{$this->nombre_1} {$this->nombre_2} {$this->apellido_1} {$this->apellido_2}");
     }
 }

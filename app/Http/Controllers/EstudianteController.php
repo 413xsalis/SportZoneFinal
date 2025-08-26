@@ -6,7 +6,7 @@ use App\Models\Estudiante;
 use App\Http\Controllers\ColaboradorController;
 use Illuminate\Validation\Rule;
 use App\Models\Grupo;
-
+use App\Models\subgrupo;
 
 class EstudianteController extends Controller
 {
@@ -20,9 +20,10 @@ class EstudianteController extends Controller
 
     public function create()
     {
-        $grupos = Grupo::all(); // Todos los grupos
+        $grupos = Grupo::all();
+        $subgrupos = Subgrupo::all(); // todos los subgrupos
 
-        return view('colaborador.inscripcion_estudent.create', compact('grupos'));// o la vista correcta si usas otra ruta
+        return view('colaborador.inscripcion_estudent.create', compact('grupos', 'subgrupos'));
     }
 
     public function store(Request $request)
@@ -38,6 +39,7 @@ class EstudianteController extends Controller
             'telefono_contacto' => 'nullable|string|max:20',
             'eps' => 'nullable|string|max:255',
             'grupo_id' => 'required|exists:grupos,id',
+            'id_subgrupo' => 'nullable|exists:subgrupos,id',
         ]);
 
         Estudiante::create($request->only([
@@ -51,6 +53,7 @@ class EstudianteController extends Controller
             'telefono_contacto',
             'eps',
             'grupo_id',
+            'id_subgrupo',
         ]));
 
 
@@ -63,7 +66,8 @@ class EstudianteController extends Controller
 
     public function edit(Estudiante $estudiante)
     {
-        return view('colaborador.inscripcion_estudent.editar', compact('estudiante'));
+        $grupos = Grupo::all();
+        return view('colaborador.inscripcion_estudent.editar', compact('estudiante', 'grupos'));
     }
 
     public function update(Request $request, Estudiante $estudiante)
@@ -83,7 +87,8 @@ class EstudianteController extends Controller
             'nombre_contacto' => 'nullable|string|max:255',
             'telefono_contacto' => 'nullable|string|max:20',
             'eps' => 'nullable|string|max:255',
-            // 'id_grupo_nivel' => 'nullable|integer|exists:grupos_niveles,id',
+            'grupo_id' => 'required|exists:grupos,id',
+
         ]);
 
         $estudiante->update($validated);

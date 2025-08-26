@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-08-2025 a las 18:28:44
+-- Tiempo de generación: 26-08-2025 a las 22:13:37
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,34 +42,7 @@ CREATE TABLE `actividades` (
 --
 
 INSERT INTO `actividades` (`id`, `horario_id`, `subgrupo_id`, `actividad`, `estado`, `created_at`, `updated_at`) VALUES
-(35, 15, 1, 'estiramientos', 'activo', '2025-08-17 22:32:13', '2025-08-17 22:32:13'),
-(36, 14, 2, 'primera clase', 'pendiente', '2025-08-17 22:32:26', '2025-08-17 22:32:26'),
-(37, 13, 3, 'tercera clase', 'cancelado', '2025-08-17 22:32:39', '2025-08-17 22:32:39'),
-(38, 15, 1, 'primera clase', 'activo', '2025-08-17 22:39:37', '2025-08-17 22:39:37'),
-(39, 13, 2, 'segunda clase', 'cancelado', '2025-08-17 22:41:32', '2025-08-17 22:41:32'),
-(40, 14, 3, 'tercera clase', 'pendiente', '2025-08-17 22:42:31', '2025-08-17 22:42:31'),
-(41, 11, 3, 'segunda clase', 'activo', '2025-08-17 22:45:38', '2025-08-17 22:45:38'),
-(42, 15, 1, 'primera clase', 'activo', '2025-08-17 22:49:11', '2025-08-17 22:49:11'),
-(43, 15, 1, 'primera clase', 'activo', '2025-08-17 22:50:51', '2025-08-17 22:50:51'),
-(44, 11, 1, 'primera clase', 'activo', '2025-08-17 22:53:04', '2025-08-17 22:53:04'),
-(45, 15, 2, 'tercera clase', 'cancelado', '2025-08-17 23:00:14', '2025-08-17 23:00:14'),
-(46, 11, 3, 'estiramientos', 'pendiente', '2025-08-17 23:01:37', '2025-08-17 23:01:37'),
-(47, 11, 2, 'estiramientos', 'cancelado', '2025-08-17 23:07:02', '2025-08-17 23:07:02'),
-(48, 11, 2, 'segunda clase', 'cancelado', '2025-08-17 23:14:30', '2025-08-17 23:14:30'),
-(49, 11, 2, 'segunda clase', 'cancelado', '2025-08-17 23:15:06', '2025-08-17 23:15:06'),
-(50, 11, 2, 'segunda clase', 'cancelado', '2025-08-17 23:15:09', '2025-08-17 23:15:09'),
-(51, 11, 2, 'segunda clase', 'cancelado', '2025-08-17 23:18:23', '2025-08-17 23:18:23'),
-(52, 15, 1, 'primera clase', 'pendiente', '2025-08-17 23:18:53', '2025-08-17 23:18:53'),
-(53, 14, 3, 'tercera clase', 'activo', '2025-08-17 23:22:33', '2025-08-17 23:22:33'),
-(54, 15, 2, 'estiramientos', 'cancelado', '2025-08-17 23:25:21', '2025-08-17 23:25:21'),
-(55, 15, 1, 'primera clase', 'activo', '2025-08-17 23:33:26', '2025-08-17 23:33:26'),
-(56, 11, 2, 'segunda clase', 'pendiente', '2025-08-17 23:33:35', '2025-08-17 23:33:35'),
-(57, 13, 3, 'tercera clase', 'cancelado', '2025-08-17 23:33:48', '2025-08-17 23:33:48'),
-(58, 13, 3, 'primera clase', 'activo', '2025-08-17 23:38:29', '2025-08-17 23:38:29'),
-(59, 14, 2, 'segunda clase', 'pendiente', '2025-08-17 23:38:44', '2025-08-17 23:38:44'),
-(60, 15, 1, 'tercera clase', 'cancelado', '2025-08-17 23:38:54', '2025-08-17 23:38:54'),
-(61, 15, 1, 'estiramientos', 'pendiente', '2025-08-17 23:47:54', '2025-08-17 23:47:54'),
-(62, 15, 2, 'estiramientos', 'pendiente', '2025-08-24 07:15:45', '2025-08-24 07:15:45');
+(74, 4, 1, 'futbol', 'cancelado', '2025-08-26 23:40:15', '2025-08-26 23:40:15');
 
 -- --------------------------------------------------------
 
@@ -92,12 +65,7 @@ CREATE TABLE `asistencias` (
 --
 
 INSERT INTO `asistencias` (`id`, `estudiante_documento`, `subgrupo_id`, `fecha`, `estado`, `created_at`, `updated_at`) VALUES
-(1, 300400500, 3, '2025-07-30', 'ausente', NULL, NULL),
-(2, 1073599534, 1, '2025-07-30', 'presente', NULL, NULL),
-(3, 1073599534, 1, '2025-08-15', 'presente', NULL, NULL),
-(4, 1073599534, 1, '2025-08-24', 'presente', NULL, NULL),
-(5, 300400500, 3, '2025-08-24', 'ausente', NULL, NULL),
-(6, 200300412, 2, '2025-08-24', 'justificado', NULL, NULL);
+(8, 1073522412, 1, '2025-08-26', 'presente', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -141,17 +109,17 @@ CREATE TABLE `estudiantes` (
   `eps` varchar(255) DEFAULT NULL,
   `grupo_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `id_subgrupo` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `estudiantes`
 --
 
-INSERT INTO `estudiantes` (`documento`, `nombre_1`, `nombre_2`, `apellido_1`, `apellido_2`, `telefono`, `nombre_contacto`, `telefono_contacto`, `eps`, `grupo_id`, `created_at`, `updated_at`) VALUES
-(1022962622, 'dieguito', 'juanes', 'morita', 'flores', '3104139818', 'juanito', '123456789', 'sura', 1, '2025-08-26 19:29:17', '2025-08-26 19:29:17'),
-(1022962623, 'ricardiño', 'Ricardoe', 'morita', 'gutierrez', '3194138715', 'juanito', '3001002001', 'sura', 4, '2025-08-26 19:43:29', '2025-08-26 19:43:29'),
-(1073599572, 'Rafaelito', 'Ricardoe', 'morita', 'qerqqrqw', '31748003993', 'juanito', '3001002001', 'compensar123', 2, '2025-08-26 19:50:27', '2025-08-26 19:50:27');
+INSERT INTO `estudiantes` (`documento`, `nombre_1`, `nombre_2`, `apellido_1`, `apellido_2`, `telefono`, `nombre_contacto`, `telefono_contacto`, `eps`, `grupo_id`, `created_at`, `updated_at`, `id_subgrupo`) VALUES
+(1022962623, 'Rafaelito', 'no aplica', 'morita', 'gutierrez', '31748003993', 'alec', '3001002001', 'sura', 1, '2025-08-27 00:59:37', '2025-08-27 00:59:37', 9),
+(1234567891, 'alex', 'no aplica', 'qwerqq', 'qerqqrqw', '31748003993', 'juanitoq', '3001002001', 'sura', 2, '2025-08-27 01:10:56', '2025-08-27 01:10:56', 16);
 
 -- --------------------------------------------------------
 
@@ -217,7 +185,8 @@ CREATE TABLE `horarios` (
 INSERT INTO `horarios` (`id`, `dia`, `fecha`, `hora_inicio`, `hora_fin`, `instructor_id`, `grupo_id`, `created_at`, `updated_at`) VALUES
 (1, 'lunes', '2025-08-26', '12:33:00', '15:36:00', 3, 2, '2025-08-26 09:33:07', '2025-08-26 09:33:07'),
 (2, 'martes', '2025-09-02', '08:00:00', '10:10:00', 4, 4, '2025-08-26 18:45:20', '2025-08-26 18:45:20'),
-(3, 'jueves', '2025-09-04', '11:45:00', '03:45:00', 6, 3, '2025-08-26 19:45:22', '2025-08-26 19:45:22');
+(3, 'jueves', '2025-09-04', '11:45:00', '03:45:00', 6, 3, '2025-08-26 19:45:22', '2025-08-26 19:45:22'),
+(4, 'jueves', '2025-10-02', '11:01:00', '13:55:00', 7, 2, '2025-08-26 21:53:43', '2025-08-26 21:53:43');
 
 -- --------------------------------------------------------
 
@@ -317,7 +286,8 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (3, 'App\\Models\\User', 3),
 (3, 'App\\Models\\User', 4),
 (3, 'App\\Models\\User', 5),
-(3, 'App\\Models\\User', 6);
+(3, 'App\\Models\\User', 6),
+(3, 'App\\Models\\User', 7);
 
 -- --------------------------------------------------------
 
@@ -429,7 +399,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('siA7Lm5DOEhxRYBWzWB0yV4EsNfPodoZxTFg5uWA', 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0 (Edition std-1)', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoieEJzaWVNYnJrcWw3ZmNEREtnWjRJZVdWOUM1aUNOMnh4cjRnZGRsYyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9pbnN0L2hvcmFyaW8iO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo0O3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTc1NjIyNDU4MTt9fQ==', 1756225676);
+('U24YKaSxYXLniQIXfFxcazMwEPR9WtuvZvny0F2L', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0 (Edition std-1)', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiM21EUDhEWlRZM2tGR2NwQVh0NFR0SWhDNmNZN0ZBUnlkZ0ZoQzFZMSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9lc3R1ZGlhbnRlcy9jcmVhdGUiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTc1NjIzNzc3MTt9fQ==', 1756239184);
 
 -- --------------------------------------------------------
 
@@ -450,9 +420,15 @@ CREATE TABLE `subgrupos` (
 --
 
 INSERT INTO `subgrupos` (`id`, `nombre`, `grupo_id`, `created_at`, `updated_at`) VALUES
-(1, 'Grupo A', 1, NULL, NULL),
-(2, 'Grupo B', 2, NULL, NULL),
-(3, 'Grupo B', 1, NULL, NULL);
+(8, 'Grupo A infantil', 1, NULL, NULL),
+(9, 'Grupo B infantil', 1, NULL, NULL),
+(10, 'Grupo A juvenil', 2, NULL, NULL),
+(11, 'Grupo B juvenil', 2, NULL, NULL),
+(12, 'Grupo A experto', 4, NULL, NULL),
+(13, 'Grupo B experto', 4, NULL, NULL),
+(14, 'Grupo A avanzado', 3, NULL, NULL),
+(15, 'Grupo B avanzado', 3, NULL, NULL),
+(16, 'Grupo C juvenil', 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -490,7 +466,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ep
 (3, 'diego mora', 'diego@email.com', NULL, '$2y$12$kwv8W9iNQfKLnn5tTH2UPOAbevdtaGmZw5uCT8PjqM1CeUv.G9fDW', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-26 09:17:36', '2025-08-26 09:17:36', NULL),
 (4, 'leidi', 'leidi@email.com', NULL, '$2y$12$RxSYsy2YUXU87bz15FcY3eHU1u9UtDNb.aQPn6LqYmnZiRk2v2t5y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-26 09:18:02', '2025-08-26 09:18:02', NULL),
 (5, 'alex1', 'alex@email.com', NULL, '$2y$12$ZPfOyfWsoVDwyj9AQxZgku1aYZQ2vf.rDxgS5U2r2oBclUm3XCxMi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-26 09:18:38', '2025-08-26 09:18:38', NULL),
-(6, 'sebastian peralta', 'sebastian@email.com', NULL, '$2y$12$Cr7KUSLh.38xS9yuVI3Cu.lTHRPPOoJUf/AkgZoqHnLjVB7h0s/EC', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-26 18:46:31', '2025-08-26 18:46:31', NULL);
+(6, 'sebastian peralta', 'sebastian@email.com', NULL, '$2y$12$Cr7KUSLh.38xS9yuVI3Cu.lTHRPPOoJUf/AkgZoqHnLjVB7h0s/EC', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-26 18:46:31', '2025-08-26 18:46:31', NULL),
+(7, 'juan esteban', 'juan@email.com', NULL, '$2y$12$Blgx2XBZtDbGV3BdAToVxuZ8G0RT.RsCfbwzzXUv9EinVp9ST.VJW', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-08-26 21:52:09', '2025-08-26 21:52:09', NULL);
 
 -- --------------------------------------------------------
 
@@ -544,7 +521,8 @@ ALTER TABLE `cache_locks`
 --
 ALTER TABLE `estudiantes`
   ADD PRIMARY KEY (`documento`),
-  ADD KEY `grupo_id` (`grupo_id`);
+  ADD KEY `grupo_id` (`grupo_id`),
+  ADD KEY `id_subgrupo` (`id_subgrupo`);
 
 --
 -- Indices de la tabla `failed_jobs`
@@ -671,13 +649,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -695,7 +673,7 @@ ALTER TABLE `grupos`
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
@@ -731,13 +709,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `subgrupos`
 --
 ALTER TABLE `subgrupos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -753,7 +731,8 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  ADD CONSTRAINT `estudiantes_ibfk_1` FOREIGN KEY (`grupo_id`) REFERENCES `grupos` (`id`);
+  ADD CONSTRAINT `estudiantes_ibfk_1` FOREIGN KEY (`grupo_id`) REFERENCES `grupos` (`id`),
+  ADD CONSTRAINT `estudiantes_ibfk_2` FOREIGN KEY (`id_subgrupo`) REFERENCES `subgrupos` (`id`);
 
 --
 -- Filtros para la tabla `horarios`

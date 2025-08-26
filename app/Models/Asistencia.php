@@ -6,17 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Estudiante;
 use App\Models\Subgrupo;
 
-
 class Asistencia extends Model
 {
     protected $table = 'asistencias';
 
     public $timestamps = false;
 
-    // Clave primaria compuesta
+    // Laravel manejará el ID autoincremental
     protected $primaryKey = 'id';
-    public $incrementing = false;
-    protected $keyType = 'string';
+    public $incrementing = true;   // ✅ debe ser true
+    protected $keyType = 'int';    // ✅ entero, no string
 
     protected $fillable = [
         'estudiante_documento',

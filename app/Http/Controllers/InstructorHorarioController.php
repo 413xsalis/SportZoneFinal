@@ -7,7 +7,7 @@ use App\Models\Horario;
 use App\Models\Actividad;
 use App\Models\Subgrupo;
 use App\Models\Grupo;
-use App\Models\Instructor;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class InstructorHorarioController extends Controller
@@ -28,7 +28,8 @@ class InstructorHorarioController extends Controller
             $horarios = Horario::with(['grupo', 'instructor'])->get();
         }
 
-        $instructores = Instructor::all();
+        // Ahora los instructores son usuarios con rol "Instructor"
+        $instructores = User::role('Instructor')->get();
 
         return view('instructor.horario.principal', compact('subgrupos', 'grupos', 'horarios', 'instructores'));
     }
@@ -98,6 +99,7 @@ class InstructorHorarioController extends Controller
                 'grupo_nombre' => $grupo,
                 'hora_inicio' => $horario->hora_inicio,
                 'hora_fin' => $horario->hora_fin,
+                'fecha' => $horario->fecha ? \Carbon\Carbon::parse($horario->fecha)->format('d/m/Y') : 'Sin fecha',
                 'estado' => $actividad->estado
             ]);
         } catch (\Exception $e) {

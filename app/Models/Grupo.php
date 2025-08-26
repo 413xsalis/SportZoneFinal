@@ -18,4 +18,8 @@ class Grupo extends Model
     {
         return $this->hasMany(Horario::class);
     }
+        public function subgrupos()
+    {
+        return $this->hasMany(Subgrupo::class, 'grupo_id');
+    }
 }
