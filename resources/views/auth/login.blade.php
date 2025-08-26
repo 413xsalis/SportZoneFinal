@@ -70,7 +70,7 @@
                                                 class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                                                 type="submit">Login</button><br>
 
-                                            <a class="text-muted" href="#!">¿Olvidaste tu contraseña?</a>
+                                            <a class="text-muted" href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
                                         </div>
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">
