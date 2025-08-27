@@ -12,11 +12,13 @@ class EstudianteController extends Controller
 {
 
 
-    public function index()
-    {
-        $estudiantes = Estudiante::with('grupo')->get();
-        return view('colaborador.inscripcion_estudent.principal', compact('estudiantes'));
-    }
+public function index()
+{
+    $estudiantes = Estudiante::with('grupo')->paginate(10);
+    $grupos = Grupo::all(); // Asegúrate de obtener los grupos
+    
+    return view('colaborador.inscripcion_estudent.principal', compact('estudiantes', 'grupos'));
+}
 
     public function create()
     {
