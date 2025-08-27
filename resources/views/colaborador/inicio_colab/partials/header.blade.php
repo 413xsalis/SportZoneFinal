@@ -270,11 +270,12 @@
         @endif
         <div>
           <p class="mb-0 text-white fw-bold">{{ Auth::user()->name }}</p>
-          <small class="text-white-50">Administrador</small>
+          <small class="text-white-50">Colabordor</small>
         </div>
       </div>
     </div>
     <!-- Sidebar menu-->
+
     <ul class="app-menu">
       <a class="app-menu__item" href="{{ route('colab.principal') }}">
         <i class="bi bi-journal-bookmark me-2"></i>

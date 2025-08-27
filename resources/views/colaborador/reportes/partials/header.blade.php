@@ -262,7 +262,7 @@
       <div class="d-flex align-items-center">
         @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
           <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
-            class="profile-image-sidebar me-4">
+            class="profile-image-sidebar me-3">
         @else
           <div class="default-avatar default-avatar-sidebar me-3">
             <i class="bi bi-person fs-4"></i>
@@ -270,11 +270,12 @@
         @endif
         <div>
           <p class="mb-0 text-white fw-bold">{{ Auth::user()->name }}</p>
-          <small class="text-white-50">Administrador</small>
+          <small class="text-white-50">Colabordor</small>
         </div>
       </div>
     </div>
     <!-- Sidebar menu-->
+
     <ul class="app-menu">
       <a class="app-menu__item" href="{{ route('colab.principal') }}">
         <i class="bi bi-journal-bookmark me-2"></i>
