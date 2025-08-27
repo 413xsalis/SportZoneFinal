@@ -10,11 +10,21 @@ use Illuminate\Http\Request;
 class HorarioController extends Controller
 {
     // Mostrar todos los horarios
-    public function index()
-    {
-        $horarios = Horario::with(['instructor', 'grupo'])->get();
-        return view('colaborador.gestion_clases.principal', compact('horarios'));
-    }
+public function index()
+{
+    // Cambiar get() por paginate() para horarios
+    $horarios = Horario::with(['instructor', 'grupo'])->paginate(10);
+    
+    // Estos pueden mantenerse como colecciones
+    $instructores = User::role('instructor')->get();
+    $grupos = Grupo::all();
+    
+    // Calcular próximas clases
+    $proximasClases = Horario::where('fecha', '>=', now()->format('Y-m-d'))->count();
+
+    return view('colaborador.gestion_clases.principal', 
+        compact('horarios', 'instructores', 'grupos', 'proximasClases'));
+}
 
 
     public function create()

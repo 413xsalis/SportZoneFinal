@@ -258,7 +258,7 @@
                 </div>
                 
                 <!-- Mensajes de alerta -->
-                @if(session('success'))
+        @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -272,6 +272,7 @@
                             <div class="stats-icon" style="background-color: rgba(67, 97, 238, 0.1); color: var(--primary-color);">
                                 <i class="bi bi-calendar-week"></i>
                             </div>
+                            <!-- Cambiado: usar $horarios->total() que ahora funciona con paginate() -->
                             <h3>{{ $horarios->total() }}</h3>
                             <p class="text-muted">Total Horarios</p>
                         </div>
@@ -281,6 +282,7 @@
                             <div class="stats-icon" style="background-color: rgba(46, 204, 113, 0.1); color: #27ae60);">
                                 <i class="bi bi-people-fill"></i>
                             </div>
+                            <!-- Cambiado: usar count() para colecciones -->
                             <h3>{{ $instructores->count() }}</h3>
                             <p class="text-muted">Instructores Activos</p>
                         </div>
@@ -290,6 +292,7 @@
                             <div class="stats-icon" style="background-color: rgba(247, 183, 49, 0.1); color: #f39c12);">
                                 <i class="bi bi-collection-play"></i>
                             </div>
+                            <!-- Cambiado: usar count() para colecciones -->
                             <h3>{{ $grupos->count() }}</h3>
                             <p class="text-muted">Grupos Activos</p>
                         </div>
@@ -299,12 +302,12 @@
                             <div class="stats-icon" style="background-color: rgba(155, 89, 182, 0.1); color: #9b59b6);">
                                 <i class="bi bi-clock-history"></i>
                             </div>
-                            <h3>{{ $horarios->where('fecha', '>=', now()->format('Y-m-d'))->count() }}</h3>
+                            <!-- Cambiado: usar la variable $proximasClases calculada en el controlador -->
+                            <h3>{{ $proximasClases }}</h3>
                             <p class="text-muted">Próximas Clases</p>
                         </div>
                     </div>
                 </div>
-
                 <!-- Filtros y botones de acción -->
                 <div class="filter-section">
                     <div class="row">
@@ -326,14 +329,7 @@
                 <div class="card card-modern">
                     <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-table me-2"></i> Lista de Horarios Registrados</h5>
-                        <div class="d-flex">
-                            <button class="btn btn-sm btn-outline-secondary me-2" id="resetFilters">
-                                <i class="bi bi-arrow-clockwise"></i> Restablecer
-                            </button>
-                            <button class="btn btn-sm btn-outline-secondary">
-                                <i class="bi bi-download"></i> Exportar
-                            </button>
-                        </div>
+
                     </div>
                     <div class="card-body">
                         @if($horarios->isEmpty())

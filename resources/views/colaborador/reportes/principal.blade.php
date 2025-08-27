@@ -146,9 +146,14 @@
         <div class="app-container">
             <div class="app-title">
                 <div class="d-flex align-items-center">
-                    <div class="default-avatar-sidebar me-3">
-                        <i class="bi bi-graph-up fs-4"></i>
-                    </div>
+                  @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
+                        <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
+                            class="profile-image-sidebar me-3">
+                    @else
+                        <div class="default-avatar-sidebar me-3">
+                            <i class="bi bi-person fs-4"></i>
+                        </div>
+                    @endif
                     <div>
                         <h1 class="mb-1"><i class="bi bi-speedometer me-2"></i> Módulo de Reportes</h1>
                         <p class="mb-0">SportZone - Panel de generación de reportes</p>
@@ -235,48 +240,6 @@
                                     </button>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Información adicional -->
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card card-modern">
-                        <div class="card-body text-center">
-                            <div class="report-icon mx-auto" style="background-color: rgba(247, 183, 49, 0.1); color: #f39c12;">
-                                <i class="bi bi-info-circle"></i>
-                            </div>
-                            <h5>¿Necesitas ayuda?</h5>
-                            <p class="text-muted">Consulta la guía de uso para generar reportes correctamente.</p>
-                            <button class="btn btn-outline-primary btn-sm">Ver documentación</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="card card-modern">
-                        <div class="card-body text-center">
-                            <div class="report-icon mx-auto" style="background-color: rgba(142, 68, 173, 0.1); color: #8e44ad;">
-                                <i class="bi bi-clock-history"></i>
-                            </div>
-                            <h5>Reportes recientes</h5>
-                            <p class="text-muted">Accede a tus reportes generados recientemente.</p>
-                            <button class="btn btn-outline-primary btn-sm">Ver historial</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="card card-modern">
-                        <div class="card-body text-center">
-                            <div class="report-icon mx-auto" style="background-color: rgba(52, 152, 219, 0.1); color: #3498db;">
-                                <i class="bi bi-graph-up"></i>
-                            </div>
-                            <h5>Estadísticas</h5>
-                            <p class="text-muted">Visualiza métricas y estadísticas de tu negocio.</p>
-                            <button class="btn btn-outline-primary btn-sm">Ver estadísticas</button>
                         </div>
                     </div>
                 </div>

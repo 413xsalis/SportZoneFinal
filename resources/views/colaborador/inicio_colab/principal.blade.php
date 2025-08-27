@@ -307,9 +307,6 @@
                                 <option value="active">Solo activos</option>
                                 <option value="inactive">Solo inactivos</option>
                             </select>
-                            <a href="{{ route('usuario.create') }}?rol=Instructor" class="btn btn-success btn-modern">
-                                <i class="bi bi-plus-circle me-1"></i> Nuevo Instructor
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -317,14 +314,6 @@
                 <div class="card card-modern">
                     <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-table me-2"></i> Lista de Instructores</h5>
-                        <div class="d-flex">
-                            <button class="btn btn-sm btn-outline-secondary me-2" id="resetFilters">
-                                <i class="bi bi-arrow-clockwise"></i> Restablecer
-                            </button>
-                            <button class="btn btn-sm btn-outline-secondary">
-                                <i class="bi bi-download"></i> Exportar
-                            </button>
-                        </div>
                     </div>
                     <div class="card-body">
                         @if($instructores->isEmpty())
@@ -332,9 +321,6 @@
                             <i class="bi bi-person-x"></i>
                             <h3>No hay instructores registrados</h3>
                             <p>Comienza agregando un nuevo instructor al sistema.</p>
-                            <a href="{{ route('usuario.create') }}?rol=Instructor" class="btn btn-success mt-3">
-                                <i class="bi bi-plus-circle"></i> Agregar Instructor
-                            </a>
                         </div>
                         @else
                         <div class="table-responsive">

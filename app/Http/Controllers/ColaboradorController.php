@@ -25,26 +25,30 @@ class ColaboradorController extends Controller
         return view('colaborador.inicio_colab.principal', compact('instructores'));
     }
 
-public function gestion()
-{
-    // Cargar datos necesarios para la vista con paginación
-    $horarios = Horario::with(['instructor', 'grupo'])->paginate(10); // Correcto
+    public function gestion()
+    {
+        // Cambiar get() por paginate() para horarios
+        $horarios = Horario::with(['instructor', 'grupo'])->paginate(10);
 
-    // Obtener solo usuarios con rol de instructor (sin paginación)
-    $instructores = User::role('instructor')->get(); // Esto devuelve una colección
+        // Estos pueden mantenerse como colecciones
+        $instructores = User::role('instructor')->get();
+        $grupos = Grupo::all();
 
-    $grupos = Grupo::all(); // Esto también devuelve una colección
+        // Calcular próximas clases
+        $proximasClases = Horario::where('fecha', '>=', now()->format('Y-m-d'))->count();
 
-    // Pasar datos a la vista principal de gestión
-    return view('colaborador.gestion_clases.principal', compact('horarios', 'instructores', 'grupos'));
-}
-public function inscripcion()
-{
-    $estudiantes = Estudiante::with('grupo')->paginate(10); // Cambia all() por paginate()
-    $grupos = Grupo::all();
+        return view(
+            'colaborador.gestion_clases.principal',
+            compact('horarios', 'instructores', 'grupos', 'proximasClases')
+        );
+    }
+    public function inscripcion()
+    {
+        $estudiantes = Estudiante::with('grupo')->paginate(10); // Cambia all() por paginate()
+        $grupos = Grupo::all();
 
-    return view('colaborador.inscripcion_estudent.principal', compact('estudiantes', 'grupos'));
-}
+        return view('colaborador.inscripcion_estudent.principal', compact('estudiantes', 'grupos'));
+    }
 
     public function reportes()
     {
