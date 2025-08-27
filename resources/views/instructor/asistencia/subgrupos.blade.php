@@ -4,243 +4,422 @@
 Bienvenido - Panel de control de instructores
 @endsection
 
-
 @section('content')
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --success-color: #4cc9f0;
+            --light-bg: #f5f7fb;
+            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #343a40;
+        }
+        
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .page-header:hover {
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .card-modern {
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-modern:hover {
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .card-header-modern {
+            background: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.25rem 1.5rem;
+        }
+        
+        .form-select-modern {
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select-modern:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.15);
+        }
+        
+        .btn-modern {
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border: none;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #4cc9f0, #3a86ff);
+            border: none;
+        }
+        
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
+        }
+        
+        .table-modern {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+        
+        .table-modern th {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+            font-weight: 600;
+            padding: 1rem;
+            color: #495057;
+        }
+        
+        .table-modern td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-top: 1px solid #f1f3f4;
+        }
+        
+        .table-modern tr {
+            transition: all 0.2s ease;
+        }
+        
+        .table-modern tr:hover {
+            background-color: rgba(67, 97, 238, 0.03);
+        }
+        
+        .badge-modern {
+            padding: 0.5em 0.8em;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.85em;
+        }
+        
+        .form-container-bottom-right {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
 
-<main class="app-content">
-    <div class="row mb-4">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-            <h3 class="page-title">Asistencia</h3>
-            <div class="form-container">
-                <div class="form-container-bottom-right">
-                    <form method="POST" action="{{ route('subgrupos.store') }}" class="form-subgrupo-simple">
-                        @csrf
-                        <input type="hidden" name="grupo_id" value="{{ $grupo->id }}">
-                        <div class="input-group-simple">
-                            <input type="text" name="nombre" class="input-field-simple" placeholder="Nombre del nuevo subgrupo" required>
-                            <button type="submit" class="submit-button-simple">
-                                + Agregar
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            <div>
-                <label for="filtroSubgrupo" class="form-label fw-bold me-2">Filtrar por subgrupo:</label>
-                <select id="filtroSubgrupo" class="form-select w-auto d-inline-block" onchange="filtrarSubgrupos()">
-                    <option value="todos">Mostrar todos</option>
-                    {{-- Bucle para generar las opciones del selector con los subgrupos disponibles --}}
-                    @foreach($subgrupos as $subgrupo)
-                        <option value="subgrupo-{{ $subgrupo->id }}">{{ $subgrupo->nombre }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
+        .form-subgrupo-simple {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 15px 20px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-subgrupo-simple:hover {
+            box-shadow: var(--hover-shadow);
+        }
 
-    <div class="row">
-        {{-- Condicional para verificar si hay subgrupos --}}
-        @if($subgrupos->isEmpty())
-            <div class="col-12">
-                <p class="text-center text-muted">No hay subgrupos asignados a este grupo.</p>
-            </div>
-        @else
-            {{-- Bucle principal para mostrar cada subgrupo --}}
-            @foreach($subgrupos as $subgrupo)
-                {{-- Cada div de subgrupo tiene una clase única para que el filtro de JavaScript lo pueda identificar --}}
-                <div class="col-12 subgrupo-container subgrupo-{{ $subgrupo->id }}">
-                    <div class="tile shadow-sm rounded-4 mb-4">
-                        <div class="tile-title">
-                            <h5 class="mb-0">{{ $subgrupo->nombre }}</h5>
-                        </div>
-                        <div class="tile-body">
-                            {{-- Condicional para verificar si el subgrupo tiene estudiantes --}}
-                            @if($subgrupo->estudiantes->isEmpty())
-                                <p class="text-muted text-center">No hay estudiantes en este subgrupo.</p>
-                            @else
-                                {{-- Formulario para enviar la asistencia --}}
-                                <form method="POST" action="{{ route('asistencia.guardar') }}">
-                                    @csrf
-                                    {{-- Campos ocultos para enviar el ID del subgrupo y la fecha actual --}}
-                                    <input type="hidden" name="subgrupo_id" value="{{ $subgrupo->id }}">
-                                    <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
+        .input-group-simple {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
 
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th>Nombre</th>
-                                                    <th>Asistencia</th>
-                                                    <th>Detalles</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {{-- Bucle para mostrar cada estudiante en el subgrupo --}}
-                                                @foreach($subgrupo->estudiantes as $estudiante)
-                                                    <tr>
-                                                        <td>{{ $estudiante->nombre_1 }} {{ $estudiante->nombre_2 }} {{ $estudiante->apellido_1 }} {{ $estudiante->apellido_2 }}</td>
-                                                        <td>
-                                                            <select name="asistencia[{{ $estudiante->documento }}]" class="form-select">
-                                                                <option value="presente">Presente</option>
-                                                                <option value="ausente">Ausente</option>
-                                                                <option value="justificado">Justificado</option>
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#infoModal{{ $estudiante->id }}">
-                                                                Ver info
-                                                            </button>
-                                                            @include('instructor.asistencia.partials.modal', ['estudiante' => $estudiante])
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="text-start mt-3">
-                                        <button type="submit" class="btn btn-success">Guardar asistencia</button>
-                                    </div>
-                                </form>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        @endif
-    </div>
+        .input-field-simple {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: #343a40;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
 
-    {{-- Bloque para el mensaje de éxito --}}
-    @if(session('success'))
-        <script>
-            setTimeout(() => {
-                const toast = document.getElementById('toastSuccess');
-                if (toast) {
-                    const bsToast = bootstrap.Toast.getOrCreateInstance(toast);
-                    bsToast.hide();
-                }
-            }, 5000);
-            localStorage.setItem('attendanceSaved', 'true');
-            localStorage.setItem('attendanceGroup', '{{ $grupo->nombre }}');
-            localStorage.setItem('attendanceSubgroup', '{{ $subgrupo->nombre }}');
-        </script>
+        .input-field-simple:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.15);
+        }
 
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
-            <div id="toastSuccess" class="toast align-items-center text-white bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        {{ session('success') }}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-    @endif
-</main>
-<style>
-                    .form-container-bottom-right {
-                        position: fixed;
-                        /* Lo posiciona de forma fija en la pantalla */
-                        bottom: 30px;
-                        /* Distancia desde el borde inferior */
-                        right: 30px;
-                        /* Distancia desde el borde derecho */
-                        z-index: 1000;
-                        /* Asegura que esté por encima de otros elementos */
-                    }
+        .input-field-simple::placeholder {
+            color: #6c757d;
+        }
 
-                    .form-subgrupo-simple {
-                        background-color: #ffffff;
-                        border: 1px solid #000000;
-                        border-radius: 8px;
-                        padding: 15px 20px;
-                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                        display: flex;
-                        align-items: center;
-                        gap: 30px;
-                        /* Valor ajustado para más espacio */
-                    }
+        .submit-button-simple {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
 
-                    .input-group-simple {
-                        display: flex;
-                        align-items: center;
-                        width: 100%;
-                    }
+        .submit-button-simple:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
 
-                    .input-field-simple {
-                        flex-grow: 1;
-                        /* Permite que el input ocupe el espacio disponible */
-                        padding: 10px 12px;
-                        border: 1px solid #cccccc;
-                        /* Borde gris claro para el input */
-                        border-radius: 5px;
-                        font-size: 0.95rem;
-                        color: #333333;
-                        background-color: #f9f9f9;
-                        /* Un blanco muy ligero para el fondo del input */
-                        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-                    }
-
-                    .input-field-simple:focus {
-                        outline: none;
-                        border-color: #88bbff;
-                        /* Borde azul suave al enfocar */
-                        box-shadow: 0 0 5px rgba(136, 187, 255, 0.5);
-                    }
-
-                    .input-field-simple::placeholder {
-                        color: #999999;
-                    }
-
-                    .submit-button-simple {
-                        padding: 10px 18px;
-                        border: none;
-                        border-radius: 5px;
-                        font-size: 0.95rem;
-                        font-weight: 500;
-                        /* Un poco más de peso para la fuente */
-                        cursor: pointer;
-                        background-color: #88bbff;
-                        /* Azul claro minimalista */
-                        color: white;
-                        transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
-                        display: flex;
-                        /* Para centrar el ícono y texto si los hubiera */
-                        align-items: center;
-                        justify-content: center;
-                        gap: 5px;
-                    }
-
-                    .submit-button-simple:hover {
-                        background-color: #66aaff;
-                        /* Un azul un poco más oscuro al pasar el cursor */
-                        transform: translateY(-1px);
-                        /* Efecto sutil de levantamiento */
-                    }
-
-                    .submit-button-simple:active {
-                        transform: translateY(0);
-                        /* Quita el efecto al hacer click */
-                        background-color: #5599ee;
-                    }
-                </style>
-@endsection
-{{-- Scripts de JavaScript --}}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    //Función JavaScript para filtrar los subgrupos 
-    function filtrarSubgrupos() {
-        const valorSeleccionado = document.getElementById('filtroSubgrupo').value;
-        const subgrupos = document.querySelectorAll('.subgrupo-container');
-
-        subgrupos.forEach(div => {
-            if (valorSeleccionado === 'todos') {
-                div.style.display = 'block';
-            } else {
-                //Muestra u oculta el div dependiendo de si su clase coincide con el valor seleccionado 
-                div.style.display = div.classList.contains(valorSeleccionado) ? 'block' : 'none';
+        .submit-button-simple:active {
+            transform: translateY(0);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .empty-state i {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: #dee2e6;
+        }
+        
+        .toast-modern {
+            border-radius: 12px;
+            box-shadow: var(--hover-shadow);
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .form-subgrupo-simple {
+                flex-direction: column;
+                padding: 1rem;
             }
+            
+            .input-group-simple {
+                width: 100%;
+            }
+            
+            .submit-button-simple {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <main class="content">
+        <div class="container py-5">
+            <div class="app-container">
+                <!-- Encabezado de página -->
+                <div class="page-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h1 class="mb-1"><i class="bi bi-clipboard-check me-2"></i> Registro de Asistencia</h1>
+                            <p class="mb-0">Grupo: {{ $grupo->nombre }}</p>
+                        </div>
+                        <div>
+                            <label for="filtroSubgrupo" class="form-label text-white me-2">Filtrar por subgrupo:</label>
+                            <select id="filtroSubgrupo" class="form-select-modern w-auto d-inline-block" onchange="filtrarSubgrupos()">
+                                <option value="todos">Mostrar todos</option>
+                                @foreach($subgrupos as $subgrupo)
+                                    <option value="subgrupo-{{ $subgrupo->id }}">{{ $subgrupo->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenido principal -->
+                <div class="row">
+                    @if($subgrupos->isEmpty())
+                        <div class="col-12">
+                            <div class="card card-modern">
+                                <div class="card-body">
+                                    <div class="empty-state">
+                                        <i class="bi bi-people"></i>
+                                        <h3>No hay subgrupos asignados</h3>
+                                        <p>Comienza agregando un nuevo subgrupo a este grupo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        @foreach($subgrupos as $subgrupo)
+                            <div class="col-12 subgrupo-container subgrupo-{{ $subgrupo->id }}">
+                                <div class="card card-modern">
+                                    <div class="card-header-modern d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0"><i class="bi bi-collection me-2"></i> {{ $subgrupo->nombre }}</h5>
+                                        <span class="badge bg-primary badge-modern">{{ $subgrupo->estudiantes->count() }} estudiantes</span>
+                                    </div>
+                                    <div class="card-body">
+                                        @if($subgrupo->estudiantes->isEmpty())
+                                            <div class="empty-state py-4">
+                                                <i class="bi bi-person-x"></i>
+                                                <p class="mb-0">No hay estudiantes en este subgrupo.</p>
+                                            </div>
+                                        @else
+                                            <form method="POST" action="{{ route('asistencia.guardar') }}">
+                                                @csrf
+                                                <input type="hidden" name="subgrupo_id" value="{{ $subgrupo->id }}">
+                                                <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-modern">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nombre del Estudiante</th>
+                                                                <th>Asistencia</th>
+                                                                <th>Acciones</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($subgrupo->estudiantes as $estudiante)
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="avatar-sm bg-light rounded-circle me-3 d-flex align-items-center justify-content-center">
+                                                                                <i class="bi bi-person"></i>
+                                                                            </div>
+                                                                            <div>
+                                                                                <div class="fw-semibold">{{ $estudiante->nombre_1 }} {{ $estudiante->apellido_1 }}</div>
+                                                                                <small class="text-muted">{{ $estudiante->documento }}</small>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select name="asistencia[{{ $estudiante->documento }}]" class="form-select form-select-modern">
+                                                                            <option value="presente">Presente</option>
+                                                                            <option value="ausente">Ausente</option>
+                                                                            <option value="justificado">Justificado</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#infoModal{{ $estudiante->id }}">
+                                                                            <i class="bi bi-info-circle"></i> Detalles
+                                                                        </button>
+                                                                        @include('instructor.asistencia.partials.modal', ['estudiante' => $estudiante])
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="text-start mt-3">
+                                                    <button type="submit" class="btn btn-success btn-modern">
+                                                        <i class="bi bi-check-circle me-1"></i> Guardar asistencia
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario flotante para agregar subgrupos -->
+        <div class="form-container-bottom-right">
+            <form method="POST" action="{{ route('subgrupos.store') }}" class="form-subgrupo-simple">
+                @csrf
+                <input type="hidden" name="grupo_id" value="{{ $grupo->id }}">
+                <div class="input-group-simple">
+                    <input type="text" name="nombre" class="input-field-simple" placeholder="Nombre del nuevo subgrupo" required>
+                    <button type="submit" class="submit-button-simple">
+                        <i class="bi bi-plus-circle"></i> Agregar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Toast de éxito -->
+        @if(session('success'))
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+                <div id="toastSuccess" class="toast toast-modern align-items-center text-white bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                setTimeout(() => {
+                    const toast = document.getElementById('toastSuccess');
+                    if (toast) {
+                        const bsToast = bootstrap.Toast.getOrCreateInstance(toast);
+                        bsToast.hide();
+                    }
+                }, 5000);
+                localStorage.setItem('attendanceSaved', 'true');
+                localStorage.setItem('attendanceGroup', '{{ $grupo->nombre }}');
+                localStorage.setItem('attendanceSubgroup', '{{ $subgrupo->nombre }}');
+            </script>
+        @endif
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Función JavaScript para filtrar los subgrupos 
+        function filtrarSubgrupos() {
+            const valorSeleccionado = document.getElementById('filtroSubgrupo').value;
+            const subgrupos = document.querySelectorAll('.subgrupo-container');
+
+            subgrupos.forEach(div => {
+                if (valorSeleccionado === 'todos') {
+                    div.style.display = 'block';
+                } else {
+                    // Muestra u oculta el div dependiendo de si su clase coincide con el valor seleccionado 
+                    div.style.display = div.classList.contains(valorSeleccionado) ? 'block' : 'none';
+                }
+            });
+        }
+        
+        // Inicializar tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
-    }
-</script>
+    </script>
+@endsection

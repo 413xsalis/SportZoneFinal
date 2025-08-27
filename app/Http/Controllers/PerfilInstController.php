@@ -11,7 +11,7 @@ class PerfilInstController extends Controller
 {
     public function edit()
     {
-        return view('instructor.inicio.perfilcolab');
+        return view('instructor.inicio.perfilinst');
     }
 
     public function update(Request $request)

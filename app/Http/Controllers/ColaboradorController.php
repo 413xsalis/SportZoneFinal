@@ -7,7 +7,7 @@ use App\Models\Horario;
 use App\Models\Grupo;
 use App\Models\Estudiante;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
+
 
 class ColaboradorController extends Controller
 {

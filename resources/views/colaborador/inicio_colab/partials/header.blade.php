@@ -270,7 +270,7 @@
         @endif
         <div>
           <p class="mb-0 text-white fw-bold">{{ Auth::user()->name }}</p>
-          <small class="text-white-50">Colabordor</small>
+          <small class="text-white-50">Colaborador</small>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-@extends('administrador.admin.layout')
+@extends('instructor.inicio.layout')
 
 @section('title', 'Perfil de Usuario')
 
@@ -10,7 +10,7 @@
                     <h1 class="h3 mb-0"><i class="bi bi-person-circle me-2"></i> Perfil de Usuario</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.principal') }}">Inicio</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('colab.principal') }}">Inicio</a></li>
                             <li class="breadcrumb-item active">Perfil</li>
                         </ol>
                     </nav>
@@ -77,7 +77,7 @@
                                     <h5 class="mb-0"><i class="bi bi-person-circle me-2"></i> Información Personal</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('perfilinst.update') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         
@@ -145,7 +145,7 @@
                                     <h5 class="mb-0"><i class="bi bi-id-card me-2"></i> Documentos</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('profile.uploadDocument') }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('perfilinst.uploadDocument') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         
                                         <div class="mb-4">
@@ -176,7 +176,7 @@
                                     <h5 class="mb-0"><i class="bi bi-lock me-2"></i> Seguridad</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('profile.changePassword') }}" method="POST">
+                                    <form action="{{ route('perfilinst.changePassword') }}" method="POST">
                                         @csrf
                                         
                                         <div class="mb-3">
@@ -216,7 +216,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('profile.uploadLogo') }}" method="POST" enctype="multipart/form-data" id="logoForm">
+                    <form action="{{ route('perfilinst.uploadLogo') }}" method="POST" enctype="multipart/form-data" id="logoForm">
                         @csrf
                         <div class="mb-3">
                             <label for="logo" class="form-label">Seleccionar imagen</label>
