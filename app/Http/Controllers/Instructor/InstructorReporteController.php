@@ -29,7 +29,7 @@ class InstructorReporteController extends Controller
             $asistencias = Asistencia::where('subgrupo_id', $subgrupoId)
                 ->where('fecha', $fecha)
                 ->with(['estudiante', 'subgrupo.grupo'])
-                ->get();
+                ->paginate(15);
         }
 
         return view('instructor.reporte.principal', compact('grupos', 'asistencias'));
