@@ -45,8 +45,9 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Entrenadores Activos</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalInstructores }}</div>
+                                        Usuarios Activos</div>
+                                    <p class="stats-number">{{ $totalUsers }}</p>
+
                                 </div>
                                 <div class="col-auto">
                                     <i class="bi bi-person-badge fa-2x text-gray-300"></i>
@@ -89,30 +90,6 @@
                                             <i class="bi bi-people-fill fa-2x"></i>
                                         </span>
                                         <span class="text d-block mt-2">Gestión de Usuarios</span>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 col-6 text-center mb-3">
-                                    <a href="#" class="btn btn-light btn-icon-split p-3">
-                                        <span class="icon text-gray-600">
-                                            <i class="bi bi-calendar-event fa-2x"></i>
-                                        </span>
-                                        <span class="text d-block mt-2">Gestión de Clases</span>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 col-6 text-center mb-3">
-                                    <a href="#" class="btn btn-light btn-icon-split p-3">
-                                        <span class="icon text-gray-600">
-                                            <i class="bi bi-person-badge fa-2x"></i>
-                                        </span>
-                                        <span class="text d-block mt-2">Entrenadores</span>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 col-6 text-center mb-3">
-                                    <a href="#" class="btn btn-light btn-icon-split p-3">
-                                        <span class="icon text-gray-600">
-                                            <i class="bi bi-people fa-2x"></i>
-                                        </span>
-                                        <span class="text d-block mt-2">Estudiantes</span>
                                     </a>
                                 </div>
                             </div>
@@ -174,7 +151,7 @@
                 <div class="col-12">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Nuestros Entrenadores</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Nuestros Usuarios</h6>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -266,4 +243,5 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>
+    
 @endsection

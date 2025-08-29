@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrador;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class PerfilColabController extends Controller
+class PerfilAdminController extends Controller
 {
     public function edit()
     {
-        return view('colaborador.inicio_colab.perfilcolab');
+        return view('administrador.admin.perfiladmin');
     }
 
     public function update(Request $request)
@@ -30,7 +31,7 @@ class PerfilColabController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('perfilcolab.edit')->with('success', 'Perfil actualizado correctamente.');
+        return redirect()->route('profile.edit')->with('success', 'Perfil actualizado correctamente.');
     }
 
     public function uploadDocument(Request $request)
@@ -51,7 +52,7 @@ class PerfilColabController extends Controller
         $user->foto_documento = $path;
         $user->save();
 
-        return redirect()->route('perfilcolab.edit')->with('success', 'Documento subido correctamente.');
+        return redirect()->route('profile.edit')->with('success', 'Documento subido correctamente.');
     }
 
     public function uploadLogo(Request $request)
@@ -76,7 +77,7 @@ class PerfilColabController extends Controller
         $user->logo_personalizado = $path;
         $user->save();
 
-        return redirect()->route('perfilcolab.edit')->with('success', 'Logo actualizado correctamente.');
+        return redirect()->route('profile.edit')->with('success', 'Logo actualizado correctamente.');
     }
 
     public function changePassword(Request $request)
@@ -95,7 +96,7 @@ class PerfilColabController extends Controller
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return redirect()->route('perfilcolab.edit')->with('success', 'Contraseña cambiada correctamente.');
+        return redirect()->route('profile.edit')->with('success', 'Contraseña cambiada correctamente.');
     }
 }
 

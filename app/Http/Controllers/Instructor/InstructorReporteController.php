@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Instructor;
 
+
+use App\Http\Controllers\Controller;
 use App\Models\Subgrupo;
 use App\Models\Grupo;
 use App\Models\Asistencia;

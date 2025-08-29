@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Instructor;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Asistencia;
 use Carbon\Carbon;
 

@@ -1,17 +1,17 @@
 <?php
+namespace App\Http\Controllers\Instructor;
 
-namespace App\Http\Controllers;
-
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class PerfilAdminController extends Controller
+class PerfilInstController extends Controller
 {
     public function edit()
     {
-        return view('administrador.admin.perfiladmin');
+        return view('instructor.inicio.perfilinst');
     }
 
     public function update(Request $request)
@@ -30,7 +30,7 @@ class PerfilAdminController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('profile.edit')->with('success', 'Perfil actualizado correctamente.');
+        return redirect()->route('perfilinst.edit')->with('success', 'Perfil actualizado correctamente.');
     }
 
     public function uploadDocument(Request $request)
@@ -51,7 +51,7 @@ class PerfilAdminController extends Controller
         $user->foto_documento = $path;
         $user->save();
 
-        return redirect()->route('profile.edit')->with('success', 'Documento subido correctamente.');
+        return redirect()->route('perfilinst.edit')->with('success', 'Documento subido correctamente.');
     }
 
     public function uploadLogo(Request $request)
@@ -76,7 +76,7 @@ class PerfilAdminController extends Controller
         $user->logo_personalizado = $path;
         $user->save();
 
-        return redirect()->route('profile.edit')->with('success', 'Logo actualizado correctamente.');
+        return redirect()->route('perfilinst.edit')->with('success', 'Logo actualizado correctamente.');
     }
 
     public function changePassword(Request $request)
@@ -95,7 +95,7 @@ class PerfilAdminController extends Controller
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return redirect()->route('profile.edit')->with('success', 'Contraseña cambiada correctamente.');
+        return redirect()->route('perfilinst.edit')->with('success', 'Contraseña cambiada correctamente.');
     }
 }
 
