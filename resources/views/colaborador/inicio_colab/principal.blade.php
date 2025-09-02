@@ -306,9 +306,6 @@
                                 <option value="active">Solo activos</option>
                                 <option value="inactive">Solo inactivos</option>
                             </select>
-                            <button class="btn btn-outline-secondary" id="resetFilters">
-                                <i class="bi bi-arrow-clockwise"></i> Reiniciar
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -316,19 +313,12 @@
                 <div class="card card-modern">
                     <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-table me-2"></i> Lista de Instructores</h5>
-                        <a href="{{ route('usuario.create') }}" class="btn btn-success btn-modern">
-                            <i class="bi bi-plus-circle me-1"></i> Nuevo Instructor
-                        </a>
                     </div>
                     <div class="card-body">
                         @if($instructores->isEmpty())
                         <div class="empty-state">
                             <i class="bi bi-person-x"></i>
                             <h3>No hay instructores registrados</h3>
-                            <p>Comienza agregando un nuevo instructor al sistema.</p>
-                            <a href="{{ route('usuario.create') }}" class="btn btn-success btn-modern mt-3">
-                                <i class="bi bi-plus-circle me-1"></i> Agregar Instructor
-                            </a>
                         </div>
                         @else
                         <div class="table-responsive">
@@ -376,10 +366,7 @@
                                             @endif
                                         </td>
                                         <td class="action-buttons">
-                                            <a href="{{ route('usuario.edit', $instructor->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <a href="{{ route('usuario.show', $instructor->id) }}" class="btn btn-sm btn-outline-info" title="Ver detalles">
+                                            <a href="{{ route('instructor.show', $instructor->id) }}" class="btn btn-sm btn-outline-info" title="Ver detalles"></a>
                                                 <i class="bi bi-eye"></i>
                                             </a>
                                             @if($instructor->deleted_at)

@@ -147,6 +147,8 @@ Route::prefix('admin')->group(function () {
 
 
 // ================= COLABORADOR =================
+
+Route::get('instructor/{usuario}', [InstructorController::class, 'show'])->name('instructor.show');
 Route::prefix('colab')->group(function () {
     Route::get('/principal', [ColaboradorController::class, 'principal'])->name('colab.principal');
     Route::get('/gestion', [ColaboradorController::class, 'gestion'])->name('colab.gestion_clases');
