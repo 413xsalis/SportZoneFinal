@@ -15,15 +15,38 @@ class ColaboradorController extends Controller
     public function index()
     {
         // Obtener solo usuarios con rol de instructor CON PAGINACIÓN
-        $instructores = User::role('instructor')->paginate(10); // 10 elementos por página
-        return view('colaborador.inicio_colab.principal', compact('instructores'));
+        $instructores = User::role('instructor')->withTrashed()->paginate(10);
+        $totalInstructores = User::role('instructor')->withTrashed()->count();
+        $instructoresActivos = User::role('instructor')->whereNull('deleted_at')->count();
+        $instructoresInactivos = User::role('instructor')->onlyTrashed()->count();
+        $nuevosEsteMes = User::role('instructor')->where('created_at', '>=', now()->subDays(30))->count();
+
+        return view('colaborador.inicio_colab.principal', compact(
+            'instructores', 
+            'totalInstructores',
+            'instructoresActivos',
+            'instructoresInactivos',
+            'nuevosEsteMes'
+        ));
+
     }
 
     public function principal()
     {
         // Obtener solo usuarios con rol de instructor CON PAGINACIÓN
-        $instructores = User::role('instructor')->paginate(10); // 10 elementos por página
-        return view('colaborador.inicio_colab.principal', compact('instructores'));
+        $instructores = User::role('instructor')->withTrashed()->paginate(10);
+        $totalInstructores = User::role('instructor')->withTrashed()->count();
+        $instructoresActivos = User::role('instructor')->whereNull('deleted_at')->count();
+        $instructoresInactivos = User::role('instructor')->onlyTrashed()->count();
+        $nuevosEsteMes = User::role('instructor')->where('created_at', '>=', now()->subDays(30))->count();
+
+        return view('colaborador.inicio_colab.principal', compact(
+            'instructores', 
+            'totalInstructores',
+            'instructoresActivos',
+            'instructoresInactivos',
+            'nuevosEsteMes'
+        ));
     }
 
     public function gestion()

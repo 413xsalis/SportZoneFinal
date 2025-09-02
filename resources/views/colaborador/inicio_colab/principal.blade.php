@@ -223,8 +223,7 @@
             }
         }
     </style>
-</head>
-<body>
+
     <main class="content">
         <div class="container py-5">
             <div class="app-container">
@@ -259,7 +258,7 @@
                             <div class="stats-icon" style="background-color: rgba(67, 97, 238, 0.1); color: var(--primary-color);">
                                 <i class="bi bi-people-fill"></i>
                             </div>
-                            <h3>{{ $instructores->count() }}</h3>
+                            <h3>{{ $totalInstructores }}</h3>
                             <p class="text-muted">Total Instructores</p>
                         </div>
                     </div>
@@ -268,7 +267,7 @@
                             <div class="stats-icon" style="background-color: rgba(46, 204, 113, 0.1); color: #27ae60;">
                                 <i class="bi bi-check-circle-fill"></i>
                             </div>
-                            <h3>{{ $instructores->where('deleted_at', null)->count() }}</h3>
+                            <h3>{{ $instructoresActivos }}</h3>
                             <p class="text-muted">Instructores Activos</p>
                         </div>
                     </div>
@@ -277,7 +276,7 @@
                             <div class="stats-icon" style="background-color: rgba(235, 87, 87, 0.1); color: #e74c3c;">
                                 <i class="bi bi-x-circle-fill"></i>
                             </div>
-                            <h3>{{ $instructores->where('deleted_at', '!=', null)->count() }}</h3>
+                            <h3>{{ $instructoresInactivos }}</h3>
                             <p class="text-muted">Instructores Inactivos</p>
                         </div>
                     </div>
@@ -286,7 +285,7 @@
                             <div class="stats-icon" style="background-color: rgba(247, 183, 49, 0.1); color: #f39c12;">
                                 <i class="bi bi-clock-fill"></i>
                             </div>
-                            <h3>{{ $instructores->where('created_at', '>=', now()->subDays(30))->count() }}</h3>
+                            <h3>{{ $nuevosEsteMes }}</h3>
                             <p class="text-muted">Nuevos este mes</p>
                         </div>
                     </div>
@@ -307,6 +306,9 @@
                                 <option value="active">Solo activos</option>
                                 <option value="inactive">Solo inactivos</option>
                             </select>
+                            <button class="btn btn-outline-secondary" id="resetFilters">
+                                <i class="bi bi-arrow-clockwise"></i> Reiniciar
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -314,6 +316,9 @@
                 <div class="card card-modern">
                     <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-table me-2"></i> Lista de Instructores</h5>
+                        <a href="{{ route('usuario.create') }}" class="btn btn-success btn-modern">
+                            <i class="bi bi-plus-circle me-1"></i> Nuevo Instructor
+                        </a>
                     </div>
                     <div class="card-body">
                         @if($instructores->isEmpty())
@@ -321,13 +326,16 @@
                             <i class="bi bi-person-x"></i>
                             <h3>No hay instructores registrados</h3>
                             <p>Comienza agregando un nuevo instructor al sistema.</p>
+                            <a href="{{ route('usuario.create') }}" class="btn btn-success btn-modern mt-3">
+                                <i class="bi bi-plus-circle me-1"></i> Agregar Instructor
+                            </a>
                         </div>
                         @else
                         <div class="table-responsive">
                             <table class="table table-modern" id="instructoresTable">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>#</th>
                                         <th>Nombre</th>
                                         <th>Documento</th>
                                         <th>Teléfono</th>
@@ -339,20 +347,24 @@
                                 <tbody>
                                     @foreach($instructores as $instructor)
                                     <tr data-status="{{ $instructor->deleted_at ? 'inactive' : 'active' }}">
-                                        <td><strong>#{{ $instructor->id }}</strong></td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 @if($instructor->foto_perfil && Storage::disk('public')->exists($instructor->foto_perfil))
                                                     <img src="{{ asset('storage/' . $instructor->foto_perfil) }}" alt="Foto de perfil"
                                                         class="profile-image-sidebar me-2" style="width: 35px; height: 35px;">
                                                 @else
-                                                    <div class="default-avatar me-2" style="width: 35px; height: 35px;">
+                                                    <div class="default-avatar me-2" style="width: 35px; height: 35px; border-radius: 50%; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center;">
                                                         <i class="bi bi-person"></i>
                                                     </div>
                                                 @endif
-                                                <div>{{ $instructor->name }}</div>
+
+                                                <strong>{{ $instructor->name }}</strong>
+                                                
                                             </div>
                                         </td>
+                                        
+                                       
                                         <td>{{ $instructor->documento_identidad }}</td>
                                         <td>{{ $instructor->telefono }}</td>
                                         <td>{{ $instructor->email }}</td>
@@ -371,13 +383,21 @@
                                                 <i class="bi bi-eye"></i>
                                             </a>
                                             @if($instructor->deleted_at)
-                                                <button class="btn btn-sm btn-outline-success" title="Activar">
-                                                    <i class="bi bi-check-circle"></i>
-                                                </button>
+                                                <form action="{{ route('usuario.restore', $instructor->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-sm btn-outline-success" title="Activar">
+                                                        <i class="bi bi-check-circle"></i>
+                                                    </button>
+                                                </form>
                                             @else
-                                                <button class="btn btn-sm btn-outline-danger" title="Desactivar">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
+                                                <form action="{{ route('usuario.destroy', $instructor->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Desactivar">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
                                             @endif
                                         </td>
                                     </tr>
@@ -495,6 +515,26 @@
             const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            // Confirmación para eliminar/desactivar
+            const deleteForms = document.querySelectorAll('form[action*="destroy"]');
+            deleteForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    if (!confirm('¿Estás seguro de que deseas desactivar este instructor?')) {
+                        e.preventDefault();
+                    }
+                });
+            });
+
+            // Confirmación para restaurar/activar
+            const restoreForms = document.querySelectorAll('form[action*="restore"]');
+            restoreForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    if (!confirm('¿Estás seguro de que deseas activar este instructor?')) {
+                        e.preventDefault();
+                    }
+                });
             });
         });
     </script>
