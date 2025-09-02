@@ -100,7 +100,7 @@
         <div class="loader"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         // Mostrar loader solo para enlaces que navegan a otras páginas
         document.addEventListener('DOMContentLoaded', function () {
