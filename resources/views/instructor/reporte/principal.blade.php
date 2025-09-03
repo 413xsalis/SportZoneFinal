@@ -192,46 +192,7 @@
                 </div>
             </div>
 
-            <!-- Estadísticas rápidas -->
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-icon"
-                            style="background-color: rgba(67, 97, 238, 0.1); color: var(--primary-color);">
-                            <i class="bi bi-people-fill"></i>
-                        </div>
-                        <h3>{{ $grupos->count() }}</h3>
-                        <p class="text-muted">Grupos Totales</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-icon" style="background-color: rgba(46, 204, 113, 0.1); color: #27ae60;">
-                            <i class="bi bi-check-circle-fill"></i>
-                        </div>
-                        <h3>0</h3>
-                        <p class="text-muted">Asistencias Hoy</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-icon" style="background-color: rgba(235, 87, 87, 0.1); color: #e74c3c;">
-                            <i class="bi bi-x-circle-fill"></i>
-                        </div>
-                        <h3>0</h3>
-                        <p class="text-muted">Inasistencias Hoy</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-icon" style="background-color: rgba(247, 183, 49, 0.1); color: #f39c12;">
-                            <i class="bi bi-percent"></i>
-                        </div>
-                        <h3>0%</h3>
-                        <p class="text-muted">Promedio Asistencia</p>
-                    </div>
-                </div>
-            </div>
+  
 
             <!-- Filtros -->
             <div class="filter-section">
