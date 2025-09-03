@@ -54,7 +54,7 @@
         @if($asistencias->isNotEmpty())
         <div style="float: left;">
             <div class="info-column"><span class="info-label">Grupo:</span> {{ $asistencias->first()->subgrupo->grupo->nombre ?? 'N/A' }}</div>
-            <div class="info-column"><span class="info-label">Subgrupo:</span> {{ substr($asistencias->first()->subgrupo->nombre ?? 'N/A', -1) }}</div>
+            <div class="info-column"><span class="info-label">Subgrupo:</span> {{ $asistencias->first()->subgrupo->nombre ?? 'N/A' }}</div>
             <div class="info-column"><span class="info-label">Fecha de Generacion:</span> {{ $fechaGeneracion }}</div>
         </div>
         <div style="clear: both;"></div>
