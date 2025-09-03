@@ -118,14 +118,9 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
 
 // Rutas para instructores
 Route::prefix('instructor')->middleware(['auth', 'role:instructor'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('instructor.inicio.principal');
-    })->name('instructor.dashboard');
-
-    // O si prefieres usar resource:
-    Route::resource('dashboard', InstrucController::class);
-});
-//---------------------------------------------------------------------------------------------------------------//
+    Route::get('/dashboard', [InstrucController::class, 'index'])
+        ->name('instructor.dashboard');
+});//---------------------------------------------------------------------------------------------------------------//
 
 
 // rutas de vistas de admin----------------------------------------------------------------//
