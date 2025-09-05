@@ -125,7 +125,7 @@
     {{-- Lista de enlaces del menú principal --}}
     <ul class="app-menu">
       {{-- Enlace de inicio corregido --}}
-      <a class="app-menu__item" href="{{ route('instructor.principal') }}"><i class="app-menu__icon bi bi-house"></i><span class="app-menu__label">Inicio</span></a>
+      <a class="app-menu__item" href="{{ route('instructor.dashboard') }}"><i class="app-menu__icon bi bi-house"></i><span class="app-menu__label">Inicio</span></a>
 
       <a class="app-menu__item" href="{{ route('instructor.horarios') }}"><i class="app-menu__icon bi bi-calendar2-week"></i><span class="app-menu__label">Horarios</span></a>
 

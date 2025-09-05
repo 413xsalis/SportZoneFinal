@@ -135,8 +135,8 @@ Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
 
     Route::get('{id}/editar', [PagoController::class, 'edit'])->name('edit');
     Route::delete('{id}', [PagoController::class, 'destroy'])->name('destroy');
-        Route::resource('pagos', PagoController::class);
-    
+    Route::resource('pagos', PagoController::class);
+
 });
 Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
 
@@ -173,6 +173,9 @@ Route::put('/inscripcion_estudiante/{estudiante:documento}', [EstudianteControll
 
 Route::delete('/inscripcion_estudiante/{estudiante:documento}', [EstudianteController::class, 'destroy'])->name('estudiantes.destroy');
 
+
+
+
 // ========================= INSTRUCTOR ========================= //
 Route::prefix('instructor')->middleware(['auth', 'role:instructor'])->group(function () {
     Route::get('/dashboard', [InstrucController::class, 'index'])->name('instructor.dashboard');
@@ -194,6 +197,8 @@ Route::prefix('instructor')->middleware(['auth', 'role:instructor'])->group(func
     Route::get('/reporte/asistencias', [InstructorReporteController::class, 'mostrarReporte'])->name('instructor.reporte.asistencias');
     Route::get('/reporte/asistencias/pdf', [InstructorReporteController::class, 'generarAsistenciasPDF'])->name('instructor.reporte.asistencias.pdf');
     Route::resource('pagos', PagoController::class);
+    Route::get('/subgrupos/{grupoId}', [InstructorReporteController::class, 'getSubgrupos'])->name('inst.get.subgrupos');
+
 
 });
 
