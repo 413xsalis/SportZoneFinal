@@ -102,7 +102,7 @@
     <div class="app-container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="mb-0">Editar Información del Estudiante</h2>
-            <a href="{{ route('colab.inscripcion') }}" class="btn btn-secondary btn-modern">
+            <a href="{{ route('colaborador.inscripcion') }}" class="btn btn-secondary btn-modern">
                 <i class="bi bi-arrow-left me-1"></i> Volver
             </a>
         </div>
@@ -218,7 +218,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end gap-2 mt-4">
-                        <a href="{{ route('colab.inscripcion') }}" class="btn btn-secondary btn-modern">Cancelar</a>
+                        <a href="{{ route('colaborador.inscripcion') }}" class="btn btn-secondary btn-modern">Cancelar</a>
                         <button type="submit" class="btn btn-primary btn-modern">
                             <i class="bi bi-check-circle me-1"></i> Actualizar Estudiante
                         </button>

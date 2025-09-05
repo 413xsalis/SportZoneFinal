@@ -78,4 +78,5 @@ class ColaboradorController extends Controller
     {
         return view('colaborador.reportes.principal');
     }
+
 }

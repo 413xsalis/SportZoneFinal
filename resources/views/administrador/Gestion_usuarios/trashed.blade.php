@@ -10,7 +10,7 @@
         </div>
     @endif
 
-    <a href="{{ route('usuario.index') }}" class="btn btn-primary mb-3">
+    <a href="{{ route('admin.gestion') }}" class="btn btn-primary mb-3">
         Volver a usuarios
     </a>
 
@@ -32,19 +32,11 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->deleted_at->format('d/m/Y H:i') }}</td>
                 <td>
-                    <form action="{{ route('usuario.restore', $user->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('usuarios.restore', $user->id) }}" method="POST" style="display:inline;">
                         @csrf
                         <button type="submit" class="btn btn-success">Restaurar</button>
                     </form>
                     
-                    <form action="{{ route('usuario.forceDelete', $user->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" 
-                            onclick="return confirm('¿Eliminar permanentemente?')">
-                            Eliminar
-                        </button>
-                    </form>
                 </td>
             </tr>
             @endforeach

@@ -226,13 +226,13 @@
                 <nav aria-label="breadcrumb" class="mb-4">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#" class="text-decoration-none"><i class="bi bi-house-door"></i> Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('usuario.index') }}" class="text-decoration-none">Gestión de Usuarios</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.gestion') }}" class="text-decoration-none">Gestión de Usuarios</a></li>
                         <li class="breadcrumb-item active">Editar Usuario</li>
                     </ol>
                 </nav>
                 
                 <!-- Formulario de edición -->
-                <form action="{{ route('usuario.update', $usuario->id) }}" method="POST" id="userForm" enctype="multipart/form-data">
+                <form action="{{ route('usuarios.update', $usuario->id) }}" method="POST" id="userForm" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     
@@ -368,7 +368,7 @@
                 <!-- Acciones de pie de página -->
                 <div class="footer-actions mt-4">
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('usuario.index') }}" class="btn btn-secondary btn-modern">
+                        <a href="{{ route('admin.gestion') }}" class="btn btn-secondary btn-modern">
                             <i class="bi bi-arrow-left me-2"></i> Volver al listado
                         </a>
                         <div>

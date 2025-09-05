@@ -198,7 +198,7 @@
                 <nav aria-label="breadcrumb" class="mb-4">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#" class="text-decoration-none"><i class="bi bi-house-door"></i> Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('usuario.index') }}" class="text-decoration-none">Gestión de Usuarios</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.gestion') }}" class="text-decoration-none">Gestión de Usuarios</a></li>
                         <li class="breadcrumb-item active">Detalles de Usuario</li>
                     </ol>
                 </nav>
@@ -400,15 +400,15 @@
                 
                 <!-- Acciones -->
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="{{ route('usuario.index') }}" class="btn btn-secondary btn-modern">
+                    <a href="{{ route('admin.gestion') }}" class="btn btn-secondary btn-modern">
                         <i class="bi bi-arrow-left me-2"></i> Volver al listado
                     </a>
                     <div>
-                        <a href="{{ route('usuario.edit', $usuario) }}" class="btn btn-primary btn-modern me-2">
+                        <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-primary btn-modern me-2">
                             <i class="bi bi-pencil me-2"></i> Editar Usuario
                         </a>
                         @if(!$usuario->deleted_at)
-                            <form action="{{ route('usuario.destroy', $usuario) }}" method="POST" class="d-inline">
+                            <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-modern" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">
@@ -416,7 +416,7 @@
                                 </button>
                             </form>
                         @else
-                            <form action="{{ route('usuario.restore', $usuario->id) }}" method="POST" class="d-inline">
+                            <form action="{{ route('usuarios.restore', $usuario->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-success btn-modern">
                                     <i class="bi bi-arrow-clockwise me-2"></i> Restaurar

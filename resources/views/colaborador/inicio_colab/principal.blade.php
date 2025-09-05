@@ -378,7 +378,7 @@
                                                     </button>
                                                 </form>
                                             @else
-                                                <form action="{{ route('usuario.destroy', $instructor->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route('usuarios.destroy', $instructor->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Desactivar">

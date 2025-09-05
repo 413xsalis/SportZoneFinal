@@ -11,7 +11,7 @@ use App\Models\Estudiante;
 class PagoController extends Controller
 {
     // Vista principal del módulo de pagos
-    public function index()
+    public function principal()
     {
         return view('colaborador.pagos.principal');
     }
@@ -94,7 +94,7 @@ public function storeMensualidad(Request $request)
         'estudiante_documento' => $request->estudiante_documento,
     ]);
 
-    return redirect()->route('pagos.mensualidades')->with('success', 'Pago de mensualidad registrado correctamente');
+    return redirect()->route('pagos.mensualidades.index')->with('success', 'Pago de mensualidad registrado correctamente');
 }
 
 // Mostrar formulario de edición

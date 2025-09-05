@@ -85,7 +85,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3 col-6 text-center mb-3">
-                                    <a href="{{ route('usuario.index') }}" class="btn btn-light btn-icon-split p-3">
+                                    <a href="{{ route('admin.gestion') }}" class="btn btn-light btn-icon-split p-3">
                                         <span class="icon text-gray-600">
                                             <i class="bi bi-people-fill fa-2x"></i>
                                         </span>

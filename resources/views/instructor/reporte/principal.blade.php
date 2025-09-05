@@ -197,7 +197,7 @@
             <!-- Filtros -->
             <div class="filter-section">
                 <h5 class="mb-3"><i class="bi bi-funnel me-2"></i> Filtros de Reporte</h5>
-                <form method="GET" action="{{ route('inst.reporte.asistencias') }}">
+                <form method="GET" action="{{ route('instructor.reporte.asistencias') }}">
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label for="grupo_id" class="form-label">Grupo</label>
@@ -242,7 +242,7 @@
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"><i class="bi bi-table me-2"></i> Resultados del Reporte</h5>
                     <div class="d-flex">
-                        <form action="{{ route('inst.reporte.asistencias.pdf') }}" method="GET">
+                        <form action="{{ route('instructor.reporte.asistencias.pdf') }}" method="GET">
                             <input type="hidden" name="grupo_id" value="{{ request('grupo_id') }}">
                             <input type="hidden" name="subgrupo_id" value="{{ request('subgrupo_id') }}">
                             <input type="hidden" name="fecha" value="{{ request('fecha') }}">
