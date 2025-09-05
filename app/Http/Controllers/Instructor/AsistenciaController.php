@@ -80,7 +80,7 @@ class AsistenciaController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Asistencia guardada correctamente.');
+        return back()->with('success', '¡Asistencia guardada correctamente!');
     }
 
     // Muestra un reporte de asistencias con opciones de filtrado. (Mejora en la consulta)

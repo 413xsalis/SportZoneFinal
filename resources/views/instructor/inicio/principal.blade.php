@@ -285,6 +285,22 @@
                                     </p>
                                 </div>
                             </div>
+                            <div id="add-options-container" class="card p-3 my-3">
+                                <h6 class="mb-3">¿Qué quieres agregar?</h6>
+                                <div class="d-flex justify-content-start gap-2">
+                                    <button class="btn btn-sm text-white me-2 rounded-pill" id="showActivityFormBtn"
+                                        style="background-color: #D17D98; border-color: #F4CCE9;">
+                                        <i class="bi bi-calendar-event me-2"></i>Actividad
+                                    </button>
+                                    <button class="btn btn-sm text-white me-2 rounded-pill" id="showReminderFormBtn"
+                                        style="background-color: #D17D98; border-color: #F4CCE9;">
+                                        <i class="bi bi-bell me-2"></i>Recordatorio
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="add-form-container">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -308,7 +324,7 @@
                 <div class="col-12">
                     <div class="card card-modern">
                         <div class="card-header card-header-modern">
-                            <h5 class="mb-0"><i class="bi bi-bell me-2"></i> Últimas notificaciones</h5>
+                            <h5 class="mb-0"><i class="bi bi-bell me-2"></i> Notificaciones</h5>
                         </div>
                         <div class="card-body">
                             <div class="list-group" id="notificationList">

@@ -77,7 +77,7 @@
                                         <div class="d-flex align-items-center justify-content-center pb-4">
                                             <p class="mb-0 me-2">No tienes cuenta?</p>
                                             <a href="{{ route('register') }}" data-mdb-button-init
-                                                class="btn btn-outline-danger" data-mdb-ripple-init>Registrarse</a>
+                                                class="btn btn-outline-danger" data-mdb-ripple-init>Registrate</a>
                                         </div>
 
 
@@ -88,8 +88,8 @@
                             </div>
                             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
                                 <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                                    <h4 class="mt-1 mb-5 pb-1">¡Bienvenidos!</h4>
-                                    <p class="small mb-0">Nos alegra tenerte aquí. Inicia sesión para acceder a tu panel
+                                    <h1 class="mt-1 mb-5 pb-1" style="text-align: center;">¡Bienvenidos!</h1>
+                                    <p class="fs-5 mb-0" style="font-family: 'Playfair Display', serif; text-align: center;">Nos alegra tenerte aquí. Inicia sesión para acceder a tu panel
                                         personalizado,
                                         gestionar tus actividades y mantenerte conectado con tu comunidad deportiva. Ya
                                         seas entrenador,
