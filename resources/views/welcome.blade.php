@@ -134,7 +134,7 @@
                 <ul class="navbar-nav auth-nav">
                     @auth
                         <li class="nav-item">
-                            <a href="{{ route('admin.dashboard') }}" class="nav-link text-custom-green">
+                            <a href="{{ route('home') }}" class="nav-link text-custom-green">
                                 Dashboard
                             </a>
                         </li>
