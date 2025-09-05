@@ -50,8 +50,8 @@
 
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <input type="email" name="email" id="email" class="form-control"
-                                                placeholder="Digita tu usuario" />
-                                            <label class="form-label" for="email">Usuario</label>
+                                                placeholder="Digita tu correo electronico" />
+                                            <label class="form-label" for="email">Correo Electronico</label>
                                         </div>
 
                                         <div data-mdb-input-init class="form-outline mb-4">
