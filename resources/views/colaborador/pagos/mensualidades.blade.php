@@ -261,7 +261,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="concepto" class="form-label">Concepto <span class="text-danger">*</span></label>
                             <input type="text" name="concepto" id="concepto" class="form-control" required>
-                            <div class="form-text">Ej: Mensualidad Enero 2024, Matrícula, etc.</div>
+                            <div class="form-text">Ej: Mensualidad Enero 2024, Abonos, etc.</div>
                         </div>
 
                         <div class="col-md-6 mb-3">
