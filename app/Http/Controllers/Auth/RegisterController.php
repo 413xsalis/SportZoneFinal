@@ -21,19 +21,23 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
-    {
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+   protected function create(array $data)
+{
+    $user = User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+    ]);
 
-        // Asignar el rol de 'instructor' al usuario registrado
-        $user->assignRole('instructor');
-
-        return $user;
+    // Verificar si es el primer usuario registrado
+    if (User::count() === 1) {
+        $user->assignRole('admin'); // Primer usuario será administrador
+    } else {
+        $user->assignRole('instructor'); // Los demás serán instructores
     }
+
+    return $user;
+}
 
     /**
      * Sobrescribe el método para redirigir según el rol después del registro

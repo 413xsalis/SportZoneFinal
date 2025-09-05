@@ -102,7 +102,7 @@
     <div class="app-container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="mb-0">Formulario de Inscripción de Estudiante</h2>
-            <a href="{{ route('colab.inscripcion') }}" class="btn btn-secondary btn-modern">
+            <a href="{{ route('colaborador.inscripcion') }}" class="btn btn-secondary btn-modern">
                 <i class="bi bi-arrow-left me-1"></i> Volver
             </a>
         </div>

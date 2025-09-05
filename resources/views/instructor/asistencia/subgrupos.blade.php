@@ -293,7 +293,7 @@ Bienvenido - Panel de control de instructores
                                                 <p class="mb-0">No hay estudiantes en este subgrupo.</p>
                                             </div>
                                         @else
-                                            <form method="POST" action="{{ route('asistencia.guardar') }}">
+                                            <form method="POST" action="{{ route('instructor.asistencia.guardar') }}">
                                                 @csrf
                                                 <input type="hidden" name="subgrupo_id" value="{{ $subgrupo->id }}">
                                                 <input type="hidden" name="fecha" value="{{ date('Y-m-d') }}">

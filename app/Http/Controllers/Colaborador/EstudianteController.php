@@ -60,7 +60,7 @@ public function index()
 
 
         //Estudiante::create($request->all());
-        return redirect()->route('colab.inscripcion')
+        return redirect()->route('colaborador.inscripcion')
             ->with('success', 'Usuario creado exitosamente.');
 
     }
@@ -95,7 +95,7 @@ public function index()
 
         $estudiante->update($validated);
 
-        return redirect()->route('colab.inscripcion')
+        return redirect()->route('colaborador.inscripcion')
             ->with('success', 'Estudiante actualizado');
     }
 
@@ -104,7 +104,7 @@ public function index()
     {
         $estudiante->delete();
 
-        return redirect()->route('colab.inscripcion')
+        return redirect()->route('colaborador.inscripcion')
             ->with('success', 'Usuario eliminado exitosamente');
     }
 

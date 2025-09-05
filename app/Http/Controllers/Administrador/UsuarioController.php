@@ -69,7 +69,7 @@ class UsuarioController extends Controller
         // Si el input 'roles' contiene los IDs de los roles:
         // $user->syncRoles($request->input('roles', [])); // syncRoles funciona con IDs o nombres
 
-        return redirect()->route('usuario.index')
+        return redirect()->route('admin.gestion')
             ->with('success', 'Usuario creado exitosamente.');
     }
 
@@ -106,7 +106,7 @@ class UsuarioController extends Controller
         // Puedes pasarle nombres o IDs de roles.
         $usuario->syncRoles($request->input('roles', []));
 
-        return redirect()->route('usuario.index')
+        return redirect()->route('admin.gestion')
             ->with('success', 'Usuario actualizado exitosamente');
     }
 
@@ -115,7 +115,7 @@ class UsuarioController extends Controller
         $usuario = User::findOrFail($id);
         $usuario->delete();
 
-        return redirect()->route('usuario.index')
+        return redirect()->route('admin.gestion')
             ->with('success', 'Usuario desactivado exitosamente');
     }
 
@@ -124,7 +124,7 @@ class UsuarioController extends Controller
         $usuario = User::withTrashed()->findOrFail($id);
         $usuario->restore();
 
-        return redirect()->route('usuario.index')
+        return redirect()->route('admin.gestion')
             ->with('success', 'Usuario reactivado exitosamente');
     }
 
@@ -133,7 +133,7 @@ class UsuarioController extends Controller
         $usuario = User::withTrashed()->findOrFail($id);
         $usuario->forceDelete();
 
-        return redirect()->route('usuario.index')
+        return redirect()->route('admin.gestion')
             ->with('success', 'Usuario eliminado permanentemente');
     }
 }

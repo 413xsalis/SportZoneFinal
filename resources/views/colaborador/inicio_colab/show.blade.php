@@ -195,13 +195,7 @@
                 </div>
                 
                 <!-- Migas de pan -->
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#" class="text-decoration-none"><i class="bi bi-house-door"></i> Inicio</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('usuario.index') }}" class="text-decoration-none">Gestión de Usuarios</a></li>
-                        <li class="breadcrumb-item active">Detalles de Usuario</li>
-                    </ol>
-                </nav>
+                
                 
                 <!-- Información básica -->
                 <div class="card card-modern">

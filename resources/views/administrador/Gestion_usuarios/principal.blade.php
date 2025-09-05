@@ -56,7 +56,7 @@
                             <i class="bi bi-search"></i>
                             <input type="text" class="form-control" placeholder="Buscar usuario..." id="searchInput">
                         </div>
-                        <a href="{{ route('usuario.trashed') }}" class="btn btn-warning">
+                        <a href="{{ route('usuarios.trashed') }}" class="btn btn-warning">
                             <i class="bi bi-trash me-1"></i> Papelera ({{ $inactiveUsers }})
                         </a>
                     </div>
@@ -106,14 +106,14 @@
                                         </td>
                                         <td class="action-buttons">
                                             <!-- Botón para editar -->
-                                            <a href="{{ route('usuario.edit', $usuario->id) }}" class="btn btn-sm btn-primary"
+                                            <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn btn-sm btn-primary"
                                                 title="Editar usuario">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
                                             <!-- Botón para desactivar -->
                                             @if(!$usuario->trashed())
-                                                <form action="{{ route('usuario.destroy', $usuario->id) }}" method="POST"
+                                                <form action="{{ route('usuarios.destroy', $usuario->id) }}" method="POST"
                                                     style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
@@ -125,7 +125,7 @@
                                             @endif
 
                                             <!-- Botón para ver detalles -->
-                                            <a href="{{ route('usuario.show', $usuario->id) }}" class="btn btn-sm btn-info" title="Ver detalles">
+                                            <a href="{{ route('usuarios.show', $usuario->id) }}" class="btn btn-sm btn-info" title="Ver detalles">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>

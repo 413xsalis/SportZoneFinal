@@ -182,7 +182,7 @@
                 </div>
                 
                 <div class="col-md-6 mb-4">
-                    <a href="{{ route('pagos.mensualidades') }}" class="card-link">
+                    <a href="{{ route('pagos.mensualidades.index') }}" class="card-link">
                         <div class="card-modern">
                             <div class="option-card">
                                 <div>

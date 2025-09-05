@@ -124,16 +124,16 @@
 
     <ul class="app-menu mt-3">
       <li>
-        <a class="app-menu__item {{ request()->routeIs('admin.principal') ? 'active' : '' }}"
-          href="{{ route('admin.principal') }}">
+        <a class="app-menu__item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+          href="{{ route('admin.dashboard') }}">
           <i class="bi bi-house-door"></i>
           <span class="app-menu__label">Inicio</span>
         </a>
       </li>
 
       <li>
-        <a class="app-menu__item {{ request()->routeIs('usuario.index') ? 'active' : '' }}"
-          href="{{ route('usuario.index') }}">
+        <a class="app-menu__item {{ request()->routeIs('admin.gestion') ? 'active' : '' }}"
+          href="{{ route('admin.gestion') }}">
           <i class="bi bi-people"></i>
           <span class="app-menu__label">Gestión de Usuarios</span>
         </a>

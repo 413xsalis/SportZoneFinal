@@ -333,7 +333,7 @@
  
       <div class="filter-section">
         <h5 class="mb-3"><i class="bi bi-funnel me-2"></i>Filtrar Horario</h5>
-        <form id="filter-form" action="{{ route('inst.horarios') }}" method="GET">
+        <form id="filter-form" action="{{ route('instructor.horarios') }}" method="GET">
           <div class="row align-items-end">
             <div class="col-md-8">
               <label for="instructor_select" class="form-label">Seleccionar Instructor</label>
@@ -422,14 +422,14 @@
         document.getElementById('filter-form').addEventListener('submit', function (event) {
           event.preventDefault();
           const instructorId = document.getElementById('instructor_select').value;
-          window.location.href = `{{ route('inst.horarios') }}/${instructorId}`;
+          window.location.href = `{{ route('instructor.horarios') }}/${instructorId}`;
         });
 
         document.addEventListener('DOMContentLoaded', function () {
           let selectedCell = null;
 
           // Obtener la URL de la ruta de guardado desde Blade
-          const guardarUrl = "{{ route('inst.horarios.guardar') }}";
+          const guardarUrl = "{{ route('instructor.horarios.guardar') }}";
 
           // Mapea el estado a las clases de color de Bootstrap
           const estadoColores = {
