@@ -1,4 +1,4 @@
-@extends('administrador.Gestion_usuarios.layout')
+@extends('colaborador.inicio_colab.layout')
 
 @section('title', 'Detalles de Usuario')
 
@@ -398,35 +398,7 @@
                     </div>
                 </div>
                 
-                <!-- Acciones -->
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="{{ route('usuario.index') }}" class="btn btn-secondary btn-modern">
-                        <i class="bi bi-arrow-left me-2"></i> Volver al listado
-                    </a>
-                    <div>
-                        <a href="{{ route('usuario.edit', $usuario) }}" class="btn btn-primary btn-modern me-2">
-                            <i class="bi bi-pencil me-2"></i> Editar Usuario
-                        </a>
-                        @if(!$usuario->deleted_at)
-                            <form action="{{ route('usuario.destroy', $usuario) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-modern" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">
-                                    <i class="bi bi-trash me-2"></i> Eliminar
-                                </button>
-                            </form>
-                        @else
-                            <form action="{{ route('usuario.restore', $usuario->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-success btn-modern">
-                                    <i class="bi bi-arrow-clockwise me-2"></i> Restaurar
-                                </button>
-                            </form>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

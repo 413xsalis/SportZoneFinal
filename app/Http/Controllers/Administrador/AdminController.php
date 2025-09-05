@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrador;
 
+
+use App\Http\Controllers\Controller;
 use App\Models\Estudiante;
 use App\Models\Instructor;
 use App\Models\Horario;
@@ -21,7 +23,7 @@ public function index()
         $totalAlumnos = Estudiante::count();
         
         // Total de instructores
-        $totalInstructores = User::count();
+        $totalUsers = User::count();
         
         // Obtener la fecha actual
         $fechaActual = Carbon::now()->format('Y-m-d');
@@ -39,7 +41,7 @@ public function index()
 
         return view('administrador.admin.principal', compact(
             'totalAlumnos', 
-            'totalInstructores', 
+            'totalUsers', 
             'clasesHoy', 
             'clasesHoyCount',
             'instructores'
@@ -50,6 +52,7 @@ public function index()
     {
         return view('administrador.Gestion_usuarios.create');
     }
+
 
     public function gestion()
     {

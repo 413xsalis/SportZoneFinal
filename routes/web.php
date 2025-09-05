@@ -1,23 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\ColaboradorController;
-use App\Http\Controllers\EstudianteController;
-use App\Http\Controllers\HorarioController;
-use App\Http\Controllers\ReporteController;
-use App\Http\Controllers\InstructorController;
-use App\Http\Controllers\InstrucController;
-use App\Http\Controllers\AsistenciaController;
-use App\Http\Controllers\PerfilAdminController;
-use App\Http\Controllers\PerfilColabController;
-use App\Http\Controllers\PerfilInstController;
+use App\Http\Controllers\Administrador\AdminController;
+use App\Http\Controllers\Administrador\UsuarioController;
+use App\Http\Controllers\Colaborador\ColaboradorController;
+use App\Http\Controllers\Colaborador\EstudianteController;
+use App\Http\Controllers\Colaborador\HorarioController;
+use App\Http\Controllers\Colaborador\ReporteController;
+use App\Http\Controllers\Colaborador\InstructorController;
+use App\Http\Controllers\Instructor\InstrucController;
+use App\Http\Controllers\Instructor\AsistenciaController;
+use App\Http\Controllers\Administrador\PerfilAdminController;
+use App\Http\Controllers\Colaborador\PerfilColabController;
+use App\Http\Controllers\Instructor\PerfilInstController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Colaborador\PagoController;
 use App\Http\Controllers\ContactoController;
-use App\Http\Controllers\InstructorHorarioController;
-use App\Http\Controllers\InstructorReporteController;
+use App\Http\Controllers\Instructor\InstructorHorarioController;
+use App\Http\Controllers\Instructor\InstructorReporteController;
 
 
 
@@ -25,6 +25,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+//Rutas para el perfil------------------------------//
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/perfil/instructor', [PerfilInstController::class, 'edit'])->name('perfilinst.edit');
@@ -43,8 +46,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/perfil/colaborador/change-password', [PerfilColabController::class, 'changePassword'])->name('perfilcolab.changePassword');
 });
 
-
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [PerfilAdminController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [PerfilAdminController::class, 'update'])->name('profile.update');
@@ -52,6 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/upload-logo', [PerfilAdminController::class, 'uploadLogo'])->name('profile.uploadLogo');
     Route::post('/profile/change-password', [PerfilAdminController::class, 'changePassword'])->name('profile.changePassword');
 });
+//---------------------------------------------------------------------------------------------------------------//
+
 
 // rutas del crud de gestion usuario--------------------------------------------------------//
 Route::resource('usuario', UsuarioController::class);
@@ -59,6 +62,7 @@ Route::resource('usuario', UsuarioController::class);
 // Rutas extra para la papelera (SoftDeletes)
 Route::get('usuario/trashed', [UsuarioController::class, 'trashed'])
     ->name('usuario.trashed');
+
 
 Route::post('usuario/{id}/restore', [UsuarioController::class, 'restore'])
     ->name('usuario.restore');
@@ -114,14 +118,9 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
 
 // Rutas para instructores
 Route::prefix('instructor')->middleware(['auth', 'role:instructor'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('instructor.inicio.principal');
-    })->name('instructor.dashboard');
-
-    // O si prefieres usar resource:
-    Route::resource('dashboard', InstrucController::class);
-});
-//---------------------------------------------------------------------------------------------------------------//
+    Route::get('/dashboard', [InstrucController::class, 'index'])
+        ->name('instructor.dashboard');
+});//---------------------------------------------------------------------------------------------------------------//
 
 
 // rutas de vistas de admin----------------------------------------------------------------//
@@ -134,6 +133,8 @@ Route::prefix('admin')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
 });
+
+
 //---------------------------------------------------------------------------------------------------------------------------//
 
 
@@ -141,6 +142,8 @@ Route::prefix('admin')->group(function () {
 
 
 // ================= COLABORADOR =================
+
+Route::get('instructor/{usuario}', [InstructorController::class, 'show'])->name('instructor.show');
 Route::prefix('colab')->group(function () {
     Route::get('/principal', [ColaboradorController::class, 'principal'])->name('colab.principal');
     Route::get('/gestion', [ColaboradorController::class, 'gestion'])->name('colab.gestion_clases');
@@ -202,13 +205,13 @@ Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])
 //rutas de modulo instructores //----------------------------//
 // rutas de instructores //----------------------------//
 
-    // INICIO
+// INICIO
 
 Route::prefix('inst')->group(function () {
-    
-    Route::get('/index', [InstrucController::class, 'index'])->name('inst.principal'); 
 
-     // HORARIOS
+    Route::get('/index', [InstrucController::class, 'index'])->name('inst.principal');
+
+    // HORARIOS
 
     Route::get('/horario', [InstructorHorarioController::class, 'horario'])->name('inst.horarios'); //Muestra la tabla de horario del instructor.
 
@@ -240,8 +243,8 @@ Route::prefix('inst')->group(function () {
 
     Route::get('/reporte/asistencias', [InstructorReporteController::class, 'mostrarReporte'])->name('inst.reporte.asistencias');
 
-    Route::post('/reporte/asistencias/pdf', [InstructorReporteController::class, 'generarAsistenciasPDF'])->name('inst.reporte.asistencias.pdf');
-    
+    Route::get('/reporte/asistencias/pdf', [InstructorReporteController::class, 'generarAsistenciasPDF'])->name('inst.reporte.asistencias.pdf');
+
     Route::get('/subgrupos/{grupoId}', [InstructorReporteController::class, 'getSubgrupos'])->name('inst.get.subgrupos');
 });
 

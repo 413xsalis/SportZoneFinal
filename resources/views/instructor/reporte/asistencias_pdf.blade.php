@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Reporte de Asistencias</title>
     <style>
@@ -55,7 +54,7 @@
         @if($asistencias->isNotEmpty())
         <div style="float: left;">
             <div class="info-column"><span class="info-label">Grupo:</span> {{ $asistencias->first()->subgrupo->grupo->nombre ?? 'N/A' }}</div>
-            <div class="info-column"><span class="info-label">Subgrupo:</span> {{ substr($asistencias->first()->subgrupo->nombre ?? 'N/A', -1) }}</div>
+            <div class="info-column"><span class="info-label">Subgrupo:</span> {{ $asistencias->first()->subgrupo->nombre ?? 'N/A' }}</div>
             <div class="info-column"><span class="info-label">Fecha de Generacion:</span> {{ $fechaGeneracion }}</div>
         </div>
         <div style="clear: both;"></div>
@@ -70,7 +69,7 @@
                 <th>Subgrupo</th>
                 <th>Fecha</th>
                 <th>Estado</th>
-            </tr>
+                <th>Hora de Registro</th> </tr>
         </thead>
         <tbody>
             @forelse($asistencias as $asis)
@@ -78,14 +77,13 @@
                 <td>{{ $asis->estudiante->nombre_completo ?? 'N/A' }}</td>
                 <td>{{ $asis->estudiante->documento ?? 'N/A' }}</td>
                 <td>{{ $asis->subgrupo->grupo->nombre ?? 'N/A' }}</td>
-                <td>{{ substr($asis->subgrupo->nombre ?? 'N/A', -1) }}</td>
+                <td>{{ $asis->subgrupo->nombre ?? 'N/A' }}</td>
                 <td>{{ $asis->fecha }}</td>
                 <td>{{ $asis->estado }}</td>
-            </tr>
+                <td>{{ $asis->hora_registro ?? 'N/A' }}</td> </tr>
             @empty
             <tr>
-                <td colspan="6">No hay registros de asistencia para mostrar.</td>
-            </tr>
+                <td colspan="7">No hay registros de asistencia para mostrar.</td> </tr>
             @endforelse
         </tbody>
     </table>

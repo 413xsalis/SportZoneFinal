@@ -3,92 +3,118 @@
 @section('title', 'Editar Usuario')
 
 @section('content')
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Usuario - Sistema de Gestión</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4e73df;
-            --secondary-color: #6f42c1;
-            --success-color: #1cc88a;
-            --light-bg: #f8f9fc;
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --success-color: #4cc9f0;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
         
         body {
-            background-color: var(--light-bg);
+            background-color: #f5f7fb;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
+            color: #343a40;
         }
         
-        .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-            margin-bottom: 1.5rem;
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
-        .card-header {
+        .app-title {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            border-radius: 10px 10px 0 0 !important;
-            padding: 1rem 1.35rem;
-            border: none;
-        }
-        
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        
-        .btn-primary:hover {
-            background-color: #3a5fc8;
-            border-color: #3a5fc8;
-        }
-        
-        .btn-secondary {
-            background-color: #858796;
-            border-color: #858796;
-        }
-        
-        .profile-header {
-            display: flex;
-            align-items: center;
+            border-radius: 16px;
             padding: 1.5rem;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
         }
         
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
+        .app-title:hover {
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .profile-image {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .default-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 2rem;
-            margin-right: 1.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            font-size: 2.5rem;
         }
         
-        .profile-info h2 {
-            margin-bottom: 0.25rem;
-            color: #333;
+        .card-modern {
+            border: none;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
         }
         
-        .profile-info p {
-            color: #666;
-            margin-bottom: 0;
+        .card-modern:hover {
+            box-shadow: var(--hover-shadow);
+        }
+        
+        .card-header-modern {
+            background: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.25rem 1.5rem;
+        }
+        
+        .form-control-modern, .form-select-modern {
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control-modern:focus, .form-select-modern:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.15);
+        }
+        
+        .btn-modern {
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            border: none;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
         }
         
         .required-field::after {
@@ -106,46 +132,97 @@
         
         .role-badge {
             display: inline-block;
-            padding: 0.35em 0.65em;
-            font-size: 0.75em;
-            font-weight: 700;
-            line-height: 1;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 0.375rem;
+            padding: 0.5em 0.8em;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.85em;
             background-color: var(--primary-color);
             color: white;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
         
+        .footer-actions {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            bottom: 20px;
+            z-index: 100;
+        }
+        
         .select2-container--default .select2-selection--multiple {
-            border: 1px solid #d1d3e2;
-            border-radius: 0.35rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
             padding: 0.375rem 0.75rem;
+            min-height: 46px;
         }
         
         .select2-container--default.select2-container--focus .select2-selection--multiple {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.15);
         }
         
-        .footer-actions {
-            background-color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 -0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
-            position: sticky;
-            bottom: 0;
-            z-index: 100;
+        .file-upload-container {
+            border: 2px dashed #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .file-upload-container:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        .file-preview {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .file-preview-img {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .app-title {
+                padding: 1rem;
+            }
+            
+            .footer-actions {
+                padding: 1rem;
+            }
         }
     </style>
-</head>
-<body>
-    <div class="container py-4">
-        <div class="row">
-            <div class="col-12">
+
+    <main class="content">
+        <div class="container py-5">
+            <div class="app-container">
+                <!-- Encabezado de página -->
+                <div class="app-title">
+                    <div class="d-flex align-items-center">
+                        @if($usuario->foto_perfil && Storage::disk('public')->exists($usuario->foto_perfil))
+                            <img src="{{ asset('storage/' . $usuario->foto_perfil) }}" alt="Foto de perfil"
+                                class="profile-image me-3">
+                        @else
+                            <div class="default-avatar me-3">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        @endif
+                        <div>
+                            <h1 class="mb-1"><i class="bi bi-pencil-square me-2"></i> Editar Usuario</h1>
+                            <p class="mb-0">{{ $usuario->name }} - {{ $usuario->email }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Migas de pan -->
                 <nav aria-label="breadcrumb" class="mb-4">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#" class="text-decoration-none"><i class="bi bi-house-door"></i> Inicio</a></li>
@@ -154,50 +231,108 @@
                     </ol>
                 </nav>
                 
-                <div class="profile-header">
-                    <div class="profile-avatar">
-                        <i class="bi bi-person"></i>
-                    </div>
-                    <div class="profile-info">
-                        <h2>{{ $usuario->name }}</h2>
-                        <p>{{ $usuario->email }}</p>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i> Editar Información del Usuario</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="{{ route('usuario.update', $usuario->id) }}" method="POST" id="userForm">
-                            @csrf
-                            @method('PUT')
-                            
-                            <div class="section-title">
-                                <i class="bi bi-info-circle me-2"></i> Información Básica
+                <!-- Formulario de edición -->
+                <form action="{{ route('usuario.update', $usuario->id) }}" method="POST" id="userForm" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="card card-modern">
+                        <div class="card-header-modern">
+                            <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i> Información Básica</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="name" class="form-label required-field">Nombre completo</label>
+                                        <input type="text" class="form-control form-control-modern" id="name" name="name" 
+                                               value="{{ old('name', $usuario->name) }}" required>
+                                        @error('name')
+                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="email" class="form-label required-field">Correo electrónico</label>
+                                        <input type="email" class="form-control form-control-modern" id="email" name="email" 
+                                               value="{{ old('email', $usuario->email) }}" required>
+                                        @error('email')
+                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="row mb-4">
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label required-field">Nombre completo</label>
-                                        <input type="text" class="form-control" id="name" name="name" value="{{ $usuario->name }}" required>
-                                        <div class="form-text">Nombre completo del usuario</div>
+                                    <div class="form-group mb-3">
+                                        <label for="documento_identidad" class="form-label">Documento de identidad</label>
+                                        <input type="text" class="form-control form-control-modern" id="documento_identidad" 
+                                               name="documento_identidad" value="{{ old('documento_identidad', $usuario->documento_identidad) }}">
+                                        @error('documento_identidad')
+                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email" class="form-label required-field">Correo electrónico</label>
-                                        <input type="email" class="form-control" id="email" name="email" value="{{ $usuario->email }}" required>
-                                        <div class="form-text">Dirección de correo electrónico</div>
+                                    <div class="form-group mb-3">
+                                        <label for="telefono" class="form-label">Teléfono</label>
+                                        <input type="text" class="form-control form-control-modern" id="telefono" 
+                                               name="telefono" value="{{ old('telefono', $usuario->telefono) }}">
+                                        @error('telefono')
+                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="section-title">
-                                <i class="bi bi-shield-lock me-2"></i> Gestión de Roles
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
+                                        <input type="date" class="form-control form-control-modern" id="fecha_nacimiento" 
+                                               name="fecha_nacimiento" value="{{ old('fecha_nacimiento', $usuario->fecha_nacimiento) }}">
+                                        @error('fecha_nacimiento')
+                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="eps" class="form-label">EPS</label>
+                                        <input type="text" class="form-control form-control-modern" id="eps" 
+                                               name="eps" value="{{ old('eps', $usuario->eps) }}">
+                                        @error('eps')
+                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                             
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="form-group mb-3">
+                                        <label for="direccion_hogar" class="form-label">Dirección de hogar</label>
+                                        <textarea class="form-control form-control-modern" id="direccion_hogar" 
+                                                  name="direccion_hogar" rows="3">{{ old('direccion_hogar', $usuario->direccion_hogar) }}</textarea>
+                                        @error('direccion_hogar')
+                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+        
+                    
+                    <!-- Sección de roles -->
+                    <div class="card card-modern">
+                        <div class="card-header-modern">
+                            <h5 class="mb-0"><i class="bi bi-shield-lock me-2"></i> Gestión de Roles</h5>
+                        </div>
+                        <div class="card-body">
                             <div class="alert alert-info">
                                 <i class="bi bi-info-circle me-2"></i> Seleccione uno o varios roles para asignar al usuario. 
                                 Los roles actuales del usuario están resaltados.
@@ -205,7 +340,7 @@
                             
                             <div class="form-group mb-4">
                                 <label for="roles" class="form-label required-field">Roles del usuario</label>
-                                <select name="roles[]" id="roles" class="form-control" multiple="multiple" required>
+                                <select name="roles[]" id="roles" class="form-control form-select-modern" multiple="multiple" required>
                                     @foreach($roles as $role)
                                         <option value="{{ $role->name }}" {{ $usuario->hasRole($role->name) ? 'selected' : '' }}>
                                             {{ $role->name }}
@@ -213,7 +348,7 @@
                                     @endforeach
                                 </select>
                                 @error('roles')
-                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                                 
                                 <div class="mt-3">
@@ -226,28 +361,26 @@
                                     @endif
                                 </div>
                             </div>
-                        </form>
+                        </div>
+                    </div>
+                </form>
+                
+                <!-- Acciones de pie de página -->
+                <div class="footer-actions mt-4">
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('usuario.index') }}" class="btn btn-secondary btn-modern">
+                            <i class="bi bi-arrow-left me-2"></i> Volver al listado
+                        </a>
+                        <div>
+                            <button type="submit" form="userForm" class="btn btn-primary btn-modern">
+                                <i class="bi bi-check2-circle me-2"></i> Actualizar Usuario
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="footer-actions mt-4">
-            <div class="d-flex justify-content-between">
-                <a href="{{ route('usuario.index') }}" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left me-2"></i> Volver al listado
-                </a>
-                <div>
-                    <button type="reset" form="userForm" class="btn btn-outline-secondary me-2">
-                        <i class="bi bi-arrow-clockwise me-2"></i> Restablecer
-                    </button>
-                    <button type="submit" form="userForm" class="btn btn-primary">
-                        <i class="bi bi-check2-circle me-2"></i> Actualizar Usuario
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -289,5 +422,27 @@
                     alert('Por favor, complete todos los campos requeridos.');
                 }
             });
+            
+            // Vista previa de imágenes al seleccionar archivos
+            $('input[type="file"]').change(function(e) {
+                const input = $(this);
+                const previewContainer = input.siblings('.file-preview');
+                
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        if (!previewContainer.length) {
+                            input.after('<div class="file-preview"><img class="file-preview-img" src="'+e.target.result+'" alt="Vista previa"><div class="text-muted">Nueva imagen</div></div>');
+                        } else {
+                            previewContainer.find('.file-preview-img').attr('src', e.target.result);
+                            previewContainer.find('.text-muted').text('Nueva imagen');
+                        }
+                    }
+                    
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
         });
+    </script>
 @endsection

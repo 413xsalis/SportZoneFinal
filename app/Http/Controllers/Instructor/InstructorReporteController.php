@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Instructor;
 
+
+use App\Http\Controllers\Controller;
 use App\Models\Subgrupo;
 use App\Models\Grupo;
 use App\Models\Asistencia;
@@ -27,7 +29,7 @@ class InstructorReporteController extends Controller
             $asistencias = Asistencia::where('subgrupo_id', $subgrupoId)
                 ->where('fecha', $fecha)
                 ->with(['estudiante', 'subgrupo.grupo'])
-                ->get();
+                ->paginate(15);
         }
 
         return view('instructor.reporte.principal', compact('grupos', 'asistencias'));

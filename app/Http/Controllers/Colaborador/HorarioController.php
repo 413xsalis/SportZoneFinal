@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Colaborador;
 
+use App\Http\Controllers\Controller;
 use App\Models\Horario;
 use App\Models\Grupo;
 use App\Models\User;

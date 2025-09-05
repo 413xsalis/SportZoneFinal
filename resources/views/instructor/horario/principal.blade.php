@@ -330,45 +330,7 @@
         </div>
       </div>
       <!-- Stats Cards -->
-      <div class="row mb-4">
-        <div class="col-md-3">
-          <div class="stats-card">
-            <div class="stats-icon" style="background-color: rgba(67, 97, 238, 0.1); color: var(--primary-color);">
-              <i class="bi bi-calendar-check"></i>
-            </div>
-            <h3>15</h3>
-            <p class="text-muted">Clases Activas</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="stats-card">
-            <div class="stats-icon" style="background-color: rgba(46, 204, 113, 0.1); color: #27ae60;">
-              <i class="bi bi-people-fill"></i>
-            </div>
-            <h3>8</h3>
-            <p class="text-muted">Total Instructores</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="stats-card">
-            <div class="stats-icon" style="background-color: rgba(247, 183, 49, 0.1); color: #f39c12;">
-              <i class="bi bi-clock-history"></i>
-            </div>
-            <h3>3</h3>
-            <p class="text-muted">Clases Pendientes</p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="stats-card">
-            <div class="stats-icon" style="background-color: rgba(235, 87, 87, 0.1); color: #e74c3c;">
-              <i class="bi bi-x-circle"></i>
-            </div>
-            <h3>2</h3>
-            <p class="text-muted">Clases Canceladas</p>
-          </div>
-        </div>
-      </div>
-
+ 
       <div class="filter-section">
         <h5 class="mb-3"><i class="bi bi-funnel me-2"></i>Filtrar Horario</h5>
         <form id="filter-form" action="{{ route('inst.horarios') }}" method="GET">
@@ -503,9 +465,9 @@
                 // Verifica si la celda es "asignable" (tiene horario_id pero no subgrupo_id ni nombre)
                 if (horarioId && (!subgrupoId || !actividadNombre)) {
                   celda.innerHTML = `<div class="bg-info text-white border border-info py-1 px-2 rounded btn-actividad" style="cursor:pointer; display:inline-block; min-width:100px;">
-                                                                                    <strong>+ Añadir</strong><br>
-                                                                                    <small>Actividad</small>
-                                                                                </div>`;
+                                                                                        <strong>+ Añadir</strong><br>
+                                                                                        <small>Actividad</small>
+                                                                                    </div>`;
                   celda.dataset.estado = '';
                 }
               } else {
@@ -603,13 +565,13 @@
                   const grupoSubgrupo = `${data.grupo_nombre} / ${data.subgrupo_nombre}`;
 
                   selectedCell.innerHTML = `
-                                        <div class="${colores.bg} ${colores.text} border ${colores.border} py-1 px-2 rounded btn-actividad" 
-                                             style="cursor:pointer; display:inline-block; min-width:100px;">
-                                          <strong>${grupoSubgrupo}</strong><br>
-                                          <small>${data.fecha}</small><br>
-                                          <small>${data.hora_inicio} - ${data.hora_fin}</small>
-                                        </div>
-                                      `;
+                                            <div class="${colores.bg} ${colores.text} border ${colores.border} py-1 px-2 rounded btn-actividad" 
+                                                 style="cursor:pointer; display:inline-block; min-width:100px;">
+                                              <strong>${grupoSubgrupo}</strong><br>
+                                              <small>${data.fecha}</small><br>
+                                              <small>${data.hora_inicio} - ${data.hora_fin}</small>
+                                            </div>
+                                          `;
 
                   selectedCell.dataset.actividadId = data.id;
                   selectedCell.dataset.subgrupoId = subgrupo_id;

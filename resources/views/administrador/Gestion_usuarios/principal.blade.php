@@ -69,7 +69,7 @@
                                     <th>ID</th>
                                     <th>Nombre</th>
                                     <th>Correo</th>
-                                    <th>Rol(es)</th>
+                                    <th>Rol</th>
                                     <th>Estado</th>
                                     <th width="200px">Acciones</th>
                                 </tr>
@@ -125,7 +125,7 @@
                                             @endif
 
                                             <!-- Botón para ver detalles -->
-                                            <a href="#" class="btn btn-sm btn-info" title="Ver detalles">
+                                            <a href="{{ route('usuario.show', $usuario->id) }}" class="btn btn-sm btn-info" title="Ver detalles">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>

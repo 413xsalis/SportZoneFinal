@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Instructor;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Grupo;
 use App\Models\Subgrupo;
@@ -85,7 +86,11 @@ class AsistenciaController extends Controller
     // Muestra un reporte de asistencias con opciones de filtrado. (Mejora en la consulta)
     public function reporteAsistencias(Request $request)
     {
-        $query = Asistencia::with(['estudiante', 'subgrupo']);
+        $query = Asistencia::with([
+            'estudiante',
+            'subgrupo',
+            'subgrupo.grupo' // Cargar la relación grupo a través de subgrupo
+        ]);
 
         if ($request->filled('subgrupo')) {
             $query->where('subgrupo_id', $request->input('subgrupo'));

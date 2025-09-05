@@ -70,13 +70,14 @@
                                                 class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                                                 type="submit">Login</button><br>
 
-                                            <a class="text-muted" href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
+                                            <a class="text-muted" href="{{ route('password.request') }}">¿Olvidaste tu
+                                                contraseña?</a>
                                         </div>
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">
                                             <p class="mb-0 me-2">No tienes cuenta?</p>
                                             <a href="{{ route('register') }}" data-mdb-button-init
-                                                data-mdb-ripple-init>Registrarse</a>
+                                                class="btn btn-outline-danger" data-mdb-ripple-init>Registrarse</a>
                                         </div>
 
 

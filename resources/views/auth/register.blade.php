@@ -39,7 +39,7 @@
 
                                     <form action="{{ route('register') }}" method="post">
                                         @csrf
-                                        <p>Por favor inicia sesión con tu cuenta</p>
+                                        <p>Por favor registrate</p>
 
 
                                         <div data-mdb-input-init class="form-outline mb-4">

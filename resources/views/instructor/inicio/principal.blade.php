@@ -207,38 +207,42 @@
                             style="background-color: rgba(67, 97, 238, 0.1); color: var(--primary-color);">
                             <i class="bi bi-calendar-check"></i>
                         </div>
-                        <h3>{{ $horariosCount ?? 0 }}</h3>
-                        <p class="text-muted">Clases esta semana</p>
+                        <h3>{{ $clasesActivas }}</h3>
+                        <p class="text-muted">Clases Activas</p>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="stats-card">
                         <div class="stats-icon" style="background-color: rgba(46, 204, 113, 0.1); color: #27ae60;">
                             <i class="bi bi-people-fill"></i>
                         </div>
-                        <h3>{{ $estudiantesCount ?? 0 }}</h3>
-                        <p class="text-muted">Estudiantes</p>
+                        <h3>{{ $totalInstructores }}</h3>
+                        <p class="text-muted">Total Instructores</p>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="stats-card">
                         <div class="stats-icon" style="background-color: rgba(247, 183, 49, 0.1); color: #f39c12;">
-                            <i class="bi bi-check-circle"></i>
+                            <i class="bi bi-clock-history"></i>
                         </div>
-                        <h3>{{ $asistenciasHoyCount ?? 0 }}</h3>
-                        <p class="text-muted">Asistencias hoy</p>
+                        <h3>{{ $clasesPendientes }}</h3>
+                        <p class="text-muted">Clases Pendientes</p>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="stats-card">
                         <div class="stats-icon" style="background-color: rgba(235, 87, 87, 0.1); color: #e74c3c;">
-                            <i class="bi bi-exclamation-circle"></i>
+                            <i class="bi bi-x-circle"></i>
                         </div>
-                        <h3>{{ $inasistenciasHoyCount ?? 0 }}</h3>
-                        <p class="text-muted">Inasistencias hoy</p>
+                        <h3>{{ $clasesCanceladas }}</h3>
+                        <p class="text-muted">Clases Canceladas</p>
                     </div>
                 </div>
             </div>
+
 
             <div class="row mb-4">
                 {{-- Calendario --}}

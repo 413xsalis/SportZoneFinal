@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Colaborador;
 use Illuminate\Http\Request;
 use App\Models\Estudiante;
-use App\Http\Controllers\ColaboradorController;
+use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use App\Models\Grupo;
 use App\Models\subgrupo;
