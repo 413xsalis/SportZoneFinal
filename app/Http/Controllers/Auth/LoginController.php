@@ -37,8 +37,15 @@ class LoginController extends Controller
      *
      * @return void
      */
+    public function logout(Request $request)
+    {
+        auth()->logout();
 
+        $request->session()->invalidate();   // invalida toda la sesión
+        $request->session()->regenerateToken(); // nuevo token CSRF
 
+        return redirect('/login');
+    }
     public function login(Request $request)
     {
         $credentials = $request->validate([
