@@ -152,7 +152,28 @@ public function destroy($id)
     return redirect()->back()->with('success', 'Pago eliminado correctamente');
 }
 
+// Listado de activos
+public function index()
+{
+    $estudiantes = Estudiante::where('estado', 'Activo')->get();
+    return view('colaborador.inscripcion_estudent.activos', compact('estudiantes'));
+}
 
+// Listado de inactivos
+public function inactivos()
+{
+    $estudiantes = Estudiante::where('estado', 'Inactivo')->get();
+    return view('colaborador.inscripcion_estudent.inactivos', compact('estudiantes'));
+}
 
+// Cambiar estado
+public function cambiarEstado($id)
+{
+    $estudiante = Estudiante::findOrFail($id);
+    $estudiante->estado = $estudiante->estado === 'Activo' ? 'Inactivo' : 'Activo';
+    $estudiante->save();
+
+    return redirect()->back()->with('success', 'El estado del estudiante fue actualizado correctamente.');
+}
 
 }

@@ -25,6 +25,7 @@ class Estudiante extends Model
         'eps',
         'grupo_id',
         'id_subgrupo',
+        'estado'
     ];
 
     public function grupo()

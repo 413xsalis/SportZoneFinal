@@ -208,6 +208,9 @@ Route::put('/inscripcion_estudiante/{estudiante:documento}', [EstudianteControll
 
 Route::delete('/inscripcion_estudiante/{estudiante:documento}', [EstudianteController::class, 'destroy'])->name('estudiantes.destroy');
 
+Route::get('/estudiantes', [EstudianteController::class, 'index'])->name('estudiantes.index');
+Route::get('/estudiantes/inactivos', [EstudianteController::class, 'inactivos'])->name('estudiantes.inactivos');
+Route::patch('/estudiantes/{id}/cambiar-estado', [EstudianteController::class, 'cambiarEstado'])->name('estudiantes.cambiarEstado');
 
 
 
