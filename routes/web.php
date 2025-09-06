@@ -26,8 +26,82 @@ Route::get('/', function () {
 
 // Autenticación
 Auth::routes();
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => [
+    'auth', 
+    \App\Http\Middleware\PreventBackHistory::class
+]], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+    
 
+
+// ========================= ADMIN ========================= //
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'principal'])->name('admin.dashboard');
+
+    // Gestión de usuarios
+    Route::get('usuarios/trashed', [UsuarioController::class, 'trashed'])->name('usuarios.trashed');
+
+    Route::resource('usuarios', UsuarioController::class);
+    Route::post('usuarios/{id}/restore', [UsuarioController::class, 'restore'])->name('usuarios.restore');
+    Route::delete('usuarios/{id}/forceDelete', [UsuarioController::class, 'forceDelete'])->name('usuarios.forceDelete');
+
+    // Vistas adicionales de admin
+    Route::get('/gestion', [AdminController::class, 'gestion'])->name('admin.gestion');
+    Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
+});
+
+
+// ========================= COLABORADOR ========================= //
+Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(function () {
+    Route::get('/dashboard', [ColaboradorController::class, 'principal'])->name('colaborador.dashboard');
+    Route::get('/gestion', [ColaboradorController::class, 'gestion'])->name('colaborador.gestion');
+    Route::get('/inscripcion', [ColaboradorController::class, 'inscripcion'])->name('colaborador.inscripcion');
+    Route::get('/reportes', [ColaboradorController::class, 'reportes'])->name('colaborador.reportes');
+
+    Route::get('instructor/{usuario}', [InstructorController::class, 'show'])->name('instructor.show');
+
+    // Estudiantes
+    Route::resource('estudiantes', EstudianteController::class)->except(['show']);
+
+    // Horarios
+    Route::resource('horarios', HorarioController::class);
+
+    // Reportes
+    Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
+    Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos.pdf');
+    Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])->name('reportes.pagos.excel');
+
+});
+
+
+
+
+// ========================= INSTRUCTOR ========================= //
+Route::prefix('instructor')->middleware(['auth', 'role:instructor'])->group(function () {
+    Route::get('/dashboard', [InstrucController::class, 'index'])->name('instructor.dashboard');
+
+    // Horarios
+    Route::get('/horario', [InstructorHorarioController::class, 'horario'])->name('instructor.horarios');
+    Route::post('/horario/guardar', [InstructorHorarioController::class, 'guardarActividad'])->name('instructor.horarios.guardar');
+    Route::put('/horario/{id}', [InstructorHorarioController::class, 'actualizarActividad'])->name('instructor.horarios.actualizar');
+    Route::delete('/horario/{id}', [InstructorHorarioController::class, 'eliminarActividad'])->name('instructor.horarios.eliminar');
+
+    // Asistencias
+    Route::get('/asistencia', [AsistenciaController::class, 'seleccionarGrupo'])->name('instructor.asistencia');
+    Route::post('/asistencia/guardar', [AsistenciaController::class, 'guardar'])->name('instructor.asistencia.guardar');
+    Route::get('/asistencia/{grupo_id}', [AsistenciaController::class, 'verSubgrupos'])->name('asistencia.subgrupos'); //Muestra los subgrupos de un grupo seleccionado.
+    Route::get('/asistencia/grupo/{nombre}', [AsistenciaController::class, 'tomarAsistenciaPorGrupo'])->name('asistencia.tomar.grupo'); //Permite tomar asistencia a un grupo específico por su nombre.
+    Route::post('/subgrupos/store', [AsistenciaController::class, 'storeSubgrupo'])->name('subgrupos.store');
+
+    // Reportes
+    Route::get('/reporte/asistencias', [InstructorReporteController::class, 'mostrarReporte'])->name('instructor.reporte.asistencias');
+    Route::get('/reporte/asistencias/pdf', [InstructorReporteController::class, 'generarAsistenciasPDF'])->name('instructor.reporte.asistencias.pdf');
+    Route::resource('pagos', PagoController::class);
+    Route::get('/subgrupos/{grupoId}', [InstructorReporteController::class, 'getSubgrupos'])->name('inst.get.subgrupos');
+
+
+});
 
 
 
@@ -71,21 +145,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-// ========================= ADMIN ========================= //
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'principal'])->name('admin.dashboard');
-
-    // Gestión de usuarios
-    Route::get('usuarios/trashed', [UsuarioController::class, 'trashed'])->name('usuarios.trashed');
-
-    Route::resource('usuarios', UsuarioController::class);
-    Route::post('usuarios/{id}/restore', [UsuarioController::class, 'restore'])->name('usuarios.restore');
-    Route::delete('usuarios/{id}/forceDelete', [UsuarioController::class, 'forceDelete'])->name('usuarios.forceDelete');
-
-    // Vistas adicionales de admin
-    Route::get('/gestion', [AdminController::class, 'gestion'])->name('admin.gestion');
-    Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
-});
 
 
 
@@ -95,30 +154,6 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
 
 
-
-
-
-// ========================= COLABORADOR ========================= //
-Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(function () {
-    Route::get('/dashboard', [ColaboradorController::class, 'principal'])->name('colaborador.dashboard');
-    Route::get('/gestion', [ColaboradorController::class, 'gestion'])->name('colaborador.gestion');
-    Route::get('/inscripcion', [ColaboradorController::class, 'inscripcion'])->name('colaborador.inscripcion');
-    Route::get('/reportes', [ColaboradorController::class, 'reportes'])->name('colaborador.reportes');
-
-    Route::get('instructor/{usuario}', [InstructorController::class, 'show'])->name('instructor.show');
-
-    // Estudiantes
-    Route::resource('estudiantes', EstudianteController::class)->except(['show']);
-
-    // Horarios
-    Route::resource('horarios', HorarioController::class);
-
-    // Reportes
-    Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
-    Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos.pdf');
-    Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])->name('reportes.pagos.excel');
-
-});
 
 
 // ========== Pagos ==========
@@ -173,34 +208,6 @@ Route::put('/inscripcion_estudiante/{estudiante:documento}', [EstudianteControll
 
 Route::delete('/inscripcion_estudiante/{estudiante:documento}', [EstudianteController::class, 'destroy'])->name('estudiantes.destroy');
 
-
-
-
-// ========================= INSTRUCTOR ========================= //
-Route::prefix('instructor')->middleware(['auth', 'role:instructor'])->group(function () {
-    Route::get('/dashboard', [InstrucController::class, 'index'])->name('instructor.dashboard');
-
-    // Horarios
-    Route::get('/horario', [InstructorHorarioController::class, 'horario'])->name('instructor.horarios');
-    Route::post('/horario/guardar', [InstructorHorarioController::class, 'guardarActividad'])->name('instructor.horarios.guardar');
-    Route::put('/horario/{id}', [InstructorHorarioController::class, 'actualizarActividad'])->name('instructor.horarios.actualizar');
-    Route::delete('/horario/{id}', [InstructorHorarioController::class, 'eliminarActividad'])->name('instructor.horarios.eliminar');
-
-    // Asistencias
-    Route::get('/asistencia', [AsistenciaController::class, 'seleccionarGrupo'])->name('instructor.asistencia');
-    Route::post('/asistencia/guardar', [AsistenciaController::class, 'guardar'])->name('instructor.asistencia.guardar');
-    Route::get('/asistencia/{grupo_id}', [AsistenciaController::class, 'verSubgrupos'])->name('asistencia.subgrupos'); //Muestra los subgrupos de un grupo seleccionado.
-    Route::get('/asistencia/grupo/{nombre}', [AsistenciaController::class, 'tomarAsistenciaPorGrupo'])->name('asistencia.tomar.grupo'); //Permite tomar asistencia a un grupo específico por su nombre.
-    Route::post('/subgrupos/store', [AsistenciaController::class, 'storeSubgrupo'])->name('subgrupos.store');
-
-    // Reportes
-    Route::get('/reporte/asistencias', [InstructorReporteController::class, 'mostrarReporte'])->name('instructor.reporte.asistencias');
-    Route::get('/reporte/asistencias/pdf', [InstructorReporteController::class, 'generarAsistenciasPDF'])->name('instructor.reporte.asistencias.pdf');
-    Route::resource('pagos', PagoController::class);
-    Route::get('/subgrupos/{grupoId}', [InstructorReporteController::class, 'getSubgrupos'])->name('inst.get.subgrupos');
-
-
-});
 
 
 
