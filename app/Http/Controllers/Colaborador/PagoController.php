@@ -35,7 +35,7 @@ class PagoController extends Controller
             'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
             'estudiante_documento' => 'required|exists:estudiantes,documento',
         ], [
-            'valor.min' => 'El valor debe ser mayor a 1000 pesos.',
+            'valor.min' => 'El valor debe ser mayor a 10000 pesos.',
             'medio_pago.in' => 'El medio de pago seleccionado no es válido.',
             'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
         ]);
@@ -45,7 +45,9 @@ class PagoController extends Controller
         ->exists();
 
         if ($existePago) {
-        return redirect()->back()->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])->withInput();
+        return redirect()->back()
+            ->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])
+            ->withInput();
         }
         // Crear el pago de inscripción
         Pago::create([
@@ -78,8 +80,10 @@ public function storeMensualidad(Request $request)
         'fecha_pago' => 'required|date',
         'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
         'estudiante_documento' => 'required|exists:estudiantes,documento',
+        'mes' => 'required|integer|min:1|max:12',
+        'año' => 'required|integer|min:2025|max:2100',
     ], [
-        'valor.min' => 'El valor debe ser mayor a 1000 pesos.',
+        'valor.min' => 'El valor debe ser mayor a 10000 pesos.',
         'medio_pago.in' => 'El medio de pago seleccionado no es válido.',
         'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
     ]);
@@ -92,6 +96,8 @@ public function storeMensualidad(Request $request)
         'medio_pago' => $request->medio_pago,
         'estado' => 'Pagado',
         'estudiante_documento' => $request->estudiante_documento,
+        'mes' => $request->mes,
+        'año' => $request->año,
     ]);
 
     return redirect()->route('pagos.mensualidades.index')->with('success', 'Pago de mensualidad registrado correctamente');
@@ -119,6 +125,8 @@ public function edit($id)
             'medio_pago' => 'required|string',
             'estado' => 'required|string',
             'estudiante_documento' => 'required|exists:estudiantes,documento',
+            'mes' => 'required|integer|min:1|max:12',
+            'año' => 'required|integer|min:2023|max:2100',
         ]);
 
         $pago->update([
@@ -128,6 +136,8 @@ public function edit($id)
             'medio_pago' => $request->medio_pago,
             'estado' => $request->estado,
             'estudiante_documento' => $request->estudiante_documento,
+            'mes' => $request->mes,
+            'año' => $request->año,
         ]);
 
         return redirect()->route('pagos.pagos.index')->with('success', 'El pago fue actualizado correctamente.');

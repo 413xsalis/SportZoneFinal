@@ -14,6 +14,8 @@ class Pago extends Model
         'tipo',
         'concepto',
         'estado',
+        'mes',
+        'año'
     ];
 
     public function estudiante()

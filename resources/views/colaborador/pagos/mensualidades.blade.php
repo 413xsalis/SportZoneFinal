@@ -284,6 +284,35 @@
                         </div>
                     </div>
 
+                     <div class="row">
+                        <div class="col-md-6 mb-3">
+    <!-- 🔹 Mes -->
+        <label for="mes" class="for-label"> Mes</label>
+        <select name="mes" id="mes" class="form-control" required>
+            <option value="">Seleccione un mes</option>
+            <option value="1">Enero</option>
+            <option value="2">Febrero</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Mayo</option>
+            <option value="6">Junio</option>
+            <option value="7">Julio</option>
+            <option value="8">Agosto</option>
+            <option value="9">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
+    </div>
+
+                <!-- 🔹 Año -->
+                    
+            <div class="col-md-6 mb-3">
+                <label for="año" class="form-label">Año</label>
+                <input type="number" name="año"  id="año" class="form-control" min="2025" max="2100" value="{{ date('Y') }}" required>
+                    </div>
+
+
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary btn-modern">
                             <i class="bi bi-check-circle me-1"></i> Registrar Mensualidad
