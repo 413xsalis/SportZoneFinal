@@ -245,14 +245,13 @@
     }
 </style>
 
-<main class="content">
+    <main class="content">
     <div class="container py-5">
         <div class="app-container">
             <div class="app-title">
                 <div class="d-flex align-items-center">
                     @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
-                        <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
-                            class="profile-image-sidebar me-3">
+                        <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil" class="profile-image-sidebar me-3">
                     @else
                         <div class="default-avatar-sidebar me-3">
                             <i class="bi bi-person fs-4"></i>
@@ -264,12 +263,12 @@
                     </div>
                 </div>
             </div>
-            
+
             @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             @endif
 
             <!-- Stats Cards -->
@@ -283,6 +282,7 @@
                         <p class="text-muted">Total Estudiantes</p>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="stats-card">
                         <div class="stats-icon" style="background-color: rgba(46, 204, 113, 0.1); color: #27ae60;">
@@ -292,6 +292,7 @@
                         <p class="text-muted">Con Grupo Asignado</p>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="stats-card">
                         <div class="stats-icon" style="background-color: rgba(235, 87, 87, 0.1); color: #e74c3c;">
@@ -301,6 +302,7 @@
                         <p class="text-muted">Sin Grupo Asignado</p>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="stats-card">
                         <div class="stats-icon" style="background-color: rgba(247, 183, 49, 0.1); color: #f39c12;">
@@ -336,186 +338,185 @@
                 </div>
             </div>
 
+            <!-- Lista de Estudiantes -->
             <div class="card card-modern">
                 <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"><i class="bi bi-table me-2"></i> Lista de Estudiantes Registrados</h5>
                 </div>
+
                 <div class="card-body">
                     @if($estudiantes->isEmpty())
-                    <div class="empty-state">
-                        <i class="bi bi-person-x"></i>
-                        <h3>No hay estudiantes registrados</h3>
-                        <p>Comienza agregando un nuevo estudiante al sistema.</p>
-                        <a href="{{ route('estudiantes.create') }}" class="btn btn-success mt-3">
-                            <i class="bi bi-plus-circle"></i> Agregar Estudiante
-                        </a>
-                    </div>
+                        <div class="empty-state">
+                            <i class="bi bi-person-x"></i>
+                            <h3>No hay estudiantes registrados</h3>
+                            <p>Comienza agregando un nuevo estudiante al sistema.</p>
+                            <a href="{{ route('estudiantes.create') }}" class="btn btn-success mt-3">
+                                <i class="bi bi-plus-circle"></i> Agregar Estudiante
+                            </a>
+                        </div>
                     @else
-                    <div class="table-responsive">
-                        <table class="table table-modern" id="estudiantesTable">
-                            <thead>
-                                <tr>
-                                    <th>Documento</th>
-                                    <th>Nombre</th>
-                                    <th>Teléfono</th>
-                                    <th>Contacto</th>
-                                    <th>Tel. Contacto</th>
-                                    <th>EPS</th>
-                                    <th>Grupo/Nivel</th>
-                                    <th width="120px">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($estudiantes as $est)
-                                <tr data-grupo="{{ $est->grupo ? $est->grupo->id : 'no_group' }}">
-                                    <td><strong>{{ $est->documento }}</strong></td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="default-avatar me-2">
-                                                <i class="bi bi-person"></i>
-                                            </div>
-                                            <div>{{ $est->nombre_1 }} {{ $est->apellido_1 }}</div>
-                                        </div>
-                                    </td>
-                                    <td>{{ $est->telefono }}</td>
-                                    <td>{{ $est->nombre_contacto }}</td>
-                                    <td>{{ $est->telefono_contacto }}</td>
-                                    <td>{{ $est->eps }}</td>
-                                    <td>
-                                        @if($est->grupo)
-                                            <span class="badge bg-success badge-modern">{{ $est->grupo->nombre }}</span>
-                                        @else
-                                            <span class="badge bg-warning badge-modern">Sin grupo</span>
-                                        @endif
-                                    </td>
-                                    <td class="action-buttons">
-                                        <a href="{{ route('estudiante.edit', $est->documento) }}" class="btn btn-sm btn-outline-primary" title="Editar">
-                                            <i class="bi bi-pencil"></i>
+                        <div class="table-responsive">
+                            <table class="table table-modern" id="estudiantesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Documento</th>
+                                        <th>Nombre</th>
+                                        <th>Teléfono</th>
+                                        <th>Contacto</th>
+                                        <th>Tel. Contacto</th>
+                                        <th>EPS</th>
+                                        <th>Grupo/Nivel</th>
+                                        <th width="120px">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($estudiantes as $est)
+                                        <tr data-grupo="{{ $est->grupo ? $est->grupo->id : 'no_group' }}">
+                                            <td><strong>{{ $est->documento }}</strong></td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="default-avatar me-2">
+                                                        <i class="bi bi-person"></i>
+                                                    </div>
+                                                    <div>{{ $est->nombre_1 }} {{ $est->apellido_1 }}</div>
+                                                </div>
+                                            </td>
+                                            <td>{{ $est->telefono }}</td>
+                                            <td>{{ $est->nombre_contacto }}</td>
+                                            <td>{{ $est->telefono_contacto }}</td>
+                                            <td>{{ $est->eps }}</td>
+                                            <td>
+                                                @if($est->grupo)
+                                                    <span class="badge bg-success badge-modern">{{ $est->grupo->nombre }}</span>
+                                                @else
+                                                    <span class="badge bg-warning badge-modern">Sin grupo</span>
+                                                @endif
+                                            </td>
+                                           <td class="action-buttons">
+                                     <a href="{{ route('estudiantes.edit', $est->documento) }}"
+                                         class="btn btn-sm btn-outline-primary" title="Editar">
+                                     <i class="bi bi-pencil"></i>
                                         </a>
-                                        <form action="{{ route('estudiantes.destroy', $est->documento) }}" method="POST" class="d-inline delete-form">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este estudiante?')">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
 
-                    <!-- Paginación -->
-                    @if($estudiantes->hasPages())
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center mt-4">
-                            {{-- Previous Page Link --}}
-                            @if ($estudiantes->onFirstPage())
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-                                </li>
-                            @else
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $estudiantes->previousPageUrl() }}">Anterior</a>
-                                </li>
-                            @endif
+                            <form action="{{ route('estudiantes.cambiarEstado', $est->documento) }}" method="POST" class="d-inline">
+                             @csrf
+                             @method('PATCH')
+                                <button type="submit" class="btn btn-sm btn-outline-warning" title="Inactivar" onclick="return confirm('¿Estás seguro de inactivar este estudiante?')">
+                                    <i class="bi bi-person-x"></i>
+                            </button>
+                        </form>
+                    </td>
 
-                            {{-- Pagination Elements --}}
-                            @foreach ($estudiantes->getUrlRange(1, $estudiantes->lastPage()) as $page => $url)
-                                @if ($page == $estudiantes->currentPage())
-                                    <li class="page-item active"><a class="page-link" href="#">{{ $page }}</a></li>
-                                @else
-                                    <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
-                                @endif
-                            @endforeach
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
-                            {{-- Next Page Link --}}
-                            @if ($estudiantes->hasMorePages())
-                                <li class="page-item">
-                                    <a class="page-link" href="{{ $estudiantes->nextPageUrl() }}">Siguiente</a>
-                                </li>
-                            @else
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#">Siguiente</a>
-                                </li>
-                            @endif
-                        </ul>
-                    </nav>
-                    @endif
+                        <!-- Paginación -->
+                        @if($estudiantes->hasPages())
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center mt-4">
+                                    {{-- Previous Page Link --}}
+                                    @if ($estudiantes->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $estudiantes->previousPageUrl() }}">Anterior</a>
+                                        </li>
+                                    @endif
+
+                                    {{-- Pagination Elements --}}
+                                    @foreach ($estudiantes->getUrlRange(1, $estudiantes->lastPage()) as $page => $url)
+                                        @if ($page == $estudiantes->currentPage())
+                                            <li class="page-item active"><a class="page-link" href="#">{{ $page }}</a></li>
+                                        @else
+                                            <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                                        @endif
+                                    @endforeach
+
+                                    {{-- Next Page Link --}}
+                                    @if ($estudiantes->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $estudiantes->nextPageUrl() }}">Siguiente</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#">Siguiente</a>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </nav>
+                        @endif
                     @endif
                 </div>
             </div>
         </div>
     </div>
+    <a href="{{ route('estudiantes.inactivos') }}" class="btn btn-warning mb-3">
+        <i class="fas fa-user-slash"></i> Ver Estudiantes Inactivos
+    </a>
+
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Búsqueda en tiempo real
-        const searchInput = document.getElementById('searchInput');
-        const grupoFilter = document.getElementById('grupoFilter');
-        const resetFilters = document.getElementById('resetFilters');
-        const table = document.getElementById('estudiantesTable');
-        
-        function filterTable() {
-            const searchText = searchInput.value.toLowerCase();
-            const grupoValue = grupoFilter.value;
-            
-            if (table) {
-                const rows = table.getElementsByTagName('tr');
-                
-                for (let i = 1; i < rows.length; i++) {
-                    const row = rows[i];
-                    const cells = row.getElementsByTagName('td');
-                    let found = false;
-                    let grupoMatch = false;
-                    
-                    // Filtrar por grupo
-                    if (grupoValue === 'all' || row.getAttribute('data-grupo') === grupoValue) {
-                        grupoMatch = true;
-                        
-                        // Filtrar por texto de búsqueda
-                        for (let j = 0; j < cells.length; j++) {
-                            const cellText = cells[j].textContent.toLowerCase();
-                            if (cellText.indexOf(searchText) > -1) {
-                                found = true;
-                                break;
-                            }
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchInput');
+    const grupoFilter = document.getElementById('grupoFilter');
+    const resetFilters = document.getElementById('resetFilters');
+    const table = document.getElementById('estudiantesTable');
+
+    function filterTable() {
+        const searchText = searchInput.value.toLowerCase();
+        const grupoValue = grupoFilter.value;
+        if (table) {
+            const rows = table.getElementsByTagName('tr');
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = row.getElementsByTagName('td');
+                let found = false;
+                let grupoMatch = false;
+
+                if (grupoValue === 'all' || row.getAttribute('data-grupo') === grupoValue) {
+                    grupoMatch = true;
+                    for (let j = 0; j < cells.length; j++) {
+                        const cellText = cells[j].textContent.toLowerCase();
+                        if (cellText.indexOf(searchText) > -1) {
+                            found = true;
+                            break;
                         }
                     }
-                    
-                    if (found && grupoMatch) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
+                }
+
+                if (found && grupoMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
                 }
             }
         }
-        
-        if (searchInput) {
-            searchInput.addEventListener('keyup', filterTable);
-        }
-        
-        if (grupoFilter) {
-            grupoFilter.addEventListener('change', filterTable);
-        }
-        
-        if (resetFilters) {
-            resetFilters.addEventListener('click', function() {
-                searchInput.value = '';
-                grupoFilter.value = 'all';
-                filterTable();
-            });
-        }
+    }
 
-        // Tooltips para botones
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
-        tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
+    if (searchInput) searchInput.addEventListener('keyup', filterTable);
+    if (grupoFilter) grupoFilter.addEventListener('change', filterTable);
+    if (resetFilters) {
+        resetFilters.addEventListener('click', function() {
+            searchInput.value = '';
+            grupoFilter.value = 'all';
+            filterTable();
         });
+    }
+
+    // Tooltips
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
     });
+});
 </script>
+
+
 @endsection

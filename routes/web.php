@@ -141,38 +141,53 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ========== Pagos ==========
+//Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
+  //  Route::get('/', [PagoController::class, 'principal'])->name('dashboard');
+
+    //Route::get('/inscripciones', [PagoController::class, 'inscripciones'])->name('inscripciones.index');
+    //Route::post('/inscripciones', [PagoController::class, 'storeInscripcion'])->name('inscripciones.store');
+
+    //Route::get('/mensualidades', [PagoController::class, 'mensualidades'])->name('mensualidades.index');
+    //Route::post('/mensualidades', [PagoController::class, 'storeMensualidad'])->name('mensualidades.store');
+
+    //Route::get('/mensualidades/{id}/edit', [PagoController::class, 'edit'])->name('mensualidades.edit');
+
+//    Route::get('{id}/editar', [PagoController::class, 'edit'])->name('edit');
+  //  Route::delete('{id}', [PagoController::class, 'destroy'])->name('destroy');
+    //Route::resource('pagos', PagoController::class);
+
+    // Pagos eliminados
+//Route::get('pagos/eliminados', [PagoController::class, 'eliminados'])->name('pagos.eliminados');
+//Route::patch('pagos/{id}/restaurar', [PagoController::class, 'restaurar'])->name('pagos.restaurar');
+
+// Listado de pagos eliminados
+//Route::get('/colaborador/pagos/eliminados', [App\Http\Controllers\Colaborador\PagoController::class, 'eliminados'])
+  //  ->name('pagos.eliminados');
+
+
+//
 Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
     Route::get('/', [PagoController::class, 'principal'])->name('dashboard');
 
+    // Inscripciones
     Route::get('/inscripciones', [PagoController::class, 'inscripciones'])->name('inscripciones.index');
     Route::post('/inscripciones', [PagoController::class, 'storeInscripcion'])->name('inscripciones.store');
 
+    // Mensualidades
     Route::get('/mensualidades', [PagoController::class, 'mensualidades'])->name('mensualidades.index');
     Route::post('/mensualidades', [PagoController::class, 'storeMensualidad'])->name('mensualidades.store');
-
     Route::get('/mensualidades/{id}/edit', [PagoController::class, 'edit'])->name('mensualidades.edit');
 
-    Route::get('{id}/editar', [PagoController::class, 'edit'])->name('edit');
-    Route::delete('{id}', [PagoController::class, 'destroy'])->name('destroy');
+    // General pagos (opcional: solo si necesitas las rutas CRUD)
     Route::resource('pagos', PagoController::class);
 
+    // SoftDeletes: pagos eliminados y restauración
+    Route::get('/eliminados', [PagoController::class, 'eliminados'])->name('eliminados');
+    Route::patch('/{id}/restaurar', [PagoController::class, 'restaurar'])->name('restaurar');
 });
+
+// Restaurar un pago eliminado
 Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
 
 
@@ -185,33 +200,39 @@ Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])
 
 
 
-
-
-
-
-
-
-
-
-
-
 // ================= ESTUDIANTES =================
-Route::get('/inscripcion_estudiante', [EstudianteController::class, 'index'])->name('estudiantes.index');
 
-Route::get('/estudiantes/create', [EstudianteController::class, 'create'])->name('estudiantes.create');
 
-Route::post('/inscripcion_estudiante', [EstudianteController::class, 'store'])->name('estudiantes.store');
+// Listar estudiantes activos
+Route::get('/inscripcion_estudiante', [EstudianteController::class, 'index'])
+    ->name('estudiantes.index');
 
-Route::get('/inscripcion_estudiante/{estudiante:documento}/edit', [EstudianteController::class, 'edit'])->name('estudiante.edit');
+// Crear estudiante
+Route::get('/estudiantes/create', [EstudianteController::class, 'create'])
+    ->name('estudiantes.create');
 
-Route::put('/inscripcion_estudiante/{estudiante:documento}', [EstudianteController::class, 'update'])->name('estudiantes.update');
+// Guardar estudiante
+Route::post('/inscripcion_estudiante', [EstudianteController::class, 'store'])
+    ->name('estudiantes.store');
 
-Route::delete('/inscripcion_estudiante/{estudiante:documento}', [EstudianteController::class, 'destroy'])->name('estudiantes.destroy');
+// Editar estudiante
+Route::get('/inscripcion_estudiante/{estudiante:documento}/edit', [EstudianteController::class, 'edit'])
+    ->name('estudiantes.edit');
 
-Route::get('/estudiantes', [EstudianteController::class, 'index'])->name('estudiantes.index');
-Route::get('/estudiantes/inactivos', [EstudianteController::class, 'inactivos'])->name('estudiantes.inactivos');
-Route::patch('/estudiantes/{id}/cambiar-estado', [EstudianteController::class, 'cambiarEstado'])->name('estudiantes.cambiarEstado');
+// Actualizar estudiante
+Route::put('/inscripcion_estudiante/{estudiante:documento}', [EstudianteController::class, 'update'])
+    ->name('estudiantes.update');
 
+// Cambiar estado (activar/inactivar)
+Route::patch('/estudiantes/{documento}/cambiar-estado', [EstudianteController::class, 'cambiarEstado'])
+    ->name('estudiantes.cambiarEstado');
+
+// Listar estudiantes inactivos
+Route::get('/estudiantes/inactivos', [EstudianteController::class, 'inactivos'])
+    ->name('estudiantes.inactivos');
+
+Route::get('/colaborador/inscripcion', [EstudianteController::class, 'index'])
+    ->name('colaborador.inscripcion');
 
 
 

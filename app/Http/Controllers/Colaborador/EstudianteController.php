@@ -14,10 +14,14 @@ class EstudianteController extends Controller
 
 public function index()
 {
-    $estudiantes = Estudiante::with('grupo')->paginate(10);
+    $estudiantes = Estudiante::with('grupo')
+    ->where('estado', 1)  // Filtrar solo estudiantes activos
+    ->paginate(10);
+
     $grupos = Grupo::all(); // Asegúrate de obtener los grupos
     
     return view('colaborador.inscripcion_estudent.principal', compact('estudiantes', 'grupos'));
+
 }
 
     public function create()
@@ -100,12 +104,33 @@ public function index()
     }
 
 
-    public function destroy(Estudiante $estudiante)
-    {
-        $estudiante->delete();
+public function cambiarEstado($documento)
+{
+    $estudiante = Estudiante::where('documento', $documento)->firstOrFail();
 
-        return redirect()->route('colaborador.inscripcion')
-            ->with('success', 'Usuario eliminado exitosamente');
-    }
+    // Alternar entre activo (1) e inactivo (0)
+    $estudiante->estado = $estudiante->estado ? 0 : 1;
+    $estudiante->save();
+
+    return back()->with('success', 'Estado del estudiante actualizado correctamente.');
+}
+
+
+public function inactivos()
+{
+    $inactivos = Estudiante::with('grupo')
+        ->where('estado', 0)  // Filtrar solo estudiantes inactivos
+        ->paginate(10);
+
+    $grupos = Grupo::all();
+    
+    return view('colaborador.inscripcion_estudent.inactivos', compact('inactivos', 'grupos'));
+}
+
+
 
 }
+
+    
+
+

@@ -300,9 +300,13 @@
             <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                 <h5 class="mb-0"><i class="bi bi-list-check me-2"></i> Pagos Registrados</h5>
                 <div class="d-flex">
+
                     <button class="btn btn-sm btn-outline-secondary me-2" id="btnExportar">
                         <i class="bi bi-download me-1"></i> Exportar
                     </button>
+                    <a href="{{ route('pagos.eliminados') }}" class="btn btn-outline-danger mb-2">
+                        <i class="fas fa-trash-alt"></i> Ver Pagos Eliminados
+                    </a>
                 </div>
             </div>
             <div class="card-body p-0">
@@ -333,6 +337,7 @@
                                                 <small class="text-muted">Doc: {{ $pago->estudiante_documento }}</small>
                                             </div>
                                         </div>
+                                        
                                     </td>
                                     <td class="text-center">{{ \Carbon\Carbon::parse($pago->fecha_pago)->format('d/m/Y') }}</td>
                                     <td class="text-end">${{ number_format($pago->valor, 0, ',', '.') }}</td>
@@ -354,6 +359,7 @@
                                     </td>
                                 </tr>
                             @empty
+                                
                                 <tr>
                                     <td colspan="6" class="text-center py-4">
                                         <i class="bi bi-receipt-cutoff display-4 text-muted"></i>

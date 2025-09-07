@@ -152,28 +152,23 @@ public function destroy($id)
     return redirect()->back()->with('success', 'Pago eliminado correctamente');
 }
 
-// Listado de activos
-public function index()
+// Listado de pagos eliminados
+public function eliminados()
 {
-    $estudiantes = Estudiante::where('estado', 'Activo')->get();
-    return view('colaborador.inscripcion_estudent.activos', compact('estudiantes'));
+    $pagos = Pago::onlyTrashed()->with('estudiante')->get();
+    return view('colaborador.pagos.eliminados', compact('pagos'));
 }
 
-// Listado de inactivos
-public function inactivos()
+// Restaurar un pago eliminado
+public function restaurar($id)
 {
-    $estudiantes = Estudiante::where('estado', 'Inactivo')->get();
-    return view('colaborador.inscripcion_estudent.inactivos', compact('estudiantes'));
+    $pago = Pago::withTrashed()->findOrFail($id);
+    $pago->restore();
+
+    return redirect()->route('pagos.eliminados')->with('success', 'Pago restaurado correctamente');
 }
 
-// Cambiar estado
-public function cambiarEstado($id)
-{
-    $estudiante = Estudiante::findOrFail($id);
-    $estudiante->estado = $estudiante->estado === 'Activo' ? 'Inactivo' : 'Activo';
-    $estudiante->save();
 
-    return redirect()->back()->with('success', 'El estado del estudiante fue actualizado correctamente.');
-}
+
 
 }

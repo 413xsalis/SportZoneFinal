@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::table('estudiantes', function (Blueprint $table) {
-        $table->enum('estado', ['Activo', 'Inactivo'])->default('Activo')->after('apellido_2');
+        Schema::table('pagos', function (Blueprint $table) {
+        $table->softDeletes();
     });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('estudiantes', function (Blueprint $table) {
-        $table->dropColumn('estado');
-        });
+       Schema::table('pagos', function (Blueprint $table) {
+        $table->dropSoftDeletes();
+    });
     }
 };

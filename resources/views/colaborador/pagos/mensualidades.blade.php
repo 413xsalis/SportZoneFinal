@@ -330,6 +330,9 @@
                     <button class="btn btn-sm btn-outline-secondary me-2" id="btnExportar">
                         <i class="bi bi-download me-1"></i> Exportar
                     </button>
+                    <a href="{{ route('pagos.eliminados') }}" class="btn btn-outline-danger mb-2">
+                        <i class="fas fa-trash-alt"></i> Ver Pagos Eliminados
+                    </a>
                 </div>
             </div>
             <div class="card-body p-0">

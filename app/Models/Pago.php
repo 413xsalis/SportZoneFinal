@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pago extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'estudiante_documento',
         'fecha_pago',
@@ -17,6 +20,8 @@ class Pago extends Model
         'mes',
         'año'
     ];
+
+     protected $dates = ['deleted_at']; // 👈 Para que Laravel maneje la fecha automáticamente
 
     public function estudiante()
     {

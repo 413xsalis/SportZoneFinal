@@ -28,6 +28,10 @@ class Estudiante extends Model
         'estado'
     ];
 
+     protected $casts = [
+        'estado' => 'boolean', // 👈 convierte 1/0 en true/false automáticamente
+    ];
+
     public function grupo()
     {
         return $this->belongsTo(Grupo::class, 'grupo_id');
