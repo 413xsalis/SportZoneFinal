@@ -43,9 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Generar una notificación de asistencia diaria
     function addAttendanceNotification(grupo, subgrupo) {
         const today = new Date();
-        const todayStr = `${today.getFullYear()}-${
-            today.getMonth() + 1
-        }-${today.getDate()}`;
+        const todayStr = `${today.getFullYear()}-${today.getMonth() + 1
+            }-${today.getDate()}`;
         const lastAttendanceDate = localStorage.getItem("lastAttendanceDate");
         const lastAttendanceDetails = localStorage.getItem(
             "lastAttendanceDetails"
@@ -60,9 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 title: "Asistencia Registrada",
                 group: grupo,
                 subgroup: subgrupo,
-                text: `Asistencia registrada exitosamente del grupo ${subgrupo
-                    .replace("Grupo ", "")
-                    .toLowerCase()} ${grupo.toLowerCase()}, fecha ${today.toLocaleDateString()}`,
+                // Modificación: Nuevo formato para el texto
+                text: `Asistencia registrada exitosamente del subgrupo ${subgrupo} fecha ${today.toLocaleDateString()}`,
+                type: "attendance", // Agregar el tipo para que la renderización sepa qué ícono usar
                 date: new Date().getTime(),
             };
             notifications.unshift(newNotification);
@@ -111,11 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         bgClass = "bg-success bg-opacity-10";
                         textClass = "text-success";
                         // CORRECCIÓN: Usar los datos del objeto notif para el texto.
-                        notificationText = `Asistencia registrada exitosamente del grupo ${
-                            notif.group
-                        } - subgrupo ${notif.subgroup}, fecha ${new Date(
-                            notif.date
-                        ).toLocaleDateString()}`;
+                        notificationText = `Asistencia registrada exitosamente del grupo ${notif.group
+                            } - subgrupo ${notif.subgroup}, fecha ${new Date(
+                                notif.date
+                            ).toLocaleDateString()}`;
                         break;
                     default:
                         iconClass = "bi-info-circle";
@@ -134,8 +132,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             <small class="text-muted">${notificationText}</small>
                         </div>
                         <small class="ms-auto text-muted">${formatTimeAgo(
-                            notif.date
-                        )}</small>
+                    notif.date
+                )}</small>
                     </div>
                 </a>
             `;
@@ -195,19 +193,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 year === today.getFullYear();
             dayCell.innerHTML = `
                 <div class="d-flex flex-column h-100">
-                    <div class="day-number ${
-                        isToday
-                            ? "bg-primary text-white rounded-circle d-inline-block mx-auto"
-                            : ""
-                    }"
+                    <div class="day-number ${isToday
+                    ? "bg-primary text-white rounded-circle d-inline-block mx-auto"
+                    : ""
+                }"
                         style="width: 24px; height: 24px; line-height: 24px;">
                         ${day}
                     </div>
-                    ${
-                        hasEvent
-                            ? '<div class="event-indicator mt-auto"><span class="badge bg-success rounded-pill" style="font-size: 6px;">●</span></div>'
-                            : ""
-                    }
+                    ${hasEvent
+                    ? '<div class="event-indicator mt-auto"><span class="badge bg-success rounded-pill" style="font-size: 6px;">●</span></div>'
+                    : ""
+                }
                 </div>
             `;
             dayCell.addEventListener("click", () => {
@@ -252,39 +248,33 @@ document.addEventListener("DOMContentLoaded", () => {
         let eventsHtml = "";
         if (eventToEdit) {
             eventsHtml = `
-            <form id="editEventForm" class="p-3 border rounded shadow-sm" data-event-id="${
-                eventToEdit.id
-            }">
+            <form id="editEventForm" class="p-3 border rounded shadow-sm" data-event-id="${eventToEdit.id
+                }">
                 <h6 class="mb-3">Editar actividad</h6>
                 <div class="mb-3">
                     <label for="editTitle" class="form-label">Título</label>
-                    <input type="text" class="form-control" id="editTitle" value="${
-                        eventToEdit.title
-                    }" required>
+                    <input type="text" class="form-control" id="editTitle" value="${eventToEdit.title
+                }" required>
                 </div>
                 <div class="mb-3">
                     <label for="editTime" class="form-label">Horario</label>
-                    <input type="time" class="form-control" id="editTime" value="${
-                        eventToEdit.time
-                    }" required>
+                    <input type="time" class="form-control" id="editTime" value="${eventToEdit.time
+                }" required>
                 </div>
                 <div class="mb-3">
                     <label for="editLocation" class="form-label">Ubicación</label>
-                    <input type="text" class="form-control" id="editLocation" value="${
-                        eventToEdit.location
-                    }" required>
+                    <input type="text" class="form-control" id="editLocation" value="${eventToEdit.location
+                }" required>
                 </div>
                 <div class="mb-3">
                     <label for="editStatus" class="form-label">Estado</label>
                     <select class="form-select" id="editStatus" required>
-                        <option value="Confirmado" ${
-                            eventToEdit.status === "Confirmado"
-                                ? "selected"
-                                : ""
-                        }>Confirmado</option>
-                        <option value="Cancelado" ${
-                            eventToEdit.status === "Cancelado" ? "selected" : ""
-                        }>Cancelado</option>
+                        <option value="Confirmado" ${eventToEdit.status === "Confirmado"
+                    ? "selected"
+                    : ""
+                }>Confirmado</option>
+                        <option value="Cancelado" ${eventToEdit.status === "Cancelado" ? "selected" : ""
+                }>Cancelado</option>
                     </select>
                 </div>
                 <div class="d-flex justify-content-between">
@@ -519,29 +509,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let interval = seconds / 31536000;
         if (interval > 1)
-            return `Hace ${Math.floor(interval)} año${
-                Math.floor(interval) > 1 ? "s" : ""
-            }`;
+            return `Hace ${Math.floor(interval)} año${Math.floor(interval) > 1 ? "s" : ""
+                }`;
         interval = seconds / 2592000;
         if (interval > 1)
-            return `Hace ${Math.floor(interval)} mes${
-                Math.floor(interval) > 1 ? "es" : ""
-            }`;
+            return `Hace ${Math.floor(interval)} mes${Math.floor(interval) > 1 ? "es" : ""
+                }`;
         interval = seconds / 86400;
         if (interval > 1)
-            return `Hace ${Math.floor(interval)} día${
-                Math.floor(interval) > 1 ? "s" : ""
-            }`;
+            return `Hace ${Math.floor(interval)} día${Math.floor(interval) > 1 ? "s" : ""
+                }`;
         interval = seconds / 3600;
         if (interval > 1)
-            return `Hace ${Math.floor(interval)} hora${
-                Math.floor(interval) > 1 ? "s" : ""
-            }`;
+            return `Hace ${Math.floor(interval)} hora${Math.floor(interval) > 1 ? "s" : ""
+                }`;
         interval = seconds / 60;
         if (interval > 1)
-            return `Hace ${Math.floor(interval)} minuto${
-                Math.floor(interval) > 1 ? "s" : ""
-            }`;
+            return `Hace ${Math.floor(interval)} minuto${Math.floor(interval) > 1 ? "s" : ""
+                }`;
         return "Justo ahora";
     }
 
