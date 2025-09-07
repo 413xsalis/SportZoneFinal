@@ -285,7 +285,8 @@
                     <div class="col-lg-6">
                         <img src="{{ asset('assets/imginicio/contactos_logo.png') }}"
                             alt="Contactos"
-                            class="img-fluid rounded">
+                            class="img-fluid rounded"
+                            style = "max-width: 360px; height: auto;">
                     </div>
                     <div class="col-lg-6">
 
