@@ -192,7 +192,7 @@
                 </div>
             </div>
 
-  
+
 
             <!-- Filtros -->
             <div class="filter-section">
@@ -246,8 +246,8 @@
                             <input type="hidden" name="grupo_id" value="{{ request('grupo_id') }}">
                             <input type="hidden" name="subgrupo_id" value="{{ request('subgrupo_id') }}">
                             <input type="hidden" name="fecha" value="{{ request('fecha') }}">
-                            <button type="submit" class="btn btn-sm btn-outline-secondary me-2">
-                                <i class="bi bi-download"></i> Exportar PDF
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-file-pdf"></i> Exportar PDF
                             </button>
                         </form>
                     </div>

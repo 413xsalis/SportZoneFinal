@@ -71,7 +71,7 @@
 
     <header>
         <img src="{{ public_path('assets/images/logo_escuela.png') }}" alt="Logo">
-        <h2>Escuela Safuka</h2>
+        <h2>Escuela Deportiva</h2>
         <h2>Reporte de Inscripciones</h2>   
      <p>
         Desde: {{ \Carbon\Carbon::parse($fechaInicio)->format('d/m/Y') }} &nbsp;

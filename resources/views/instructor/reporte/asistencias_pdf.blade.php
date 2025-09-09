@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Reporte de Asistencias</title>
     <style>
@@ -50,14 +51,19 @@
 
 <body>
     <div class="header">
+        <img src="{{ public_path('assets/images/logo_escuela.png') }}" alt="Logo">
+        <h2>Escuela Deportiva</h2>
+        <h2>Reporte de Inscripciones</h2> 
         <div class="report-title">Reporte de Asistencias</div>
         @if($asistencias->isNotEmpty())
-        <div style="float: left;">
-            <div class="info-column"><span class="info-label">Grupo:</span> {{ $asistencias->first()->subgrupo->grupo->nombre ?? 'N/A' }}</div>
-            <div class="info-column"><span class="info-label">Subgrupo:</span> {{ $asistencias->first()->subgrupo->nombre ?? 'N/A' }}</div>
-            <div class="info-column"><span class="info-label">Fecha de Generacion:</span> {{ $fechaGeneracion }}</div>
-        </div>
-        <div style="clear: both;"></div>
+            <div style="float: left;">
+                <div class="info-column"><span class="info-label">Grupo:</span>
+                    {{ $asistencias->first()->subgrupo->grupo->nombre ?? 'N/A' }}</div>
+                <div class="info-column"><span class="info-label">Subgrupo:</span>
+                    {{ $asistencias->first()->subgrupo->nombre ?? 'N/A' }}</div>
+                <div class="info-column"><span class="info-label">Fecha de Generacion:</span> {{ $fechaGeneracion }}</div>
+            </div>
+            <div style="clear: both;"></div>
         @endif
     </div>
     <table>
@@ -69,24 +75,30 @@
                 <th>Subgrupo</th>
                 <th>Fecha</th>
                 <th>Estado</th>
-                <th>Hora de Registro</th> </tr>
+                <th>Hora de Registro</th>
+            </tr>
         </thead>
         <tbody>
             @forelse($asistencias as $asis)
-            <tr>
-                <td>{{ $asis->estudiante->nombre_completo ?? 'N/A' }}</td>
-                <td>{{ $asis->estudiante->documento ?? 'N/A' }}</td>
-                <td>{{ $asis->subgrupo->grupo->nombre ?? 'N/A' }}</td>
-                <td>{{ $asis->subgrupo->nombre ?? 'N/A' }}</td>
-                <td>{{ $asis->fecha }}</td>
-                <td>{{ $asis->estado }}</td>
-                <td>{{ $asis->hora_registro ?? 'N/A' }}</td> </tr>
+                <tr>
+                    <td>{{ $asis->estudiante->nombre_completo ?? 'N/A' }}</td>
+                    <td>{{ $asis->estudiante->documento ?? 'N/A' }}</td>
+                    <td>{{ $asis->subgrupo->grupo->nombre ?? 'N/A' }}</td>
+                    <td>{{ $asis->subgrupo->nombre ?? 'N/A' }}</td>
+                    <td>{{ $asis->fecha }}</td>
+                    <td>{{ $asis->estado }}</td>
+                    <td>{{ $asis->hora_registro ?? 'N/A' }}</td>
+                </tr>
             @empty
-            <tr>
-                <td colspan="7">No hay registros de asistencia para mostrar.</td> </tr>
+                <tr>
+                    <td colspan="7">No hay registros de asistencia para mostrar.</td>
+                </tr>
             @endforelse
         </tbody>
     </table>
+    <footer>
+        © {{ date('Y') }} Escuela Deportiva Safuka | Generado el {{ date('d/m/Y H:i') }}
+    </footer>
 
 </body>
 
