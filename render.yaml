@@ -1,0 +1,18 @@
+services:
+
+  - type: web
+    name: sportzone
+    env: docker
+    plan: free
+
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: SESSION_DRIVER
+        value: database
+
+
