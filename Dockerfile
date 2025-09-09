@@ -1,32 +1,32 @@
 FROM php:8.2.12-apache
 
-# Instala dependencias del sistema
-RUN apk add --no-cache \
+# Actualiza e instala paquetes necesarios (usando apt-get)
+RUN apt-get update && apt-get install -y \
     bash \
     curl \
     git \
     libzip-dev \
-    postgresql-dev \
-    zip
+    libpq-dev \
+    zip \
+    unzip \
+    && docker-php-ext-install pdo pdo_pgsql zip \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instala extensiones de PHP
-RUN docker-php-ext-install pdo pdo_pgsql zip
-
-# Copia Composer desde una imagen oficial
+# Copia Composer desde imagen oficial
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Copia el código del proyecto
+# Copia el proyecto
 COPY . .
 
-# Instala dependencias de PHP
+# Instala dependencias PHP
 RUN composer install --optimize-autoloader --no-dev
 
-# Cambia permisos
+# Da permisos necesarios
 RUN chmod -R 777 storage bootstrap/cache
 
 EXPOSE 8000
 
-# Comando de inicio
+# Comando para producción
 CMD php artisan migrate --force && php artisan serve --host 0.0.0.0 --port 8000
