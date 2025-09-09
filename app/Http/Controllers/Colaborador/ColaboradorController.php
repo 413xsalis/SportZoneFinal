@@ -22,7 +22,7 @@ class ColaboradorController extends Controller
         $nuevosEsteMes = User::role('instructor')->where('created_at', '>=', now()->subDays(30))->count();
 
         return view('colaborador.inicio_colab.principal', compact(
-            'instructores', 
+            'instructores',
             'totalInstructores',
             'instructoresActivos',
             'instructoresInactivos',
@@ -33,20 +33,17 @@ class ColaboradorController extends Controller
 
     public function principal()
     {
-        // Obtener solo usuarios con rol de instructor CON PAGINACIÓN
-        $instructores = User::role('instructor')->withTrashed()->paginate(10);
-        $totalInstructores = User::role('instructor')->withTrashed()->count();
-        $instructoresActivos = User::role('instructor')->whereNull('deleted_at')->count();
-        $instructoresInactivos = User::role('instructor')->onlyTrashed()->count();
-        $nuevosEsteMes = User::role('instructor')->where('created_at', '>=', now()->subDays(30))->count();
+        // Obtener todos los usuarios con el rol 'instructor' y paginarlos
+        $instructores = User::role('instructor')->paginate(10); // Puedes ajustar el número (10)
 
-        return view('colaborador.inicio_colab.principal', compact(
-            'instructores', 
-            'totalInstructores',
-            'instructoresActivos',
-            'instructoresInactivos',
-            'nuevosEsteMes'
-        ));
+        // Contadores para los stats cards
+        $todosInstructores = User::role('instructor')->get();
+        $totalInstructores = $todosInstructores->count();
+        $instructoresActivos = $todosInstructores->where('deleted_at', null)->count();
+        $instructoresInactivos = $todosInstructores->whereNotNull('deleted_at')->count();
+        $nuevosEsteMes = $todosInstructores->where('created_at', '>=', now()->startOfMonth())->count();
+
+        return view('colaborador.inicio_colab.principal', compact('instructores', 'totalInstructores', 'instructoresActivos', 'instructoresInactivos', 'nuevosEsteMes'));
     }
 
     public function gestion()

@@ -2,49 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function index(): RedirectResponse
     {
-        $this->middleware('auth');
-    }
+        $usuario = Auth::user();
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    // public function index()
-    // {
-    //     $user = \Auth::user();
-    //     if($user->hasRole('admin')){
-    //        return redirect('admin/dashboard');
-    //     }elseif($user->hasRole('editor')){
-    //         return redirect('editor/dashboard');
-    //     }
-    //     return redirect('/');
-    //     //return view('home');
-    // }
-        public function index()
-    {
-        $usuario = \Auth::user();
-        if($usuario->hasRole('admin')){
-           return redirect('admin/dashboard');
-        }elseif($usuario->hasRole('colaborador')){
-            return redirect('colaborador/dashboard');
-        }elseif($usuario->hasRole('instructor')){
-            return redirect('instructor/dashboard');
+        if ($usuario->hasRole('admin')) {
+            return redirect()->route('admin.dashboard');
+        } elseif ($usuario->hasRole('colaborador')) {
+            return redirect()->route('colaborador.dashboard');
+        } elseif ($usuario->hasRole('instructor')) {
+            return redirect()->route('instructor.dashboard');
         }
-        return redirect('/');
-        //return view('home');
-    }
 
+        // Si el usuario no tiene ninguno de los roles anteriores,
+        // lo redirigimos a la página de bienvenida.
+        return redirect()->route('welcome');
+    }
 }

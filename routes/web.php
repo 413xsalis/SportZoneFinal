@@ -22,7 +22,7 @@ use App\Http\Controllers\ContactoController;
 // Página principal
 Route::get('/', function () {
     return view('welcome');
-});
+}) -> name('welcome');
 
 // Autenticación
 Auth::routes();
@@ -185,6 +185,7 @@ Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
     // SoftDeletes: pagos eliminados y restauración
     Route::get('/eliminados', [PagoController::class, 'eliminados'])->name('eliminados');
     Route::patch('/{id}/restaurar', [PagoController::class, 'restaurar'])->name('restaurar');
+    
 });
 
 // Restaurar un pago eliminado
