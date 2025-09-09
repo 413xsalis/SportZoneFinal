@@ -9,129 +9,116 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 
-
 class UsuarioController extends Controller
 {
-
+    /**
+     * MÉTODO INDEX - LISTA PRINCIPAL DE USUARIOS
+     * Muestra la lista de usuarios con paginación y estadísticas
+     */
     public function index()
     {
-        $users = User::latest()->get();
-        $users = User::with('roles')->get();
-
+        // Obtener usuarios con sus roles (relación eager loading)
         $users = User::with('roles')->paginate(10);
-        $totalUsers = User::withTrashed()->count();
-        $activeUsers = User::whereNull('deleted_at')->count();
-        $inactiveUsers = User::onlyTrashed()->count();
-
-        return view('administrador.Gestion_usuarios.principal', compact('users', 'totalUsers', 'activeUsers', 'inactiveUsers'));
         
+        // Estadísticas para el dashboard
+        $totalUsers = User::withTrashed()->count();      // Total incluyendo eliminados
+        $activeUsers = User::whereNull('deleted_at')->count();  // Usuarios activos
+        $inactiveUsers = User::onlyTrashed()->count();   // Usuarios eliminados (inactivos)
+
+        return view('administrador.Gestion_usuarios.principal', 
+            compact('users', 'totalUsers', 'activeUsers', 'inactiveUsers'));
     }
 
-
+    /**
+     * MÉTODO TRASHED - PAPELERA DE USUARIOS ELIMINADOS
+     * Muestra solo los usuarios con eliminación suave (soft delete)
+     */
     public function trashed()
     {
         $users = User::onlyTrashed()->latest()->get();
         return view('administrador.Gestion_usuarios.trashed', compact('users'));
-
-
     }
 
-
-    public function create()
-    {
-        $roles = Role::all(); // Obtén todos los roles disponibles desde el modelo de Spatie
-        return view('administrador.Gestion_usuarios.create', compact('roles'));
-    }
-
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password), // ¡Importante hashear la contraseña!
-            'roles' => ['array'], // Asegura que 'roles' sea un array
-            // Valida que los roles enviados existan en la tabla 'roles' de Spatie.
-            // Si tu select envía los NOMBRES de los roles:
-            'roles.*' => ['exists:roles,name'],
-            // Si tu select envía los IDs de los roles:
-            // 'roles.*' => ['exists:roles,id'],
-        ]);
-
-        // Asigna los roles al usuario usando Spatie.
-        // Si el input 'roles' contiene los NOMBRES de los roles (lo más común con Spatie):
-        $user->assignRole($request->input('roles', []));
-        // Si el input 'roles' contiene los IDs de los roles:
-        // $user->syncRoles($request->input('roles', [])); // syncRoles funciona con IDs o nombres
-
-        return redirect()->route('admin.gestion')
-            ->with('success', 'Usuario creado exitosamente.');
-    }
-
+    /**
+     * MÉTODO SHOW - MOSTRAR DETALLES DE USUARIO
+     * Muestra los detalles de un usuario específico
+     */
     public function show(User $usuario)
     {
-        // Los roles del usuario se pueden acceder directamente a través de $usuario->roles
-        // gracias al trait HasRoles. Puedes cargarlos explícitamente si es necesario.
+        // Carga explícita de roles para evitar problemas de carga diferida
         $usuario->load('roles');
         return view('administrador.Gestion_usuarios.show', compact('usuario'));
     }
 
+    /**
+     * MÉTODO EDIT - FORMULARIO DE EDICIÓN
+     * Muestra el formulario para editar un usuario existente
+     */
     public function edit(User $usuario)
     {
-        $roles = Role::all(); // Obtén todos los roles disponibles de Spatie
-        // Los roles asignados al usuario se obtienen con $usuario->roles (gracias a HasRoles)
+        $roles = Role::all(); // Todos los roles disponibles
         return view('administrador.Gestion_usuarios.edit', compact('usuario', 'roles'));
-
     }
 
+    /**
+     * MÉTODO UPDATE - ACTUALIZAR USUARIO
+     * Valida y actualiza la información de un usuario existente
+     */
     public function update(Request $request, User $usuario)
     {
+        // Validación con regla unique ignorando el usuario actual
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($usuario->id)],
+            'email' => ['required', 'string', 'email', 'max:255', 
+                       Rule::unique('users')->ignore($usuario->id)],
             'roles' => ['array'],
-            // Valida que los roles enviados existan
-            'roles.*' => ['exists:roles,name'], // O 'exists:roles,id' si envías IDs
+            'roles.*' => ['exists:roles,name'], // Valida que los roles existan
         ]);
+
+        // Actualizar información básica del usuario
         $usuario->update($request->all());
 
-        // Sincroniza los roles del usuario usando Spatie.
-        // `syncRoles` es el método ideal para actualizar un multi-select,
-        // ya que elimina los roles que ya no están seleccionados y añade los nuevos.
-        // Puedes pasarle nombres o IDs de roles.
+        // Sincronizar roles (elimina los antiguos y añade los nuevos)
         $usuario->syncRoles($request->input('roles', []));
 
         return redirect()->route('admin.gestion')
             ->with('success', 'Usuario actualizado exitosamente');
     }
 
+    /**
+     * MÉTODO DESTROY - ELIMINACIÓN SUAVE (SOFT DELETE)
+     * Desactiva un usuario sin eliminarlo permanentemente
+     */
     public function destroy($id)
     {
         $usuario = User::findOrFail($id);
-        $usuario->delete();
+        $usuario->delete(); // Eliminación suave
 
         return redirect()->route('admin.gestion')
             ->with('success', 'Usuario desactivado exitosamente');
     }
 
+    /**
+     * MÉTODO RESTORE - RESTAURAR USUARIO ELIMINADO
+     * Reactiva un usuario que fue eliminado con soft delete
+     */
     public function restore($id)
     {
         $usuario = User::withTrashed()->findOrFail($id);
-        $usuario->restore();
+        $usuario->restore(); // Restauración
 
         return redirect()->route('admin.gestion')
             ->with('success', 'Usuario reactivado exitosamente');
     }
 
+    /**
+     * MÉTODO FORCE DELETE - ELIMINACIÓN PERMANENTE
+     * Elimina definitivamente un usuario de la base de datos
+     */
     public function forceDelete($id)
     {
         $usuario = User::withTrashed()->findOrFail($id);
-        $usuario->forceDelete();
+        $usuario->forceDelete(); // Eliminación permanente
 
         return redirect()->route('admin.gestion')
             ->with('success', 'Usuario eliminado permanentemente');
