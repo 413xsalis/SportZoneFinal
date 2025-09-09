@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Registro</title>
+    <title>Registro con Validación</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -151,11 +151,11 @@
 </head>
 
 <body>
-    <!-- Contenedor para el mensaje de éxito (reemplazo de alert()) -->
-    <div id="success-message" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1050; display: none;">
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            ¡Formulario enviado con éxito!
-            <button type="button" class="btn-close" onclick="document.getElementById('success-message').style.display='none';" aria-label="Close"></button>
+    <!-- Contenedor para los mensajes de éxito y error -->
+    <div id="message-box" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1050; display: none;">
+        <div id="alert-message" class="alert alert-dismissible fade show" role="alert">
+            <span id="message-text"></span>
+            <button type="button" class="btn-close" onclick="document.getElementById('message-box').style.display='none';" aria-label="Close"></button>
         </div>
     </div>
 
@@ -190,8 +190,8 @@
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <input type="email" name="email" id="email" class="form-control"
                                                 placeholder="Digita tu correo electronico" required />
-                                            <label class="form-label" for="email">Correo Electronico</label>
-                                            <div class="invalid-feedback">Por favor, introduce un correo electrónico válido.</div>
+                                            <label class="form-label" for="email">Correo Electrónico</label>
+                                            <div class="invalid-feedback" id="email-feedback">Por favor, introduce un correo electrónico válido.</div>
                                         </div>
 
                                         <div data-mdb-input-init class="form-outline mb-4">
@@ -253,29 +253,60 @@
             const emailInput = document.getElementById('email');
             const passwordInput = document.getElementById('password');
             const passwordConfirmationInput = document.getElementById('password_confirmation');
+            const emailFeedback = document.getElementById('email-feedback');
+
+            // Simula una base de datos de usuarios ya registrados
+            const registeredUsers = ['usuario@ejemplo.com', 'admin@ejemplo.com'];
 
             form.addEventListener('submit', function (event) {
-                // Previene el envío del formulario si la validación falla
                 event.preventDefault();
                 event.stopPropagation();
                 
-                // Realiza la validación de cada campo y guarda el resultado
+                // Realiza la validación de cada campo
                 const isNameValid = validateName();
                 const isEmailValid = validateEmail();
                 const isPasswordValid = validatePassword();
                 const isPasswordConfirmationValid = validatePasswordConfirmation();
 
-                // Si todos los campos son válidos, muestra un mensaje de éxito
+                // Si toda la validación de campos es exitosa
                 if (isNameValid && isEmailValid && isPasswordValid && isPasswordConfirmationValid) {
-                    // Muestra el mensaje de éxito
-                    document.getElementById('success-message').style.display = 'block';
-                    // Aquí es donde enviarías los datos al servidor en una aplicación real
-                    console.log('Validación exitosa, datos listos para ser enviados.');
+                    // Verifica si el usuario ya existe
+                    if (registeredUsers.includes(emailInput.value)) {
+                        showErrorMessage('El usuario ya está registrado.');
+                        emailInput.classList.add('is-invalid');
+                        emailFeedback.textContent = 'Este usuario ya está creado.';
+                    } else {
+                        // Simula el registro exitoso: añade el usuario a la "base de datos"
+                        registeredUsers.push(emailInput.value);
+                        showSuccessMessage('¡Usuario registrado con éxito!');
+                        // Oculta la validación del formulario después del éxito
+                        form.classList.remove('was-validated');
+                        form.reset();
+                    }
                 } else {
-                    // Si no es válido, agrega la clase 'was-validated' para mostrar los mensajes de error
                     form.classList.add('was-validated');
                 }
             });
+
+            function showSuccessMessage(message) {
+                const messageBox = document.getElementById('message-box');
+                const alertMessage = document.getElementById('alert-message');
+                const messageText = document.getElementById('message-text');
+
+                alertMessage.className = 'alert alert-success alert-dismissible fade show';
+                messageText.textContent = message;
+                messageBox.style.display = 'block';
+            }
+
+            function showErrorMessage(message) {
+                const messageBox = document.getElementById('message-box');
+                const alertMessage = document.getElementById('alert-message');
+                const messageText = document.getElementById('message-text');
+
+                alertMessage.className = 'alert alert-danger alert-dismissible fade show';
+                messageText.textContent = message;
+                messageBox.style.display = 'block';
+            }
 
             function validateName() {
                 const isValid = nameInput.value.trim() !== '';
@@ -289,11 +320,14 @@
                 const isValid = emailRegex.test(emailInput.value);
                 emailInput.classList.toggle('is-invalid', !isValid);
                 emailInput.classList.toggle('is-valid', isValid);
+                // Restablece el mensaje de error personalizado
+                if(isValid) {
+                    emailFeedback.textContent = 'Por favor, introduce un correo electrónico válido.';
+                }
                 return isValid;
             }
 
             function validatePassword() {
-                // Valida que la contraseña tenga al menos 8 caracteres
                 const isValid = passwordInput.value.length >= 8;
                 passwordInput.classList.toggle('is-invalid', !isValid);
                 passwordInput.classList.toggle('is-valid', isValid);
