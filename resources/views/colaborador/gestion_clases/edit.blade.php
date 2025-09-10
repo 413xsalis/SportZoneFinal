@@ -19,10 +19,9 @@
                 @method('PUT')
 
                 <!-- Información del horario -->
-                <h5 class="text-primary mb-3">Información del Horario</h5>
+                <h5 style="color: rgb(48, 135, 250);" class="mb-3">Información del Horario</h5>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="dia" class="form-label">Día *</label>
                         <label for="dia" class="form-label">Día *</label>
 <select name="dia" id="dia" class="form-control" required>
     <option value="">Seleccione un día</option>
@@ -51,42 +50,44 @@
                     </div>
                 </div>
 
-                <!-- Información adicional -->
-                <h5 class="text-primary mb-3">Información Instructor</h5>
-                <div class="row mb-3">
-                    <div class="mb-3">
-    <label for="instructor_id" class="form-label">Instructor</label>
-    <select name="instructor_id" id="instructor_id" class="form-control">
-        <option value="">Seleccione un instructor</option>
-        @foreach($instructores as $instructor)
-            <option value="{{ $instructor->id }}" 
-                {{ $horario->instructor_id == $instructor->id ? 'selected' : '' }}>
-                {{ $instructor->name }}
-            </option>
-        @endforeach
-    </select>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="mb-3">
-    <label for="grupo_id" class="form-label">Grupo</label>
-    <select name="grupo_id" id="grupo_id" class="form-control">
-        <option value="">Seleccione un grupo</option>
-        @foreach($grupos as $grupo)
-            <option value="{{ $grupo->id }}" 
-                {{ $horario->grupo_id == $grupo->id ? 'selected' : '' }}>
-                {{ $grupo->nombre }}
-            </option>
-        @endforeach
-    </select>
-                    </div>
-                </div>
+<!-- Información adicional -->
+<h5 style="color:rgb(48, 135, 250);" class="mb-3">Información Instructor</h5>
+<div class="row mb-3">
+    <!-- Instructor -->
+    <div class="col-md-6">
+        <label for="instructor_id" class="form-label">Instructor</label>
+        <select name="instructor_id" id="instructor_id" class="form-select" required>
+            <option value="">Seleccione un instructor</option>
+            @foreach($instructores as $instructor)
+                <option value="{{ $instructor->id }}" 
+                    {{ $horario->instructor_id == $instructor->id ? 'selected' : '' }}>
+                    {{ $instructor->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <!-- Grupo -->
+    <div class="col-md-6">
+        <label for="grupo_id" class="form-label">Grupo</label>
+        <select name="grupo_id" id="grupo_id" class="form-select" required>
+            <option value="">Seleccione un grupo</option>
+            @foreach($grupos as $grupo)
+                <option value="{{ $grupo->id }}" 
+                    {{ $horario->grupo_id == $grupo->id ? 'selected' : '' }}>
+                    {{ $grupo->nombre }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
 
                 <!-- Botones -->
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-success me-2">
+                    <button type="submit" class="btn btn-info me-2">
                         <i class="bi bi-check-circle"></i> Actualizar
                     </button>
-                    <a href="{{ route('horarios.index') }}" class="btn btn-secondary">
+                    <a href="{{ route('horarios.index') }}" class="btn btn-danger">
                         <i class="bi bi-x-circle"></i> Cancelar
                     </a>
                 </div>
