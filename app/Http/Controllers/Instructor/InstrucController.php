@@ -12,13 +12,13 @@ class InstrucController extends Controller
 {
 public function index()
 {
-    // 📊 estadísticas
+    // estadísticas
     $clasesActivas = Actividad::where('estado', 'activo')->count();
     $clasesPendientes = Actividad::where('estado', 'pendiente')->count();
     $clasesCanceladas = Actividad::where('estado', 'cancelado')->count();
     $totalInstructores = User::role('Instructor')->count();
 
-    // 📌 asistencias de hoy
+    // asistencias de hoy
     $asistenciasHoy = Asistencia::with('estudiante', 'grupo')
         ->whereDate('created_at', Carbon::today())
         ->latest()

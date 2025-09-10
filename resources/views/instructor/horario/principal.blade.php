@@ -422,7 +422,7 @@
         document.getElementById('filter-form').addEventListener('submit', function (event) {
           event.preventDefault();
           const instructorId = document.getElementById('instructor_select').value;
-          window.location.href = `{{ route('instructor.horarios') }}/${instructorId}`;
+          window.location.href = `{{ route('instructor.horarios') }}?instructorId=${instructorId}`;
         });
 
         document.addEventListener('DOMContentLoaded', function () {
