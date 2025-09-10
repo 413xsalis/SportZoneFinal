@@ -220,6 +220,12 @@
                                             <a href="{{ route('login') }}" data-mdb-button-init data-mdb-ripple-init
                                                 class="btn btn-outline-danger">Login</a>
                                         </div>
+
+                                        <div class="text-center mt-4">
+                                            <a href="{{ route('welcome') }}" class="text-decoration-none">
+                                                <i class="bi bi-arrow-left-circle me-1"></i> Volver a la pagina principal
+                                            </a>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
