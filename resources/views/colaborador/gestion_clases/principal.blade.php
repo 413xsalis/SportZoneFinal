@@ -370,9 +370,9 @@
                class="btn btn-sm btn-outline-primary" title="Editar">
                 <i class="bi bi-pencil"></i>
             </a>
-            <a href="{{ route('horarios.show', $horario->id) }}" 
+            <!--<a href="{{ route('horarios.show', $horario->id) }}" 
                class="btn btn-sm btn-outline-info" title="Ver detalles">
-                <i class="bi bi-eye"></i>
+                <i class="bi bi-eye"></i> -->
             </a>
             <a href="#" class="btn btn-sm btn-outline-danger" title="Eliminar"
                onclick="event.preventDefault(); if(confirm('¿Seguro que deseas eliminar este horario?')){ document.getElementById('delete-form-{{ $horario->id }}').submit(); }">

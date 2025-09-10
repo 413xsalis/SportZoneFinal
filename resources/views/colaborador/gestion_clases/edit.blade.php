@@ -1,4 +1,4 @@
-@extends('colaborador.partials.layout')
+@extends('colaborador.gestion_clases.layout')
 
 @section('content')
 <div class="container">
@@ -23,7 +23,16 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="dia" class="form-label">Día *</label>
-                        <input type="text" class="form-control" id="dia" name="dia" value="{{ $horario->dia }}" required>
+                        <label for="dia" class="form-label">Día *</label>
+<select name="dia" id="dia" class="form-control" required>
+    <option value="">Seleccione un día</option>
+    @foreach($dias as $dia)
+        <option value="{{ $dia }}" {{ strtolower($horario->dia) == strtolower($dia) ? 'selected' : '' }}>
+            {{ ucfirst($dia) }}
+        </option>
+    @endforeach
+</select>
+
                     </div>
                     <div class="col-md-6">
                         <label for="fecha" class="form-label">Fecha *</label>
@@ -43,15 +52,32 @@
                 </div>
 
                 <!-- Información adicional -->
-                <h5 class="text-primary mb-3">Información Adicional</h5>
+                <h5 class="text-primary mb-3">Información Instructor</h5>
                 <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="instructor" class="form-label">Instructor</label>
-                        <input type="text" class="form-control" id="instructor" name="instructor" value="{{ $horario->instructor }}">
+                    <div class="mb-3">
+    <label for="instructor_id" class="form-label">Instructor</label>
+    <select name="instructor_id" id="instructor_id" class="form-control">
+        <option value="">Seleccione un instructor</option>
+        @foreach($instructores as $instructor)
+            <option value="{{ $instructor->id }}" 
+                {{ $horario->instructor_id == $instructor->id ? 'selected' : '' }}>
+                {{ $instructor->name }}
+            </option>
+        @endforeach
+    </select>
                     </div>
-                    <div class="col-md-6">
-                        <label for="grupo" class="form-label">Grupo</label>
-                        <input type="text" class="form-control" id="grupo" name="grupo" value="{{ $horario->grupo }}">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+    <label for="grupo_id" class="form-label">Grupo</label>
+    <select name="grupo_id" id="grupo_id" class="form-control">
+        <option value="">Seleccione un grupo</option>
+        @foreach($grupos as $grupo)
+            <option value="{{ $grupo->id }}" 
+                {{ $horario->grupo_id == $grupo->id ? 'selected' : '' }}>
+                {{ $grupo->nombre }}
+            </option>
+        @endforeach
+    </select>
                     </div>
                 </div>
 

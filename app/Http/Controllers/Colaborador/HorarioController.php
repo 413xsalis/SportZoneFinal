@@ -70,7 +70,10 @@ public function index()
     {
         $instructores = User::role('instructor')->get();
         $grupos = Grupo::all();
-        return view('colaborador.gestion_clases.edit', compact('horario', 'instructores', 'grupos'));
+
+        $dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']; // Días de la semana
+
+        return view('colaborador.gestion_clases.edit', compact('horario', 'instructores', 'grupos', 'dias'));
     }
 
     // Actualizar horario
