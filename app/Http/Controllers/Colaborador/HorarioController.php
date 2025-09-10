@@ -62,7 +62,7 @@ public function index()
     // Mostrar un horario específico
     public function show(Horario $horario)
     {
-        return view('horarios.show', compact('horario'));
+        return view('colaborador.gestion_clases.show', compact('horario'));
     }
 
     // Formulario de edición
@@ -70,7 +70,7 @@ public function index()
     {
         $instructores = User::role('instructor')->get();
         $grupos = Grupo::all();
-        return view('horarios.edit', compact('horario', 'instructores', 'grupos'));
+        return view('colaborador.gestion_clases.edit', compact('horario', 'instructores', 'grupos'));
     }
 
     // Actualizar horario
@@ -80,7 +80,8 @@ public function index()
             'instructor_id' => 'required|exists:users,id',
             'grupo_id' => 'required|exists:grupos,id',
             'fecha' => 'required|date',
-            'hora' => 'required',
+            'hora_inicio' => 'required',
+            'hora_fin' => 'required',
         ]);
 
         $horario->update($request->all());

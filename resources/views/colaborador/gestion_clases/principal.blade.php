@@ -356,27 +356,38 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+        
                                     @foreach ($horarios as $horario)
-                                        <tr>
-                                            <td><span class="badge bg-primary badge-modern">{{ $horario->dia }}</span></td>
-                                            <td>{{ $horario->fecha }}</td>
-                                            <td>{{ $horario->hora_inicio }}</td>
-                                            <td>{{ $horario->hora_fin }}</td>
-                                            <td>{{ $horario->instructor->name ?? 'Sin instructor' }}</td>
-                                            <td>{{ $horario->grupo->nombre ?? 'Sin grupo' }}</td>
-                                            <td class="action-buttons">
-                                                <a href="#" class="btn btn-sm btn-outline-primary" title="Editar">
-                                                    <i class="bi bi-pencil"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-sm btn-outline-info" title="Ver detalles">
-                                                    <i class="bi bi-eye"></i>
-                                                </a>
-                                                <button class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+    <tr>
+        <td><span class="badge bg-primary badge-modern">{{ $horario->dia }}</span></td>
+        <td>{{ $horario->fecha }}</td>
+        <td>{{ $horario->hora_inicio }}</td>
+        <td>{{ $horario->hora_fin }}</td>
+        <td>{{ $horario->instructor->name ?? 'Sin instructor' }}</td>
+        <td>{{ $horario->grupo->nombre ?? 'Sin grupo' }}</td>
+        <td class="action-buttons">
+            <a href="{{ route('horarios.edit', $horario->id) }}" 
+               class="btn btn-sm btn-outline-primary" title="Editar">
+                <i class="bi bi-pencil"></i>
+            </a>
+            <a href="{{ route('horarios.show', $horario->id) }}" 
+               class="btn btn-sm btn-outline-info" title="Ver detalles">
+                <i class="bi bi-eye"></i>
+            </a>
+            <a href="#" class="btn btn-sm btn-outline-danger" title="Eliminar"
+               onclick="event.preventDefault(); if(confirm('¿Seguro que deseas eliminar este horario?')){ document.getElementById('delete-form-{{ $horario->id }}').submit(); }">
+                <i class="bi bi-trash"></i>
+            </a>
+            <form id="delete-form-{{ $horario->id }}" 
+                  action="{{ route('horarios.destroy', $horario->id) }}" 
+                  method="POST" style="display:none;">
+                @csrf
+                @method('DELETE')
+            </form>
+        </td>
+    </tr>
+@endforeach
+
                                 </tbody>
                             </table>
                         </div>
