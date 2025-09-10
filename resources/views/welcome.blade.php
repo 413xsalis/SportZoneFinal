@@ -290,8 +290,11 @@
                     </div>
                     <div class="col-lg-6">
 
-                        @if(session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
+                         @if(session('success'))
+                            <div class="alert alert-success alert-dismissible fade show mb-3" role="alert" id="success-alert">
+                                {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                            </div>
                         @endif
 
                         @if ($errors->any())
@@ -340,6 +343,19 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let alert = document.getElementById('success-alert');
+        if (alert) {
+            setTimeout(() => {
+                let bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }, 4000); // 4000 = 4 segundos
+        }
+    });
+</script>
+
 
 </body>
 </html>
