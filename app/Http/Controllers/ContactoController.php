@@ -22,12 +22,11 @@ class ContactoController extends Controller
         Contacto::create($request->all());
 
         // (Opcional) Enviar correo
-        /*
         Mail::raw("Nuevo mensaje de {$request->nombre}:\n\n{$request->mensaje}", function ($message) use ($request) {
             $message->to('tu_correo@ejemplo.com')
                     ->subject('Nuevo mensaje de contacto');
         });
-        */
+    
 
         return back()->with('success', '¡Gracias por tu mensaje! Te contactaremos pronto.');
     }
