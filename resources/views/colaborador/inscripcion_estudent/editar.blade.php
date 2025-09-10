@@ -138,7 +138,7 @@
                             <label for="documento" class="form-label">Documento <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" name="documento" id="documento" 
                                    value="{{ old('documento', $estudiante->documento) }}" required readonly>
-                            <div class="form-text">Número de documento de identidad (no editable)</div>
+                            <div class="form-text">Número de documento de Identidad (no editable)</div>
                         </div>
 
                         <div class="col-md-6 mb-3">

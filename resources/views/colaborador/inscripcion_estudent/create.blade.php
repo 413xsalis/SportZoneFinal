@@ -137,7 +137,7 @@
                             <label for="documento" class="form-label">Documento <span class="text-danger">*</span></label>
                             <input type="number" class="form-control" name="documento" id="documento" 
                                    value="{{ old('documento') }}" required>
-                            <div class="form-text">Número de documento de identidad</div>
+                            <div class="form-text">Número de Documento de Identidad</div>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -181,7 +181,7 @@
                             <label for="nombre_contacto" class="form-label">Nombre de Contacto</label>
                             <input type="text" class="form-control" name="nombre_contacto" id="nombre_contacto" 
                                    value="{{ old('nombre_contacto') }}">
-                            <div class="form-text">Persona a contactar en caso de emergencia</div>
+                            <div class="form-text">Persona a contactar en caso de Emergencia</div>
                         </div>
 
                         <div class="col-md-6 mb-3">

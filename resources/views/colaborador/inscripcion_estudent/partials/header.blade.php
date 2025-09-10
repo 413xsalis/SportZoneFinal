@@ -10,7 +10,7 @@
   <!-- Font-icon css-->
   <link rel="stylesheet" type="text/css"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <title>Proyecto sportzone</title>
+  <title>Proyecto Sportzone</title>
   <style>
     .profile-image-nav {
       width: 40px;
@@ -131,7 +131,7 @@
       <ul class="app-menu">
         <a class="app-menu__item" href="{{ route('colaborador.gestion') }}">
           <i class="bi bi-journal-bookmark me-2"></i>
-          <span class="app-menu__label">Gestion de clases</span>
+          <span class="app-menu__label">Gestion de Clases</span>
         </a>
 
         <a class="app-menu__item" href="{{route('colaborador.inscripcion')}}">

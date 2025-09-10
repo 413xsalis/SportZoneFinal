@@ -235,7 +235,7 @@
                                       que nos permiten crear soluciones a medida para cada tipo de cliente
 
                                 </p>
-                                <!--<a href="#" class="btn btn-custom">VER MAS</a>-->
+                                
                             </div>
                         </div>
                     </div>
