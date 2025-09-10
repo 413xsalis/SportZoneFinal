@@ -370,7 +370,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="detail-item">
-                                    <div class="detail-label">Última actualización</div>
+                                    <div class="detail-label">Última Actualización</div>
                                     <div class="detail-value">
                                         {{ \Carbon\Carbon::parse($usuario->updated_at)->format('d/m/Y H:i') }}
                                     </div>
