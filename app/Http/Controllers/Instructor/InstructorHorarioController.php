@@ -17,10 +17,13 @@ class InstructorHorarioController extends Controller
     /**
      * Muestra la vista principal del horario del instructor, cargando los datos iniciales.
      */
-    public function horario($instructorId = null)
+    public function horario(Request $request)
     {
         $subgrupos = Subgrupo::all();
         $grupos = Grupo::all();
+
+        // Obtener el ID del instructor del query string.
+        $instructorId = $request->input('instructorId');
 
         if ($instructorId) {
             $horarios = Horario::with(['grupo', 'instructor'])
@@ -29,12 +32,11 @@ class InstructorHorarioController extends Controller
         } else {
             $horarios = Horario::with(['grupo', 'instructor'])->get();
         }
-
-        // Ahora los instructores son usuarios con rol "Instructor"
         $instructores = User::role('Instructor')->get();
-
         return view('instructor.horario.principal', compact('subgrupos', 'grupos', 'horarios', 'instructores'));
     }
+
+
     /**
      * Obtiene y formatea las actividades del horario para ser consumidas por el calendario vía AJAX.
      */
