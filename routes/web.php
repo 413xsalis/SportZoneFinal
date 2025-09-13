@@ -62,7 +62,7 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
     Route::get('instructor/{usuario}', [InstructorController::class, 'show'])->name('instructor.show');
 
     // Estudiantes
-    Route::resource('estudiantes', EstudianteController::class)->except(['show']);
+    // Route::resource('estudiantes', EstudianteController::class)->except(['show']);
 
     // Horarios
     Route::resource('horarios', HorarioController::class);
@@ -182,8 +182,8 @@ Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
 
 
 // Listar estudiantes activos
-// Route::get('/inscripcion_estudiante', [EstudianteController::class, 'index'])
-//     ->name('estudiantes.index');
+Route::get('/inscripcion_estudiante', [EstudianteController::class, 'index'])
+    ->name('estudiantes.index');
 
 // Crear estudiante
 Route::get('/estudiantes/create', [EstudianteController::class, 'create'])
