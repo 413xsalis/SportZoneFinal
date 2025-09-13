@@ -170,11 +170,11 @@ Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
 
 
 // Reportes de Pagos (PDF y Excel)
-Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])
-    ->name('reportes.pagos');
+// Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])
+//     ->name('reportes.pagos');
 
-Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])
-    ->name('reportes.pagos.excel');
+// Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])
+//     ->name('reportes.pagos.excel');
 
 
 
