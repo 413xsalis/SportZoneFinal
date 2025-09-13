@@ -141,29 +141,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-// ========== Pagos ==========
-//Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
-  //  Route::get('/', [PagoController::class, 'principal'])->name('dashboard');
-
-    //Route::get('/inscripciones', [PagoController::class, 'inscripciones'])->name('inscripciones.index');
-    //Route::post('/inscripciones', [PagoController::class, 'storeInscripcion'])->name('inscripciones.store');
-
-    //Route::get('/mensualidades', [PagoController::class, 'mensualidades'])->name('mensualidades.index');
-    //Route::post('/mensualidades', [PagoController::class, 'storeMensualidad'])->name('mensualidades.store');
-
-    //Route::get('/mensualidades/{id}/edit', [PagoController::class, 'edit'])->name('mensualidades.edit');
-
-//    Route::get('{id}/editar', [PagoController::class, 'edit'])->name('edit');
-  //  Route::delete('{id}', [PagoController::class, 'destroy'])->name('destroy');
-    //Route::resource('pagos', PagoController::class);
-
-    // Pagos eliminados
-//Route::get('pagos/eliminados', [PagoController::class, 'eliminados'])->name('pagos.eliminados');
-//Route::patch('pagos/{id}/restaurar', [PagoController::class, 'restaurar'])->name('pagos.restaurar');
-
-// Listado de pagos eliminados
-//Route::get('/colaborador/pagos/eliminados', [App\Http\Controllers\Colaborador\PagoController::class, 'eliminados'])
-  //  ->name('pagos.eliminados');
 
 
 //
@@ -189,7 +166,7 @@ Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
 });
 
 // Restaurar un pago eliminado
-Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
+//Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
 
 
 // Reportes de Pagos (PDF y Excel)
