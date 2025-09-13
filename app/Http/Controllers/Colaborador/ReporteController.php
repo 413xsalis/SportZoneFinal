@@ -25,7 +25,7 @@ class ReporteController extends Controller
         return $pdf->stream('reporte_inscripciones.pdf');
     }
 
-     // 📌 Reporte de Pagos en PDF
+             //  Reporte de Pagos en PDF
     public function pagosPDF(Request $request)
     {
         $tipo = $request->tipo;
@@ -47,7 +47,7 @@ class ReporteController extends Controller
         return $pdf->download('reporte_pagos.pdf');
     }
 
-    // Reporte de Pagos en Excel
+            // Reporte de Pagos en Excel
     public function pagosExcel(Request $request)
     {
         $tipo = $request->tipo;
