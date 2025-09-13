@@ -338,6 +338,34 @@
         </section>
     </main>
 
+     <!-- Footer -->
+    <footer class="bg-secondary text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>SportZone</h5>
+                    <p>Formación deportiva de calidad para niños y jóvenes.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#inicio" class="text-white">Inicio</a></li>
+                        <li><a href="#detalles" class="text-white">Nosotros</a></li>
+                        <li><a href="#servicios" class="text-white">Servicios</a></li>
+                        <li><a href="#contactos" class="text-white">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Contacto</h5>
+                    <p>Email: info@sportzone.com</p>
+                    <p>Tel: +57 3144800399</p>
+                </div>
+            </div>
+            <hr class="border-light">
+            <p class="text-center mb-0">&copy; {{ date('Y') }} SportZone. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
