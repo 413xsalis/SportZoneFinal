@@ -337,7 +337,11 @@
                                         </div>
                                         <p class="mb-1">Estudiante: <strong>{{ $asistencia->estudiante->nombre_1 }}
                                                 {{ $asistencia->estudiante->apellido_1 }}</strong></p>
-                                        <p class="mb-1">Subgrupo: <strong>{{ $asistencia->subgrupo->nombre ?? 'N/A' }}</strong>
+                                        <p class="mb-1">Grupo:
+                                            <strong>{{ $asistencia->subgrupo->grupo->nombre ?? 'N/A' }}</strong>
+                                        </p>
+                                        <p class="mb-1">Subgrupo:
+                                            <strong>{{ $asistencia->subgrupo->nombre ?? 'N/A' }}</strong>
                                         </p>
                                         <small class="text-muted">Estado:
                                             <span

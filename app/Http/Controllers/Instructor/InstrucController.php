@@ -19,7 +19,10 @@ public function index()
     $totalInstructores = User::role('Instructor')->count();
 
     //asistencias de hoy
-$asistenciasHoy = Asistencia::with('estudiante', 'subgrupo')
+$asistenciasHoy = Asistencia::with([
+        'estudiante',
+        'subgrupo.grupo' // 👈 así cargamos el grupo padre del subgrupo
+    ])
     ->whereDate('created_at', Carbon::today())
     ->latest()
     ->take(10)
