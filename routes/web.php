@@ -16,7 +16,6 @@ use App\Http\Controllers\Instructor\AsistenciaController;
 use App\Http\Controllers\Instructor\PerfilInstController;
 use App\Http\Controllers\Instructor\InstructorHorarioController;
 use App\Http\Controllers\Instructor\InstructorReporteController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactoController;
 
 // Página principal
@@ -68,11 +67,10 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
     Route::resource('horarios', HorarioController::class);
 
     // Reportes
-      Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
+    Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
     Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos.pdf');
     Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])->name('reportes.pagos.excel');
 
-    Route::resource('pagos', PagoController::class);
     Route::get('/reportes/pagos', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos');
 
 });
