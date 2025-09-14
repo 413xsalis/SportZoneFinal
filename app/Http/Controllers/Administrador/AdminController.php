@@ -37,8 +37,6 @@ class AdminController extends Controller
         return view('administrador.admin.principal', compact(
             'totalAlumnos',
             'totalUsers',
-            'clasesHoy',
-            'clasesHoyCount',
             'instructores'
         ));
     }
