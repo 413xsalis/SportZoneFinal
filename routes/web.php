@@ -68,13 +68,11 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
     Route::resource('horarios', HorarioController::class);
 
     // Reportes
-    Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
-    // Reportes para COLABORADOR
-    Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos');
+      Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
+    Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos.pdf');
     Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])->name('reportes.pagos.excel');
-    Route::get('/colaborador/reportes/pagos', [ReporteController::class, 'index'])->name('reportes.mostrar');
 
-
+    Route::resource('pagos', PagoController::class);
 });
 
 
@@ -100,7 +98,6 @@ Route::prefix('instructor')->middleware(['auth', 'role:instructor'])->group(func
     // Reportes
     Route::get('/reporte/asistencias', [InstructorReporteController::class, 'mostrarReporte'])->name('instructor.reporte.asistencias');
     Route::get('/reporte/asistencias/pdf', [InstructorReporteController::class, 'generarAsistenciasPDF'])->name('instructor.reporte.asistencias.pdf');
-    Route::resource('pagos', PagoController::class);
     Route::get('/subgrupos/{grupoId}', [InstructorReporteController::class, 'getSubgrupos'])->name('inst.get.subgrupos');
 
 
