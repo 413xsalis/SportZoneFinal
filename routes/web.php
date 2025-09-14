@@ -163,25 +163,9 @@ Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
     
 });
 
-// Restaurar un pago eliminado
-//Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
-
-
-// Reportes de Pagos (PDF y Excel)
-// Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])
-//     ->name('reportes.pagos');
-
-// Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])
-//     ->name('reportes.pagos.excel');
-
 
 
 // ================= ESTUDIANTES =================
-
-
-// Listar estudiantes activos
-// Route::get('/inscripcion_estudiante', [EstudianteController::class, 'index'])
-//     ->name('estudiantes.index');
 
 // Crear estudiante
 Route::get('/estudiantes/create', [EstudianteController::class, 'create'])
