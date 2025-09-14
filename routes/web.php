@@ -73,6 +73,8 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
     Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])->name('reportes.pagos.excel');
 
     Route::resource('pagos', PagoController::class);
+    Route::get('/reportes/pagos', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos');
+
 });
 
 
