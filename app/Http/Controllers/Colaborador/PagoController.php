@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pago;
 use App\Models\Estudiante;
-
+use Illuminate\Database\QueryException;
 
 class PagoController extends Controller
 {
@@ -26,21 +26,21 @@ class PagoController extends Controller
     }
 
     // Guardar un nuevo pago de inscripción
-    public function storeInscripcion(Request $request)
-    {
-        $request->validate([
-            'tipo' => 'required|in:inscripción',
-            'valor' => 'required|numeric|min:10000',
-            'fecha_pago' => 'required|date',
-            'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
-            'estudiante_documento' => 'required|exists:estudiantes,documento',
-        ], [
-            'valor.min' => 'El valor debe ser mayor a 10000 pesos.',
-            'medio_pago.in' => 'El medio de pago seleccionado no es válido.',
-            'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
-        ]);
+public function storeInscripcion(Request $request)
+{
+    $request->validate([
+        'tipo' => 'required|in:inscripción',
+        'valor' => 'required|numeric|min:10000',
+        'fecha_pago' => 'required|date',
+        'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
+        'estudiante_documento' => 'required|exists:estudiantes,documento',
+    ], [
+        'valor.min' => 'El valor debe ser mayor a 10000 pesos.',
+        'medio_pago.in' => 'El medio de pago seleccionado no es válido.',
+        'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
+    ]);
 
-        // Intentar crear o encontrar el pago
+    try {
         $pago = Pago::firstOrCreate(
             [
                 'tipo' => 'inscripción',
@@ -50,7 +50,7 @@ class PagoController extends Controller
                 'valor' => $request->valor,
                 'fecha_pago' => $request->fecha_pago,
                 'medio_pago' => $request->medio_pago,
-                'estado' => 'Pagado', // siempre se paga completa
+                'estado' => 'Pagado',
             ]
         );
 
@@ -62,7 +62,19 @@ class PagoController extends Controller
 
         return redirect()->route('pagos.inscripciones.index')
             ->with('success', 'Pago de inscripción registrado correctamente');
+
+    } catch (QueryException $e) {
+        // Si el error es por UNIQUE, lo manejamos
+        if ($e->getCode() === "23000") {
+            return redirect()->back()
+                ->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])
+                ->withInput();
+        }
+
+        // Otros errores de base de datos
+        throw $e;
     }
+}
 
 
     // Vista de mensualidades (la desarrollamos después)
