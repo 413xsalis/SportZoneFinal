@@ -13,6 +13,11 @@ use App\Exports\PagosExports;
 
 class ReporteController extends Controller
 {
+
+    public function index()
+    {
+        return view('colaborador.reportes.pdf');
+    }
     public function reporteInscripciones(Request $request)
     {
         $fechaInicio = $request->fecha_inicio;
@@ -25,7 +30,7 @@ class ReporteController extends Controller
         return $pdf->stream('reporte_inscripciones.pdf');
     }
 
-             //  Reporte de Pagos en PDF
+    //  Reporte de Pagos en PDF
     public function pagosPDF(Request $request)
     {
         $tipo = $request->tipo;
@@ -47,7 +52,7 @@ class ReporteController extends Controller
         return $pdf->download('reporte_pagos.pdf');
     }
 
-            // Reporte de Pagos en Excel
+    // Reporte de Pagos en Excel
     public function pagosExcel(Request $request)
     {
         $tipo = $request->tipo;
@@ -60,7 +65,7 @@ class ReporteController extends Controller
 
 }
 
-    
+
 
 
 
