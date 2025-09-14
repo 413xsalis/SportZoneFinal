@@ -162,8 +162,8 @@
                                                 <div class="mb-3">
                                                     <i class="bi bi-person-circle fa-3x text-gray-300"></i>
                                                 </div>
-                                                <h5 class="card-title">{{ $instructor->nombre }}</h5>
-                                                <p class="card-text text-muted">{{ $instructor->especialidad }}</p>
+                                                <h5 class="card-title">{{ $instructor->name ?? '' }}</h5>
+                                                <p class="card-text text-muted">{{ $instructor->email ?? '' }}</p>
                                                 <p class="card-text small">
                                                     <i class="bi bi-telephone me-1"></i> {{ $instructor->telefono }}
                                                 </p>
