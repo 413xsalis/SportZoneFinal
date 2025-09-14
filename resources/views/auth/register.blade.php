@@ -37,54 +37,49 @@
                                     </div>
 
 
-                                    <form action="{{ route('register') }}" method="post">
+                                    <form action="{{ route('register') }}" method="POST">
                                         @csrf
-                                        <p>Por favor registrate</p>
+                                        <p>Por favor regístrate</p>
 
-
-                                        <div data-mdb-input-init class="form-outline mb-4">
+                                        <div class="form-outline mb-4">
                                             <input type="text" name="name" id="name" class="form-control"
-                                                placeholder="Digita tu nombre" />
+                                                value="{{ old('name') }}" required>
                                             <label class="form-label" for="name">Nombre</label>
+                                            @error('name')
+                                                <div class="text-danger small">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
-                                        <div data-mdb-input-init class="form-outline mb-4">
+                                        <div class="form-outline mb-4">
                                             <input type="email" name="email" id="email" class="form-control"
-                                                placeholder="Digita tu correo electronico" />
-                                            <label class="form-label" for="email">Correo Electronico</label>
+                                                value="{{ old('email') }}" required>
+                                            <label class="form-label" for="email">Correo Electrónico</label>
+                                            @error('email')
+                                                <div class="text-danger small">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
-                                        <div data-mdb-input-init class="form-outline mb-4">
+                                        <div class="form-outline mb-4">
                                             <input type="password" name="password" id="password" class="form-control"
-                                                placeholder="Digita la contraseña" />
+                                                required>
                                             <label class="form-label" for="password">Contraseña</label>
+                                            @error('password')
+                                                <div class="text-danger small">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
-                                        <div data-mdb-input-init class="form-outline mb-4">
+                                        <div class="form-outline mb-4">
                                             <input type="password" name="password_confirmation"
-                                                id="password_confirmation" class="form-control"
-                                                placeholder="Digita la contraseña" />
-                                            <label class="form-label" for="password">Confirmar Contraseña</label>
+                                                id="password_confirmation" class="form-control" required>
+                                            <label class="form-label" for="password_confirmation">Confirmar
+                                                Contraseña</label>
                                         </div>
-
 
                                         <div class="text-center pt-1 mb-5 pb-1">
-                                            <button data-mdb-button-init data-mdb-ripple-init
-                                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                                type="submit">Registrarse</button><br>
-
+                                            <button class="btn btn-primary btn-block gradient-custom-2 mb-3"
+                                                type="submit">Registrarse</button>
                                         </div>
-
-                                        <div class="d-flex align-items-center justify-content-center pb-4">
-                                            <p class="mb-0 me-2">Ir al Login</p>
-                                            <a href="{{ route('login') }}" data-mdb-button-init data-mdb-ripple-init
-                                                class="btn btn-outline-danger">Login</a>
-                                        </div>
-
-
-
                                     </form>
-
                                 </div>
                             </div>
                             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
