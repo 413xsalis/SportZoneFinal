@@ -27,9 +27,13 @@ class AdminController extends Controller
         // Obtener la fecha actual
         $fechaActual = Carbon::now()->format('Y-m-d');
 
+        // Clases programadas para hoy - usando la columna 'fecha'
+        $clasesHoy = Horario::with(['instructor', 'grupo'])
+            ->whereDate('fecha', $fechaActual)
+            ->orderBy('hora_inicio')
+            ->get();
 
-
-
+        $clasesHoyCount = $clasesHoy->count();
 
         // Todos los instructores
         $instructores = User::all();
@@ -37,6 +41,8 @@ class AdminController extends Controller
         return view('administrador.admin.principal', compact(
             'totalAlumnos',
             'totalUsers',
+            'clasesHoy',
+            'clasesHoyCount',
             'instructores'
         ));
     }
