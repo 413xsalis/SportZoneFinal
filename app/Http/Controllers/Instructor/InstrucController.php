@@ -19,11 +19,11 @@ public function index()
     $totalInstructores = User::role('Instructor')->count();
 
     //asistencias de hoy
-    $asistenciasHoy = Asistencia::with('estudiante', 'grupo')
-        ->whereDate('created_at', Carbon::today())
-        ->latest()
-        ->take(10)
-        ->get();
+$asistenciasHoy = Asistencia::with('estudiante', 'subgrupo')
+    ->whereDate('created_at', Carbon::today())
+    ->latest()
+    ->take(10)
+    ->get();
 
     return view('instructor.inicio.principal', compact(
         'clasesActivas',
