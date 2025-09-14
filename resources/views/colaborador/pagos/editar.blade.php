@@ -81,6 +81,17 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mb-3">
+                             <label class="form-label">Mes</label>
+                             <input type="number" name="mes" class="form-control" 
+                                     value="{{ old('mes', $pago->mes) }}" min="1" max="12" required>
+                            </div>
+
+                           <div class="mb-3">
+    <label class="form-label">Año</label>
+    <input type="number" name="año" class="form-control" 
+           value="{{ old('año', $pago->año) }}" min="2023" max="2100" required>
+</div>
 
                         <div class="d-flex justify-content-end mt-4">
                             <button type="submit" class="btn btn-success me-2">
