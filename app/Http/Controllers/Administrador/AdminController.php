@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Administrador;
 
 use App\Http\Controllers\Controller;
 use App\Models\Estudiante;
-use App\Models\Instructor;
 use App\Models\Horario;
 use Carbon\Carbon;
 use App\Models\User;
 
 class AdminController extends Controller
 {
-public function index()
+    public function index()
     {
         return $this->principal();
     }
@@ -21,28 +20,28 @@ public function index()
     {
         // Total de alumnos
         $totalAlumnos = Estudiante::count();
-        
+
         // Total de instructores
         $totalUsers = User::count();
-        
+
         // Obtener la fecha actual
         $fechaActual = Carbon::now()->format('Y-m-d');
-        
+
         // Clases programadas para hoy - usando la columna 'fecha'
         $clasesHoy = Horario::with(['instructor', 'grupo'])
             ->whereDate('fecha', $fechaActual)
             ->orderBy('hora_inicio')
             ->get();
-            
+
         $clasesHoyCount = $clasesHoy->count();
-        
+
         // Todos los instructores
         $instructores = User::all();
 
         return view('administrador.admin.principal', compact(
-            'totalAlumnos', 
-            'totalUsers', 
-            'clasesHoy', 
+            'totalAlumnos',
+            'totalUsers',
+            'clasesHoy',
             'clasesHoyCount',
             'instructores'
         ));
