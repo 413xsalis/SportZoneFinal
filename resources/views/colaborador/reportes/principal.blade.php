@@ -211,7 +211,7 @@
                         </div>
                         <div class="col-md-8">
                             <p class="mb-3">Genera reportes de pagos filtrados por tipo y fecha. Exporta en formato PDF o Excel.</p>
-                            <form action="{{ route('reportes.pagos') }}" method="GET" class="row g-3">
+                            <form action="{{ route('reportes.mostrar') }}" method="GET" class="row g-3">
                                 <div class="col-md-3">
                                     <label for="tipo" class="form-label">Tipo de Pago</label>
                                     <select name="tipo" id="tipo" class="form-select">
