@@ -232,7 +232,7 @@
                                 <p class="mb-4">
                                     Nos caracterizamos por nuestra capacidad de adaptación a distintos sectores y desafíos tecnológicos.
                                      Utilizamos una amplia gama de lenguajes de programación, frameworks y herramientas
-                                      que nos permiten crear soluciones a medida para cada tipo de cliente
+                                      que nos permiten crear soluciones a medida para cada tipo de cliente.
 
                                 </p>
                                 <!--<a href="#" class="btn btn-custom">VER MAS</a>-->
