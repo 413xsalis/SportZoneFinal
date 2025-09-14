@@ -30,7 +30,7 @@ class PagoController extends Controller
     {
         $request->validate([
             'tipo' => 'required|in:inscripción',
-            'valor' => 'required|numeric',
+            'valor' => 'required|numeric|min:10000',
             'fecha_pago' => 'required|date',
             'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
             'estudiante_documento' => 'required|exists:estudiantes,documento',
@@ -39,28 +39,31 @@ class PagoController extends Controller
             'medio_pago.in' => 'El medio de pago seleccionado no es válido.',
             'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
         ]);
-        // Verificar si ya existe un pago de inscripción para el estudiante
-        $existePago = Pago::where('tipo', 'inscripción')
-            ->where('estudiante_documento', $request->estudiante_documento)
-            ->exists();
 
-        if ($existePago) {
+        // Intentar crear o encontrar el pago
+        $pago = Pago::firstOrCreate(
+            [
+                'tipo' => 'inscripción',
+                'estudiante_documento' => $request->estudiante_documento,
+            ],
+            [
+                'valor' => $request->valor,
+                'fecha_pago' => $request->fecha_pago,
+                'medio_pago' => $request->medio_pago,
+                'estado' => 'Pagado', // siempre se paga completa
+            ]
+        );
+
+        if (!$pago->wasRecentlyCreated) {
             return redirect()->back()
                 ->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])
                 ->withInput();
         }
-        // Crear el pago de inscripción
-        Pago::create([
-            'tipo' => 'inscripción',
-            'valor' => $request->valor,
-            'fecha_pago' => $request->fecha_pago,
-            'medio_pago' => $request->medio_pago,
-            'estado' => 'Pagado', // Por defecto, una inscripción se paga completa
-            'estudiante_documento' => $request->estudiante_documento,
-        ]);
 
-        return redirect()->route('pagos.inscripciones.index')->with('success', 'Pago de inscripción registrado correctamente');
+        return redirect()->route('pagos.inscripciones.index')
+            ->with('success', 'Pago de inscripción registrado correctamente');
     }
+
 
     // Vista de mensualidades (la desarrollamos después)
 
@@ -139,11 +142,11 @@ class PagoController extends Controller
             'mes' => $request->mes,
             'año' => $request->año,
         ]);
-    if ($pago->tipo === 'inscripción') {
-        return redirect()->route('pagos.inscripciones.index')->with('success', 'El pago fue actualizado correctamente.');
-    } else {
-        return redirect()->route('pagos.mensualidades.index')->with('success', 'El pago fue actualizado correctamente.');
-    }
+        if ($pago->tipo === 'inscripción') {
+            return redirect()->route('pagos.inscripciones.index')->with('success', 'El pago fue actualizado correctamente.');
+        } else {
+            return redirect()->route('pagos.mensualidades.index')->with('success', 'El pago fue actualizado correctamente.');
+        }
     }
 
     // Eliminar un pago
