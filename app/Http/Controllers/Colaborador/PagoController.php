@@ -19,9 +19,9 @@ class PagoController extends Controller
     // Mostrar formulario y lista de pagos de inscripción
     public function inscripciones()
     {
-         $pagos = Pago::with('estudiante')->where('tipo', 'inscripción')->get();
-         $estudiantes = Estudiante::all();
-         
+        $pagos = Pago::with('estudiante')->where('tipo', 'inscripción')->get();
+        $estudiantes = Estudiante::all();
+
         return view('colaborador.pagos.inscripciones', compact('pagos', 'estudiantes'));
     }
 
@@ -40,14 +40,14 @@ class PagoController extends Controller
             'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
         ]);
         // Verificar si ya existe un pago de inscripción para el estudiante
-         $existePago = Pago::where('tipo', 'inscripción')
-        ->where('estudiante_documento', $request->estudiante_documento)
-        ->exists();
+        $existePago = Pago::where('tipo', 'inscripción')
+            ->where('estudiante_documento', $request->estudiante_documento)
+            ->exists();
 
         if ($existePago) {
-        return redirect()->back()
-            ->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])
-            ->withInput();
+            return redirect()->back()
+                ->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])
+                ->withInput();
         }
         // Crear el pago de inscripción
         Pago::create([
@@ -65,54 +65,54 @@ class PagoController extends Controller
     // Vista de mensualidades (la desarrollamos después)
 
     public function mensualidades()
-{
-    $estudiantes = Estudiante::all();
-    $pagos = Pago::with('estudiante')->where('tipo', 'mensualidad')->get(); // Para mostrar en el select
+    {
+        $estudiantes = Estudiante::all();
+        $pagos = Pago::with('estudiante')->where('tipo', 'mensualidad')->get(); // Para mostrar en el select
 
-    return view('colaborador.pagos.mensualidades', compact('estudiantes', 'pagos'));
-}
+        return view('colaborador.pagos.mensualidades', compact('estudiantes', 'pagos'));
+    }
 
-public function storeMensualidad(Request $request)
-{
-    $request->validate([
-        'tipo' => 'required|in:mensualidad',
-        'valor' => 'required|numeric',
-        'fecha_pago' => 'required|date',
-        'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
-        'estudiante_documento' => 'required|exists:estudiantes,documento',
-        'mes' => 'required|integer|min:1|max:12',
-        'año' => 'required|integer|min:2025|max:2100',
-    ], [
-        'valor.min' => 'El valor debe ser mayor a 10000 pesos.',
-        'medio_pago.in' => 'El medio de pago seleccionado no es válido.',
-        'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
-    ]);
+    public function storeMensualidad(Request $request)
+    {
+        $request->validate([
+            'tipo' => 'required|in:mensualidad',
+            'valor' => 'required|numeric',
+            'fecha_pago' => 'required|date',
+            'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
+            'estudiante_documento' => 'required|exists:estudiantes,documento',
+            'mes' => 'required|integer|min:1|max:12',
+            'año' => 'required|integer|min:2025|max:2100',
+        ], [
+            'valor.min' => 'El valor debe ser mayor a 10000 pesos.',
+            'medio_pago.in' => 'El medio de pago seleccionado no es válido.',
+            'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
+        ]);
 
-    Pago::create([
-        'tipo' => 'mensualidad',
-        'concepto' => $request->concepto,
-        'valor' => $request->valor,
-        'fecha_pago' => $request->fecha_pago,
-        'medio_pago' => $request->medio_pago,
-        'estado' => 'Pagado',
-        'estudiante_documento' => $request->estudiante_documento,
-        'mes' => $request->mes,
-        'año' => $request->año,
-    ]);
+        Pago::create([
+            'tipo' => 'mensualidad',
+            'concepto' => $request->concepto,
+            'valor' => $request->valor,
+            'fecha_pago' => $request->fecha_pago,
+            'medio_pago' => $request->medio_pago,
+            'estado' => 'Pagado',
+            'estudiante_documento' => $request->estudiante_documento,
+            'mes' => $request->mes,
+            'año' => $request->año,
+        ]);
 
-    return redirect()->route('pagos.mensualidades.index')->with('success', 'Pago de mensualidad registrado correctamente');
-}
+        return redirect()->route('pagos.mensualidades.index')->with('success', 'Pago de mensualidad registrado correctamente');
+    }
 
-// Mostrar formulario de edición
-public function edit($id)
-{
-    $pago = Pago::findOrFail($id);
-    $estudiantes = Estudiante::all();
+    // Mostrar formulario de edición
+    public function edit($id)
+    {
+        $pago = Pago::findOrFail($id);
+        $estudiantes = Estudiante::all();
 
-    return view('colaborador.pagos.editar', compact('pago', 'estudiantes'));
-}
+        return view('colaborador.pagos.editar', compact('pago', 'estudiantes'));
+    }
 
-  /**
+    /**
      * Actualizar el pago en la base de datos.
      */
     public function update(Request $request, $id)
@@ -125,8 +125,8 @@ public function edit($id)
             'medio_pago' => 'required|string',
             'estado' => 'required|string',
             'estudiante_documento' => 'required|exists:estudiantes,documento',
-            'mes' => 'required|integer|min:1|max:12',
-            'año' => 'required|integer|min:2023|max:2100',
+            'mes' => 'nullable|integer|min:1|max:12',
+            'año' => 'nullable|integer|min:2023|max:2100',
         ]);
 
         $pago->update([
@@ -143,30 +143,30 @@ public function edit($id)
         return redirect()->route('pagos.pagos.index')->with('success', 'El pago fue actualizado correctamente.');
     }
 
-// Eliminar un pago
-public function destroy($id)
-{
-    $pago = Pago::findOrFail($id);
-    $pago->delete();
+    // Eliminar un pago
+    public function destroy($id)
+    {
+        $pago = Pago::findOrFail($id);
+        $pago->delete();
 
-    return redirect()->back()->with('success', 'Pago eliminado correctamente');
-}
+        return redirect()->back()->with('success', 'Pago eliminado correctamente');
+    }
 
-// Listado de pagos eliminados
-public function eliminados()
-{
-    $pagos = Pago::onlyTrashed()->with('estudiante')->get();
-    return view('colaborador.pagos.eliminados', compact('pagos'));
-}
+    // Listado de pagos eliminados
+    public function eliminados()
+    {
+        $pagos = Pago::onlyTrashed()->with('estudiante')->get();
+        return view('colaborador.pagos.eliminados', compact('pagos'));
+    }
 
-// Restaurar un pago eliminado
-public function restaurar($id)
-{
-    $pago = Pago::withTrashed()->findOrFail($id);
-    $pago->restore();
+    // Restaurar un pago eliminado
+    public function restaurar($id)
+    {
+        $pago = Pago::withTrashed()->findOrFail($id);
+        $pago->restore();
 
-    return redirect()->route('pagos.eliminados')->with('success', 'Pago restaurado correctamente');
-}
+        return redirect()->route('pagos.eliminados')->with('success', 'Pago restaurado correctamente');
+    }
 
 
 
