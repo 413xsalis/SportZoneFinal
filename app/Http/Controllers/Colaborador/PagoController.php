@@ -125,6 +125,8 @@ class PagoController extends Controller
             'medio_pago' => 'required|string',
             'estado' => 'required|string',
             'estudiante_documento' => 'required|exists:estudiantes,documento',
+            'mes' => 'nullable|integer|min:1|max:12',
+            'año' => 'nullable|integer|min:2023|max:2100',
         ]);
 
         $pago->update([
