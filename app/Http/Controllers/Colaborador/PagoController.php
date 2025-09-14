@@ -140,7 +140,8 @@ class PagoController extends Controller
             'año' => $request->año,
         ]);
 
-        return redirect()->route('pagos.pagos.index')->with('success', 'El pago fue actualizado correctamente.');
+        return redirect()->back()->with('success', 'El pago fue actualizado correctamente.');
+
     }
 
     // Eliminar un pago
