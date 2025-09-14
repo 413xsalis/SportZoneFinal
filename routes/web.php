@@ -61,8 +61,6 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
 
     Route::get('instructor/{usuario}', [InstructorController::class, 'show'])->name('instructor.show');
 
-    // Estudiantes
-    // Route::resource('estudiantes', EstudianteController::class)->except(['show']);
 
     // Horarios
     Route::resource('horarios', HorarioController::class);
