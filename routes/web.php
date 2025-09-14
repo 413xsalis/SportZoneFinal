@@ -22,17 +22,19 @@ use App\Http\Controllers\ContactoController;
 // Página principal
 Route::get('/', function () {
     return view('welcome');
-}) -> name('welcome');
+})->name('welcome');
 
 // Autenticación
 Auth::routes();
-Route::group(['middleware' => [
-    'auth', 
-    \App\Http\Middleware\PreventBackHistory::class
-]], function () {
+Route::group([
+    'middleware' => [
+        'auth',
+        \App\Http\Middleware\PreventBackHistory::class
+    ]
+], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
-    
+
 
 
 // ========================= ADMIN ========================= //
@@ -67,8 +69,10 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
 
     // Reportes
     Route::get('/reportes/inscripciones', [ReporteController::class, 'reporteInscripciones'])->name('reportes.inscripciones');
-    Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos.pdf');
+    // Reportes para COLABORADOR
+    Route::get('/reportes/pagos/pdf', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos');
     Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])->name('reportes.pagos.excel');
+
 
 });
 
@@ -161,7 +165,7 @@ Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
     // SoftDeletes: pagos eliminados y restauración
     Route::get('/eliminados', [PagoController::class, 'eliminados'])->name('eliminados');
     Route::patch('/{id}/restaurar', [PagoController::class, 'restaurar'])->name('restaurar');
-    
+
 });
 
 
