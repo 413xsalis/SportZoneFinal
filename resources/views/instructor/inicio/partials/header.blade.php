@@ -125,7 +125,7 @@
     </div> 
 
     {{-- Lista de enlaces del menú principal --}}
-    <ul class="app-menu">
+    <ul class="app-menu mt-3">
       {{-- Enlace de inicio corregido --}}
       <a class="app-menu__item" href="{{ route('instructor.dashboard') }}"><i class="app-menu__icon bi bi-house"></i><span class="app-menu__label">Inicio</span></a>
 
