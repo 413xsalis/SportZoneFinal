@@ -59,7 +59,7 @@
 </head>
 
 <body class="app sidebar-mini">
-    @include('instructor.horario.partials.header')
+    @include('instructor.inicio.partials.header')
 
     @hasSection('page-header')
         <div class="page-header bg-white border-bottom">
