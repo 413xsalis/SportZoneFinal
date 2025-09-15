@@ -111,7 +111,8 @@
           <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
             class="profile-image-sidebar me-3">
         @else
-          <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=36&background=random"
+          <img
+            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=36&background=0D6EFD&color=fff"
             alt="Avatar por defecto" class="rounded-circle shadow-sm border profile-image-nav"
             style="width: 36px; height: 36px; object-fit: cover;">
         @endif
