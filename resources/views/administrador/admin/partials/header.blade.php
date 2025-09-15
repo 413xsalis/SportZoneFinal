@@ -112,9 +112,8 @@
             class="profile-image-sidebar me-3">
         @else
           <img
-            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=36&background=0D6EFD&color=fff"
-            alt="Avatar por defecto" class="rounded-circle shadow-sm border profile-image-nav"
-            style="width: 36px; height: 36px; object-fit: cover;">
+            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=60&background=0D6EFD&color=fff"
+            alt="Avatar por defecto" class="profile-image-sidebar me-3">
         @endif
 
         <div>
