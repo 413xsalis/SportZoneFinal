@@ -218,11 +218,20 @@
                         <input class="form-check-input" type="checkbox" id="useAsProfile" name="use_as_profile" checked>
                         <label class="form-check-label" for="useAsProfile">Usar como foto de perfil</label>
                     </div>
+                    
+                    @if(Auth::user()->foto_perfil)
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="removeProfileImage" name="remove_profile_image">
+                            <label class="form-check-label text-danger fw-semibold" for="removeProfileImage">
+                                Eliminar imagen actual y usar avatar por defecto
+                            </label>
+                        </div>
+                    @endif
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" form="logoForm">Subir imagen</button>
+                <button type="submit" class="btn btn-primary" form="logoForm">Guardar cambios</button>
             </div>
         </div>
     </div>

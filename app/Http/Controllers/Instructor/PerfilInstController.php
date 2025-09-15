@@ -54,31 +54,32 @@ class PerfilInstController extends Controller
         return redirect()->route('perfilinst.edit')->with('success', 'Documento subido correctamente.');
     }
 
-    public function uploadLogo(Request $request)
-    {
-        $request->validate([
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024',
-        ]);
+ public function uploadLogo(Request $request)
+{
+    $user = Auth::user();
 
-        $user = Auth::user();
-
-        // Guardar logo
-        $path = $request->file('logo')->store('logos', 'public');
-
-        if ($request->has('use_as_profile')) {
-            // Eliminar foto de perfil anterior si existe
-            if ($user->foto_perfil) {
-                Storage::delete($user->foto_perfil);
-            }
-            $user->foto_perfil = $path;
+    // Si se pidió eliminar la foto
+    if ($request->has('remove_profile_image')) {
+        if ($user->foto_perfil && \Storage::exists('public/' . $user->foto_perfil)) {
+            \Storage::delete('public/' . $user->foto_perfil);
         }
-
-        $user->logo_personalizado = $path;
+        $user->foto_perfil = null;
         $user->save();
 
-        return redirect()->route('perfilinst.edit')->with('success', 'Logo actualizado correctamente.');
+        return back()->with('success', 'Imagen eliminada. Se usará el avatar por defecto.');
     }
 
+    // Si se sube nueva imagen
+    if ($request->hasFile('logo')) {
+        $path = $request->file('logo')->store('perfiles', 'public');
+        $user->foto_perfil = $path;
+        $user->save();
+
+        return back()->with('success', 'Imagen actualizada correctamente.');
+    }
+
+    return back()->with('warning', 'No se subió ninguna imagen.');
+}
     public function changePassword(Request $request)
     {
         $request->validate([
