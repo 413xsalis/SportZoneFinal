@@ -122,17 +122,22 @@
           <small class="text-white-50">Instructor</small>
         </div>
       </div>
-    </div> 
+    </div>
 
     {{-- Lista de enlaces del menú principal --}}
     <ul class="app-menu mt-3">
       {{-- Enlace de inicio corregido --}}
-      <a class="app-menu__item" href="{{ route('instructor.dashboard') }}"><i class="app-menu__icon bi bi-house"></i><span class="app-menu__label">Inicio</span></a>
+      <a class="app-menu__item" href="{{ route('instructor.dashboard') }}"><i
+          class="app-menu__icon bi bi-house"></i><span class="app-menu__label">Inicio</span></a>
 
-      <a class="app-menu__item" href="{{ route('instructor.horarios') }}"><i class="app-menu__icon bi bi-calendar2-week"></i><span class="app-menu__label">Horarios</span></a>
+      <a class="app-menu__item" href="{{ route('instructor.horarios') }}"><i
+          class="app-menu__icon bi bi-calendar2-week"></i><span class="app-menu__label">Horarios</span></a>
 
-      <a class="app-menu__item" href="{{ route('instructor.asistencia') }}"><i class="app-menu__icon bi bi-person-check"></i><span class="app-menu__label">Asistencia</span></a>
-      
-      <a class="app-menu__item" href="{{ route('instructor.reporte.asistencias') }}"><i class="app-menu__icon bi bi-file-earmark-bar-graph"></i><span class="app-menu__label">Reportes</span></a>
+      <a class="app-menu__item" href="{{ route('instructor.asistencia') }}"><i
+          class="app-menu__icon bi bi-person-check"></i><span class="app-menu__label">Asistencia</span></a>
+
+      <a class="app-menu__item" href="{{ route('instructor.reporte.asistencias') }}"><i
+          class="app-menu__icon bi bi-file-earmark-bar-graph"></i><span class="app-menu__label">Reportes</span></a>
     </ul>
   </aside>
+</body>
