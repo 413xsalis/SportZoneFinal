@@ -68,12 +68,12 @@
              alt="Foto de perfil" 
              class="rounded-circle shadow-sm border profile-image-nav"
              style="width: 36px; height: 36px; object-fit: cover;">
-      @else
-        <div class="d-flex justify-content-center align-items-center rounded-circle bg-light text-secondary shadow-sm"
-             style="width: 36px; height: 36px;">
-          <i class="bi bi-person fs-5"></i>
-        </div>
-      @endif
+          @else
+            <img
+              src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=36&background=0D6EFD&color=fff"
+              alt="Avatar por defecto" class="rounded-circle shadow-sm border profile-image-nav"
+              style="width: 36px; height: 36px; object-fit: cover;">
+          @endif
       <span class="ms-2 fw-semibold d-none d-md-inline">
         {{ Auth::user()->name }}
       </span>
@@ -110,10 +110,11 @@
         @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
           <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
             class="profile-image-sidebar me-3">
-        @else
-          <div class="default-avatar default-avatar-sidebar me-3">
-            <i class="bi bi-person fs-4"></i>
-          </div>
+       @else
+          <img
+            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=36&background=0D6EFD&color=fff"
+            alt="Avatar por defecto" class="rounded-circle shadow-sm border profile-image-nav"
+            style="width: 36px; height: 36px; object-fit: cover;">
         @endif
         <div>
           <p class="mb-0 text-white fw-bold">{{ Auth::user()->name }}</p>
