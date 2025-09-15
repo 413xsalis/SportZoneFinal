@@ -68,10 +68,10 @@
               class="rounded-circle shadow-sm border profile-image-nav"
               style="width: 36px; height: 36px; object-fit: cover;">
           @else
-            <div class="d-flex justify-content-center align-items-center rounded-circle bg-light text-secondary shadow-sm"
-              style="width: 36px; height: 36px;">
-              <i class="bi bi-person fs-5"></i>
-            </div>
+            <img
+              src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=36&background=0D6EFD&color=fff"
+              alt="Avatar por defecto" class="rounded-circle shadow-sm border profile-image-nav"
+              style="width: 36px; height: 36px; object-fit: cover;">
           @endif
           <span class="ms-2 fw-semibold d-none d-md-inline">
             {{ Auth::user()->name }}
