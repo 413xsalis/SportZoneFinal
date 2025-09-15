@@ -58,27 +58,29 @@ class PerfilColabController extends Controller
 
     public function uploadLogo(Request $request)
     {
-        $request->validate([
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024',
-        ]);
-
         $user = Auth::user();
 
-        // Guardar logo
-        $path = $request->file('logo')->store('logos', 'public');
-
-        if ($request->has('use_as_profile')) {
-            // Eliminar foto de perfil anterior si existe
-            if ($user->foto_perfil) {
-                Storage::delete($user->foto_perfil);
+        // Si se pidió eliminar la foto
+        if ($request->has('remove_profile_image')) {
+            if ($user->foto_perfil && \Storage::exists('public/' . $user->foto_perfil)) {
+                \Storage::delete('public/' . $user->foto_perfil);
             }
-            $user->foto_perfil = $path;
+            $user->foto_perfil = null;
+            $user->save();
+
+            return back()->with('success', 'Imagen eliminada. Se usará el avatar por defecto.');
         }
 
-        $user->logo_personalizado = $path;
-        $user->save();
+        // Si se sube nueva imagen
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->store('perfiles', 'public');
+            $user->foto_perfil = $path;
+            $user->save();
 
-        return redirect()->route('perfilcolab.edit')->with('success', 'Logo actualizado correctamente.');
+            return back()->with('success', 'Imagen actualizada correctamente.');
+        }
+
+        return back()->with('warning', 'No se subió ninguna imagen.');
     }
 
     public function changePassword(Request $request)

@@ -208,21 +208,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('profile.uploadLogo') }}" method="POST" enctype="multipart/form-data" id="logoForm">
+                <form action="{{ route('perfilinst.uploadLogo') }}" method="POST" enctype="multipart/form-data" id="logoForm">
                     @csrf
                     <div class="mb-3">
                         <label for="logo" class="form-label">Seleccionar imagen</label>
                         <input class="form-control" type="file" id="logo" name="logo" accept="image/*">
                     </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="useAsProfile" name="use_as_profile" checked>
-                        <label class="form-check-label" for="useAsProfile">Usar como foto de perfil</label>
-                    </div>
+                    @if(Auth::user()->foto_perfil)
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="removeProfileImage" name="remove_profile_image">
+                            <label class="form-check-label text-danger fw-semibold" for="removeProfileImage">
+                                Eliminar imagen actual y usar avatar por defecto
+                            </label>
+                        </div>
+                    @endif
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" form="logoForm">Subir imagen</button>
+                <button type="submit" class="btn btn-primary" form="logoForm">Guardar cambios</button>
             </div>
         </div>
     </div>
