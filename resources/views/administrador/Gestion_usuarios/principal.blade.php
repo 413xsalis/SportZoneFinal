@@ -6,14 +6,7 @@
             <!-- ENCABEZADO CON INFORMACIÓN DEL ADMINISTRADOR -->
             <div class="app-title">
                 <div class="d-flex align-items-center">
-                    <!-- MUESTRA LA FOTO DE PERFIL DEL ADMINISTRADOR O AVATAR POR DEFECTO -->
-                    @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
-                        <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
-                            class="profile-image-sidebar me-3">
-                    @else
-                        <div class="default-avatar default-avatar-sidebar me-3">
-                            <i class="bi bi-person fs-4"></i> <!-- Icono de persona -->
-                        </div>
+
                     @endif
                     <div>
                         <h1 class="mb-1"><i class="bi bi-people me-2"></i> Gesti&oacute;n de Usuarios</h1>
