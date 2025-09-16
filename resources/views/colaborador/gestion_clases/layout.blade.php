@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Assets locales -->
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/png">
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+
     <title>@yield('title', 'SportZone')</title>
     <style>
         :root {

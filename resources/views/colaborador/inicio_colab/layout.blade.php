@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +11,11 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Assets locales -->
+
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/png">
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
     <title>@yield('title', 'SportZone')</title>
     <style>
         :root {
@@ -21,7 +26,7 @@
             --warning-color: #f6c23e;
             --light-bg: #f8f9fc;
         }
-        
+
 
         .loader-wrapper {
             position: fixed;
@@ -29,7 +34,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -46,54 +51,60 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
-        
     </style>
 
 </head>
+
 <body class="app sidebar-mini">
     @include('colaborador.inicio_colab.partials.header')
-    
 
-    
+
+
     <div class="app-content">
         @yield('content')
-        
+
     </div>
 
-    
+
     <div class="loader-wrapper" id="loader" style="display: none;">
         <div class="loader"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    // Mostrar loader solo para enlaces que navegan a otras páginas
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('a').forEach(link => {
-            // Excluir enlaces que no deben activar el loader
-            if (link.hasAttribute('data-toggle') || 
-                link.hasAttribute('data-bs-toggle') || 
-                link.getAttribute('href') === '#' ||
-                link.getAttribute('href') === '' ||
-                link.classList.contains('no-loader')) {
-                return;
-            }
-            
-            link.addEventListener('click', function() {
-                document.getElementById('loader').style.display = 'flex';
+        // Mostrar loader solo para enlaces que navegan a otras páginas
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('a').forEach(link => {
+                // Excluir enlaces que no deben activar el loader
+                if (link.hasAttribute('data-toggle') ||
+                    link.hasAttribute('data-bs-toggle') ||
+                    link.getAttribute('href') === '#' ||
+                    link.getAttribute('href') === '' ||
+                    link.classList.contains('no-loader')) {
+                    return;
+                }
+
+                link.addEventListener('click', function () {
+                    document.getElementById('loader').style.display = 'flex';
+                });
             });
         });
-    });
 
-    // Ocultar loader cuando la página termine de cargar
-    window.addEventListener('load', function() {
-        document.getElementById('loader').style.display = 'none';
-    });
+        // Ocultar loader cuando la página termine de cargar
+        window.addEventListener('load', function () {
+            document.getElementById('loader').style.display = 'none';
+        });
     </script>
 
     @include('colaborador.inicio_colab.partials.footer')
 </body>
+
 </html>
