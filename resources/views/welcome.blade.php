@@ -7,8 +7,7 @@
     <title>SPORT_ZONE</title>
     <!-- Bootstrap CSS -->
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('logo.png') }}" type="image/png">
-    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+ 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
