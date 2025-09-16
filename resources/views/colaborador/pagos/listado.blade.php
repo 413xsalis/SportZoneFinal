@@ -1,7 +1,7 @@
 {{-- PAGOS DE INSCRIPCIÓN --}}
 @extends('colaborador.pagos.partials.layout')
 
-@section('contenido')
+@section('content')
     <h4 class="mt-4 mb-3">Pagos de Inscripción</h4>
 
     @if ($pagos->where('tipo', 'inscripción')->isEmpty())

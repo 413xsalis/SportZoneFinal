@@ -65,6 +65,7 @@
         @yield('content')
 
     </div>
+
     <div class="loader-wrapper" id="loader" style="display: none;">
         <div class="loader"></div>
     </div>

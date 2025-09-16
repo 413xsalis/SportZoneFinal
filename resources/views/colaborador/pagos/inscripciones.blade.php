@@ -1,7 +1,7 @@
 @extends('colaborador.pagos.partials.layout')
 
 @section('title', 'Gestión de Pagos de Inscripción')
-@section('contenido')
+@section('content')
 
     <style>
         :root {

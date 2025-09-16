@@ -1,6 +1,6 @@
 @extends('colaborador.pagos.partials.layout')
 
-@section('contenido')
+@section('content')
     <div class="container mt-4">
         <h3 class="mb-4">Registrar Pago</h3>
 
