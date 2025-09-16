@@ -73,7 +73,7 @@
 <body>
 
     <header>
-        <img src="{{ public_path('assets/images/logo_escuela.png') }}" alt="Logo">
+        <img src="{{ public_path('assets/images/logo_escuela.png') }}" style="width: 80px" alt="Logo">
         <h2>Escuela Deportiva</h2>
         <h2>Reporte de Inscripciones</h2>
         <p>
