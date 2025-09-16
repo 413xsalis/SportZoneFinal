@@ -11,18 +11,18 @@
             --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
             --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
-        
+
         body {
             background-color: #f5f7fb;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #343a40;
         }
-        
+
         .app-container {
             max-width: 1400px;
             margin: 0 auto;
         }
-        
+
         .app-title {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
@@ -32,11 +32,11 @@
             box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
         }
-        
+
         .app-title:hover {
             box-shadow: var(--hover-shadow);
         }
-        
+
         .profile-image {
             width: 100px;
             height: 100px;
@@ -44,7 +44,7 @@
             object-fit: cover;
             border: 3px solid rgba(255, 255, 255, 0.3);
         }
-        
+
         .default-avatar {
             width: 100px;
             height: 100px;
@@ -57,7 +57,7 @@
             border: 3px solid rgba(255, 255, 255, 0.3);
             font-size: 2.5rem;
         }
-        
+
         .card-modern {
             border: none;
             border-radius: 16px;
@@ -66,69 +66,69 @@
             overflow: hidden;
             margin-bottom: 1.5rem;
         }
-        
+
         .card-modern:hover {
             box-shadow: var(--hover-shadow);
         }
-        
+
         .card-header-modern {
             background: white;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             padding: 1.25rem 1.5rem;
         }
-        
+
         .detail-item {
             padding: 0.75rem 0;
             border-bottom: 1px solid #f1f3f4;
         }
-        
+
         .detail-label {
             font-weight: 600;
             color: #495057;
             margin-bottom: 0.25rem;
         }
-        
+
         .detail-value {
             color: #343a40;
         }
-        
+
         .btn-modern {
             border-radius: 50px;
             padding: 0.75rem 1.5rem;
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        
+
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             border: none;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
         }
-        
+
         .btn-danger {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             border: none;
         }
-        
+
         .btn-danger:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
         }
-        
+
         .btn-secondary {
             background: linear-gradient(135deg, #6c757d, #495057);
             border: none;
         }
-        
+
         .btn-secondary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
         }
-        
+
         .role-badge {
             display: inline-block;
             padding: 0.5em 0.8em;
@@ -140,12 +140,12 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
-        
+
         .file-preview {
             margin-top: 1rem;
             text-align: center;
         }
-        
+
         .file-preview-img {
             max-width: 200px;
             max-height: 200px;
@@ -153,19 +153,19 @@
             margin-bottom: 0.5rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         .empty-state {
             text-align: center;
             padding: 2rem;
             color: #6c757d;
         }
-        
+
         .empty-state i {
             font-size: 3rem;
             margin-bottom: 1rem;
             color: #dee2e6;
         }
-        
+
         @media (max-width: 768px) {
             .app-title {
                 padding: 1rem;
@@ -193,10 +193,10 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Migas de pan -->
-                
-                
+
+
                 <!-- Información básica -->
                 <div class="card card-modern">
                     <div class="card-header-modern">
@@ -217,7 +217,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="detail-item">
@@ -232,7 +232,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="detail-item">
@@ -253,7 +253,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="detail-item">
@@ -264,7 +264,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Archivos e imágenes -->
                 <div class="card card-modern">
                     <div class="card-header-modern">
@@ -277,7 +277,8 @@
                                     <div class="detail-label">Foto de perfil</div>
                                     @if($usuario->foto_perfil && Storage::disk('public')->exists($usuario->foto_perfil))
                                         <div class="file-preview">
-                                            <img src="{{ asset('storage/' . $usuario->foto_perfil) }}" alt="Foto de perfil" class="file-preview-img">
+                                            <img src="{{ asset('storage/' . $usuario->foto_perfil) }}" alt="Foto de perfil"
+                                                class="file-preview-img">
                                         </div>
                                     @else
                                         <div class="empty-state">
@@ -287,13 +288,14 @@
                                     @endif
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <div class="detail-item">
                                     <div class="detail-label">Foto de documento</div>
                                     @if($usuario->foto_documento && Storage::disk('public')->exists($usuario->foto_documento))
                                         <div class="file-preview">
-                                            <img src="{{ asset('storage/' . $usuario->foto_documento) }}" alt="Foto de documento" class="file-preview-img">
+                                            <img src="{{ asset('storage/' . $usuario->foto_documento) }}"
+                                                alt="Foto de documento" class="file-preview-img">
                                         </div>
                                     @else
                                         <div class="empty-state">
@@ -303,13 +305,14 @@
                                     @endif
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <div class="detail-item">
                                     <div class="detail-label">Logo personalizado</div>
                                     @if($usuario->logo_personalizado && Storage::disk('public')->exists($usuario->logo_personalizado))
                                         <div class="file-preview">
-                                            <img src="{{ asset('storage/' . $usuario->logo_personalizado) }}" alt="Logo personalizado" class="file-preview-img">
+                                            <img src="{{ asset('storage/' . $usuario->logo_personalizado) }}"
+                                                alt="Logo personalizado" class="file-preview-img">
                                         </div>
                                     @else
                                         <div class="empty-state">
@@ -322,7 +325,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Roles asignados -->
                 <div class="card card-modern">
                     <div class="card-header-modern">
@@ -343,7 +346,7 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <!-- Información del sistema -->
                 <div class="card card-modern">
                     <div class="card-header-modern">
@@ -366,7 +369,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="detail-item">
@@ -391,9 +394,12 @@
                         </div>
                     </div>
                 </div>
-                
+
 
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
 @endsection

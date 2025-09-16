@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Reporte de Pagos</title>
@@ -45,7 +46,8 @@
             margin-top: 15px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #a00707;
             padding: 6px;
             text-align: center;
@@ -61,50 +63,52 @@
         }
     </style>
 </head>
+
 <body>
 
-<header>
-    <img src="{{ public_path('assets/images/logo_escuela.png') }}" alt="Logo Escuela">
-    <h2>Escuela Deportiva Safuka</h2>
-    <p><strong>Reporte de Pagos</strong></p>
-    <p>Desde {{ $inicio }} hasta {{ $fin }}</p>
-</header>
+    <header>
+        <img src="{{ public_path('assets/images/logo_escuela.png') }}" alt="Logo Escuela">
+        <h2>Escuela Deportiva Safuka</h2>
+        <p><strong>Reporte de Pagos</strong></p>
+        <p>Desde {{ $inicio }} hasta {{ $fin }}</p>
+    </header>
 
-<main>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Estudiante</th>
-                <th>Tipo</th>
-                <th>Valor</th>
-                <th>Fecha de Pago</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($pagos as $pago)
+    <main>
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ $pago->id }}</td>
-                    <td>
-                        {{ $pago->estudiante->nombre_1 ?? '' }}
-                        {{ $pago->estudiante->apellido_1 ?? '' }}
-                    </td>
-                    <td>{{ ucfirst($pago->tipo) }}</td>
-                    <td>${{ number_format($pago->valor, 0, ',', '.') }}</td>
-                    <td>{{ $pago->fecha_pago }}</td>
-                    <td>{{ ucfirst($pago->estado) }}</td>
+                    <th>ID</th>
+                    <th>Estudiante</th>
+                    <th>Tipo</th>
+                    <th>Valor</th>
+                    <th>Fecha de Pago</th>
+                    <th>Estado</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach($pagos as $pago)
+                    <tr>
+                        <td>{{ $pago->id }}</td>
+                        <td>
+                            {{ $pago->estudiante->nombre_1 ?? '' }}
+                            {{ $pago->estudiante->apellido_1 ?? '' }}
+                        </td>
+                        <td>{{ ucfirst($pago->tipo) }}</td>
+                        <td>${{ number_format($pago->valor, 0, ',', '.') }}</td>
+                        <td>{{ $pago->fecha_pago }}</td>
+                        <td>{{ ucfirst($pago->estado) }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-    <p class="resumen">Total Pagos: {{ count($pagos) }}</p>
-</main>
+        <p class="resumen">Total Pagos: {{ count($pagos) }}</p>
+    </main>
 
-<footer>
-    © {{ date('Y') }} Escuela Deportiva Safuka | Generado el {{ date('d/m/Y H:i') }}
-</footer>
+    <footer>
+        © {{ date('Y') }} Escuela Deportiva Safuka | Generado el {{ date('d/m/Y H:i') }}
+    </footer>
 
 </body>
+
 </html>
