@@ -157,8 +157,11 @@
                                                 type="submit">Continuar</button>
                                         </div>
 
+
                                         <div class="d-flex align-items-center justify-content-center pb-4">
-                                            <a href="{{ route('login') }}" class="btn btn-outline-danger">Iniciar sesion</a>
+                                                <p class="mb-0 me-2">¿Tienes cuenta?</p>
+                                            <a href="{{ route('login') }}" data-mdb-button-init
+                                                class="btn btn-outline-danger" data-mdb-ripple-init>Inicia Sesion</a>
                                         </div>
 
                                         <div class="text-center mt-4">
