@@ -149,13 +149,13 @@
                         @else
                             <li class="nav-item">
                                 <a href="{{ route('login') }}" class="nav-link text-custom-green">
-                                    Log in
+                                    Ingresa
                                 </a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a href="{{ route('register') }}" class="nav-link text-custom-green">
-                                        Register
+                                        Regístrate
                                     </a>
                                 </li>
                             @endif
