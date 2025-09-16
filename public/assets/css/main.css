@@ -130,26 +130,6 @@
   --bs-form-invalid-color: #dc3545;
   --bs-form-invalid-border-color: #dc3545;
 }
-/* Cuando el sidebar está colapsado */
-body.sidenav-toggled .app-header__logo img {
-  display: none; /* Oculta el logo */
-}
-
-body.sidenav-toggled .app-sidebar__user p,
-body.sidenav-toggled .app-sidebar__user small,
-body.sidenav-toggled .app-menu__label,
-body.sidenav-toggled .app-header span {
-  display: none; /* Oculta nombres y textos */
-}
-
-body.sidenav-toggled .app-header__logo {
-  width: 60px;
-  text-align: center;
-}
-
-body.sidenav-toggled .app-sidebar__user {
-  justify-content: center;
-}
 [data-bs-theme=dark] {
   color-scheme: dark;
   --bs-body-color: #dee2e6;
