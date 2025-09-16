@@ -47,28 +47,26 @@
 
                                     <form action="{{ route('login') }}" method="post">
                                         @csrf
-                                        <p>Por favor inicia sesión con tu cuenta</p>
-
-
-
 
                                         <div data-mdb-input-init class="form-outline mb-4">
+                                            <label class="form-label" for="email">Correo</label>
                                             <input type="email" name="email" id="email" class="form-control"
-                                                placeholder="Digita tu usuario" />
-                                            <label class="form-label" for="email">Usuario</label>
+                                                placeholder="Nombre@dominio.com" />
+
                                         </div>
 
                                         <div data-mdb-input-init class="form-outline mb-4">
+                                            <label class="form-label" for="password">Contraseña</label>
                                             <input type="password" name="password" id="password" class="form-control"
                                                 placeholder="Digita la contraseña" />
-                                            <label class="form-label" for="password">Contraseña</label>
+
                                         </div>
 
 
                                         <div class="text-center pt-1 mb-5 pb-1">
                                             <button data-mdb-button-init data-mdb-ripple-init
                                                 class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                                type="submit">Login</button><br>
+                                                type="submit">Continuar</button><br>
 
                                             <a class="text-muted" href="{{ route('password.request') }}">¿Olvidaste tu
                                                 contraseña?</a>
@@ -82,7 +80,8 @@
 
                                         <div class="text-center mt-4">
                                             <a href="{{ route('welcome') }}" class="text-decoration-none">
-                                                <i class="bi bi-arrow-left-circle me-1"></i> Volver a la pagina principal
+                                                <i class="bi bi-arrow-left-circle me-1"></i> Volver a la pagina
+                                                principal
                                             </a>
                                         </div>
 

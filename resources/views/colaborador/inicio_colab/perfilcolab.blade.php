@@ -249,16 +249,6 @@
                         <span class="profile-badge"><i class="bi bi-award me-1"></i>{{ Auth::user()->rol }}</span>
                     </div>
                 </div>
-                <div class="col-md-4 text-md-end mt-4 mt-md-0">
-                    @if(Auth::user()->logo_personalizado)
-                        <img src="{{ asset('storage/' . Auth::user()->logo_personalizado) }}" 
-                            alt="Logo Personalizado" class="mb-3 img-fluid" style="max-height:45px;">
-                    @endif
-                    <br>
-                    <button class="btn btn-light rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#uploadLogoModal">
-                        <i class="bi bi-pencil me-1"></i> Cambiar Imagen
-                    </button>
-                </div>
             </div>
         </div>
 

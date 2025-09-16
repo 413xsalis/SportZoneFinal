@@ -102,14 +102,12 @@
 
  <form id="registroForm" action="{{ route('register') }}" method="POST" novalidate>
     @csrf
-    <p class="mt-3">Por favor regístrate</p>
-
     <!-- Nombre -->
     <div class="form-outline mb-4">
+    <label class="form-label" for="name">Nombre</label>
         <input type="text" name="name" id="name" 
                class="form-control @error('name') is-invalid @enderror"
                value="{{ old('name') }}" placeholder="Digita tu nombre" required>
-        <label class="form-label" for="name">Nombre</label>
         @error('name')
             <div class="invalid-feedback">{{ $message }}</div>
         @else
@@ -119,10 +117,10 @@
 
     <!-- Email -->
     <div class="form-outline mb-4">
+        <label class="form-label" for="email">Correo Electrónico</label>
         <input type="email" name="email" id="email" 
                class="form-control @error('email') is-invalid @enderror"
                value="{{ old('email') }}" placeholder="Digita tu correo electrónico" required>
-        <label class="form-label" for="email">Correo Electrónico</label>
         @error('email')
         <div class="invalid-feedback">{{ $message }}</div>
         @else
@@ -132,10 +130,11 @@
 
     <!-- Password -->
     <div class="form-outline mb-4">
+        <label class="form-label" for="password">Contraseña</label>
+
         <input type="password" name="password" id="password" 
                class="form-control @error('password') is-invalid @enderror"
                placeholder="Digita la contraseña" required>
-        <label class="form-label" for="password">Contraseña</label>
         @error('password')
             <div class="invalid-feedback">{{ $message }}</div>
         @else
@@ -145,9 +144,9 @@
 
     <!-- Confirmación -->
     <div class="form-outline mb-4">
+        <label class="form-label mb-6" for="password_confirmation">Confirmar Contraseña</label>
         <input type="password" name="password_confirmation" id="password_confirmation"
                class="form-control" placeholder="Confirma la contraseña" required>
-        <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
         <div class="invalid-feedback">Las contraseñas no coinciden.</div>
     </div>
 
@@ -155,11 +154,11 @@
 
                                         <div class="text-center pt-1 mb-5 pb-1">
                                             <button class="btn btn-primary btn-block gradient-custom-2 mb-3"
-                                                type="submit">Registrarse</button>
+                                                type="submit">Continuar</button>
                                         </div>
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">
-                                            <a href="{{ route('login') }}" class="btn btn-outline-danger">Login</a>
+                                            <a href="{{ route('login') }}" class="btn btn-outline-danger">Iniciar sesion</a>
                                         </div>
 
                                         <div class="text-center mt-4">
