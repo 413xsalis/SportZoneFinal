@@ -7,7 +7,7 @@
             <div class="app-title">
                 <div class="d-flex align-items-center">
 
-                    @endif
+                    
                     <div>
                         <h1 class="mb-1"><i class="bi bi-people me-2"></i> Gesti&oacute;n de Usuarios</h1>
                         <p class="mb-0">Bienvenido/a, {{ Auth::user()->name }}</p> <!-- Saludo personalizado -->
