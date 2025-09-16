@@ -180,216 +180,210 @@
         }
     </style>
 
-    <main class="content py-5">
-        <div class="app-container">
-            <!-- Encabezado con información de usuario -->
-            <div class="app-title">
-                <div class="d-flex align-items-center">
-                    @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
-                        <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
-                            class="profile-image-sidebar me-3">
-                    @else
-                        <div class="default-avatar default-avatar-sidebar me-3">
-                            <i class="bi bi-person fs-4"></i>
+    <main class="content">
+        <div class="container py-5">
+            <div class="app-container">
+                <!-- Encabezado con información de usuario -->
+                <div class="app-title">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h1 class="mb-4"><i class="bi bi-clipboard-check me-2"></i> Control de Actividades</h1>
+                            <p class="mb-0">Bienvenido/a, {{ Auth::user()->name }}</p>
                         </div>
-                    @endif
-                    <div>
-                        <h1 class="mb-1"><i class="bi bi-clipboard-check me-2"></i> Control de Actividades</h1>
-                        <p class="mb-0">Bienvenido/a, {{ Auth::user()->name }}</p>
                     </div>
                 </div>
-            </div>
-            {{-- Tarjetas de estadísticas --}}
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-icon"
-                            style="background-color: rgba(67, 97, 238, 0.1); color: var(--primary-color);">
-                            <i class="bi bi-calendar-check"></i>
-                        </div>
-                        <h3>{{ $clasesActivas }}</h3>
-                        <p class="text-muted">Clases Activas</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-icon" style="background-color: rgba(46, 204, 113, 0.1); color: #27ae60;">
-                            <i class="bi bi-people-fill"></i>
-                        </div>
-                        <h3>{{ $totalInstructores }}</h3>
-                        <p class="text-muted">Total Instructores</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-icon" style="background-color: rgba(247, 183, 49, 0.1); color: #f39c12;">
-                            <i class="bi bi-clock-history"></i>
-                        </div>
-                        <h3>{{ $clasesPendientes }}</h3>
-                        <p class="text-muted">Clases Pendientes</p>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-icon" style="background-color: rgba(235, 87, 87, 0.1); color: #e74c3c;">
-                            <i class="bi bi-x-circle"></i>
-                        </div>
-                        <h3>{{ $clasesCanceladas }}</h3>
-                        <p class="text-muted">Clases Canceladas</p>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row mb-4">
-                {{-- Calendario --}}
-                <div class="col-lg-8 mb-4">
-                    <div class="card card-modern">
-                        <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i> Calendario de Actividades</h5>
-                            <div>
-                                <button class="btn btn-sm btn-outline-primary me-1" id="prevMonth">
-                                    <i class="bi bi-chevron-left"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-primary" id="nextMonth">
-                                    <i class="bi bi-chevron-right"></i>
-                                </button>
+                {{-- Tarjetas de estadísticas --}}
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-icon"
+                                style="background-color: rgba(67, 97, 238, 0.1); color: var(--primary-color);">
+                                <i class="bi bi-calendar-check"></i>
                             </div>
+                            <h3>{{ $clasesActivas }}</h3>
+                            <p class="text-muted">Clases Activas</p>
                         </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <input type="month" class="form-control" id="monthSelector">
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background-color: rgba(46, 204, 113, 0.1); color: #27ae60;">
+                                <i class="bi bi-people-fill"></i>
                             </div>
-                            <div class="mini-calendar">
-                                <div class="calendar-header d-flex justify-content-between py-2 rounded-top">
-                                    <div class="text-center" style="width: 14.28%;">Lun</div>
-                                    <div class="text-center" style="width: 14.28%;">Mar</div>
-                                    <div class="text-center" style="width: 14.28%;">Mié</div>
-                                    <div class="text-center" style="width: 14.28%;">Jue</div>
-                                    <div class="text-center" style="width: 14.28%;">Vie</div>
-                                    <div class="text-center" style="width: 14.28%;">Sáb</div>
-                                    <div class="text-center" style="width: 14.28%;">Dom</div>
-                                </div>
-                                <div class="calendar-body" id="calendarBody">
-                                    <!-- El calendario se generará con JavaScript -->
-                                </div>
+                            <h3>{{ $totalInstructores }}</h3>
+                            <p class="text-muted">Total Instructores</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background-color: rgba(247, 183, 49, 0.1); color: #f39c12;">
+                                <i class="bi bi-clock-history"></i>
                             </div>
-                            <div class="mt-4" id="dailyEvents">
-                                <h5 class="mb-3">Actividades para hoy</h5>
-                                <div class="list-group">
-                                    <p class="text-muted text-center p-3 mb-0">
-                                        Selecciona una fecha en el calendario para ver o agregar actividades.
-                                    </p>
-                                </div>
+                            <h3>{{ $clasesPendientes }}</h3>
+                            <p class="text-muted">Clases Pendientes</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="background-color: rgba(235, 87, 87, 0.1); color: #e74c3c;">
+                                <i class="bi bi-x-circle"></i>
                             </div>
-                            <div id="add-options-container" class="card p-3 my-3">
-                                <h6 class="mb-3">¿Qué quieres agregar?</h6>
-                                <div class="d-flex justify-content-start gap-2">
-                                    <button class="btn btn-sm text-white me-2 rounded-pill" id="showActivityFormBtn"
-                                        style="background-color: #D17D98; border-color: #F4CCE9;">
-                                        <i class="bi bi-calendar-event me-2"></i>Actividad
+                            <h3>{{ $clasesCanceladas }}</h3>
+                            <p class="text-muted">Clases Canceladas</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row mb-4">
+                    {{-- Calendario --}}
+                    <div class="col-lg-8 mb-4">
+                        <div class="card card-modern">
+                            <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i> Calendario de Actividades</h5>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-primary me-1" id="prevMonth">
+                                        <i class="bi bi-chevron-left"></i>
                                     </button>
-                                    <button class="btn btn-sm text-white me-2 rounded-pill" id="showReminderFormBtn"
-                                        style="background-color: #D17D98; border-color: #F4CCE9;">
-                                        <i class="bi bi-bell me-2"></i>Recordatorio
+                                    <button class="btn btn-sm btn-outline-primary" id="nextMonth">
+                                        <i class="bi bi-chevron-right"></i>
                                     </button>
                                 </div>
                             </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <input type="month" class="form-control" id="monthSelector">
+                                </div>
+                                <div class="mini-calendar">
+                                    <div class="calendar-header d-flex justify-content-between py-2 rounded-top">
+                                        <div class="text-center" style="width: 14.28%;">Lun</div>
+                                        <div class="text-center" style="width: 14.28%;">Mar</div>
+                                        <div class="text-center" style="width: 14.28%;">Mié</div>
+                                        <div class="text-center" style="width: 14.28%;">Jue</div>
+                                        <div class="text-center" style="width: 14.28%;">Vie</div>
+                                        <div class="text-center" style="width: 14.28%;">Sáb</div>
+                                        <div class="text-center" style="width: 14.28%;">Dom</div>
+                                    </div>
+                                    <div class="calendar-body" id="calendarBody">
+                                        <!-- El calendario se generará con JavaScript -->
+                                    </div>
+                                </div>
+                                <div class="mt-4" id="dailyEvents">
+                                    <h5 class="mb-3">Actividades para hoy</h5>
+                                    <div class="list-group">
+                                        <p class="text-muted text-center p-3 mb-0">
+                                            Selecciona una fecha en el calendario para ver o agregar actividades.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div id="add-options-container" class="card p-3 my-3">
+                                    <h6 class="mb-3">¿Qué quieres agregar?</h6>
+                                    <div class="d-flex justify-content-start gap-2">
+                                        <button class="btn btn-sm text-white me-2 rounded-pill" id="showActivityFormBtn"
+                                            style="background-color: #D17D98; border-color: #F4CCE9;">
+                                            <i class="bi bi-calendar-event me-2"></i>Actividad
+                                        </button>
+                                        <button class="btn btn-sm text-white me-2 rounded-pill" id="showReminderFormBtn"
+                                            style="background-color: #D17D98; border-color: #F4CCE9;">
+                                            <i class="bi bi-bell me-2"></i>Recordatorio
+                                        </button>
+                                    </div>
+                                </div>
 
-                            <div id="add-form-container">
+                                <div id="add-form-container">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Imagen --}}
+                    <div class="col-lg-4">
+                        <div class="card card-modern h-100">
+                            <div class="card-header card-header-modern">
+                                <h5 class="mb-0"><i class="bi bi-image me-2"></i> SportZone</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <img src="{{ asset('assets/images/imagen.jpg') }}" alt="Deportes"
+                                    class="img-fluid rounded-bottom" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Imagen --}}
-                <div class="col-lg-4">
-                    <div class="card card-modern h-100">
-                        <div class="card-header card-header-modern">
-                            <h5 class="mb-0"><i class="bi bi-image me-2"></i> SportZone</h5>
-                        </div>
-                        <div class="card-body p-0">
-                            <img src="{{ asset('assets/images/imagen.jpg') }}" alt="Deportes"
-                                class="img-fluid rounded-bottom" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Notificaciones --}}
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-modern">
-                        <div class="card-header card-header-modern">
-                            <h5 class="mb-0"><i class="bi bi-bell me-2"></i> Notificaciones</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="list-group" id="notificationList">
-                                @forelse ($asistenciasHoy as $asistencia)
-                                    <div class="list-group-item notification-item">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1">Asistencia registrada</h6>
-                                            <small
-                                                class="text-muted">{{ \Carbon\Carbon::parse($asistencia->fecha)->format('d/m/Y H:i') }}</small>
+                {{-- Notificaciones --}}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-modern">
+                            <div class="card-header card-header-modern">
+                                <h5 class="mb-0"><i class="bi bi-bell me-2"></i> Notificaciones</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="list-group" id="notificationList">
+                                    @forelse ($asistenciasHoy as $asistencia)
+                                        <div class="list-group-item notification-item">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1">Asistencia registrada</h6>
+                                                <small
+                                                    class="text-muted">{{ \Carbon\Carbon::parse($asistencia->fecha)->format('d/m/Y H:i') }}</small>
+                                            </div>
+                                            <p class="mb-1">Estudiante: <strong>{{ $asistencia->estudiante->nombre_1 }}
+                                                    {{ $asistencia->estudiante->apellido_1 }}</strong></p>
+                                            <p class="mb-1">Grupo:
+                                                <strong>{{ $asistencia->subgrupo->grupo->nombre ?? 'N/A' }}</strong>
+                                            </p>
+                                            <p class="mb-1">Subgrupo:
+                                                <strong>{{ $asistencia->subgrupo->nombre ?? 'N/A' }}</strong>
+                                            </p>
+                                            <small class="text-muted">Estado:
+                                                <span
+                                                    class="badge {{ $asistencia->estado == 'asistió' ? 'bg-success' : 'bg-danger' }}">
+                                                    {{ $asistencia->estado }}
+                                                </span>
+                                            </small>
                                         </div>
-                                        <p class="mb-1">Estudiante: <strong>{{ $asistencia->estudiante->nombre_1 }}
-                                                {{ $asistencia->estudiante->apellido_1 }}</strong></p>
-                                        <p class="mb-1">Grupo:
-                                            <strong>{{ $asistencia->subgrupo->grupo->nombre ?? 'N/A' }}</strong>
-                                        </p>
-                                        <p class="mb-1">Subgrupo:
-                                            <strong>{{ $asistencia->subgrupo->nombre ?? 'N/A' }}</strong>
-                                        </p>
-                                        <small class="text-muted">Estado:
-                                            <span
-                                                class="badge {{ $asistencia->estado == 'asistió' ? 'bg-success' : 'bg-danger' }}">
-                                                {{ $asistencia->estado }}
-                                            </span>
-                                        </small>
-                                    </div>
-                                @empty
-                                    <div class="text-center py-4">
-                                        <i class="bi bi-check-circle display-4 text-muted"></i>
-                                        <p class="mt-3">No hay asistencias registradas para hoy</p>
-                                    </div>
-                                @endforelse
+                                    @empty
+                                        <div class="text-center py-4">
+                                            <i class="bi bi-check-circle display-4 text-muted"></i>
+                                            <p class="mt-3">No hay asistencias registradas para hoy</p>
+                                        </div>
+                                    @endforelse
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {{-- Footer --}}
-            <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="card card-modern">
-                        <div class="card-body">
-                            <h5>SportZone</h5>
-                            <p class="text-muted">Sistema de gestión para escuelas deportivas</p>
-                            <div class="d-flex">
-                                <a href="#" class="me-3 text-primary"><i class="bi bi-facebook"></i></a>
-                                <a href="#" class="me-3 text-primary"><i class="bi bi-instagram"></i></a>
-                                <a href="#" class="me-3 text-primary"><i class="bi bi-twitter"></i></a>
-                                <a href="#" class="text-primary"><i class="bi bi-youtube"></i></a>
+                {{-- Footer --}}
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card card-modern">
+                            <div class="card-body">
+                                <h5>SportZone</h5>
+                                <p class="text-muted">Sistema de gestión para escuelas deportivas</p>
+                                <div class="d-flex">
+                                    <a href="#" class="me-3 text-primary"><i class="bi bi-facebook"></i></a>
+                                    <a href="#" class="me-3 text-primary"><i class="bi bi-instagram"></i></a>
+                                    <a href="#" class="me-3 text-primary"><i class="bi bi-twitter"></i></a>
+                                    <a href="#" class="text-primary"><i class="bi bi-youtube"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card card-modern">
-                        <div class="card-body">
-                            <h5>Contacto</h5>
-                            <p class="text-muted mb-2">
-                                <i class="bi bi-envelope me-2"></i> info@sportzone.edu
-                            </p>
-                            <p class="text-muted mb-2">
-                                <i class="bi bi-telephone me-2"></i> +57 123 456 7890
-                            </p>
-                            <p class="text-muted mb-0">v1.0.0</p>
-                            <p class="text-muted">© {{ date('Y') }} Todos los derechos reservados</p>
+                    <div class="col-md-6">
+                        <div class="card card-modern">
+                            <div class="card-body">
+                                <h5>Contacto</h5>
+                                <p class="text-muted mb-2">
+                                    <i class="bi bi-envelope me-2"></i> info@sportzone.edu
+                                </p>
+                                <p class="text-muted mb-2">
+                                    <i class="bi bi-telephone me-2"></i> +57 123 456 7890
+                                </p>
+                                <p class="text-muted mb-0">v1.0.0</p>
+                                <p class="text-muted">© {{ date('Y') }} Todos los derechos reservados</p>
+                            </div>
                         </div>
                     </div>
                 </div>

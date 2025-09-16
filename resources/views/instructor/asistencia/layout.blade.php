@@ -61,7 +61,7 @@
 <body class="app sidebar-mini">
     {{-- Incluye la cabecera específica para el módulo de asistencia. Este archivo (`header.blade.php`) probablemente
     contiene la barra de navegación y otros elementos de la parte superior. --}}
-    @include('instructor.asistencia.partials.header')
+    @include('instructor.inicio.partials.header')
 
     {{-- `@hasSection` es una directiva de Blade que verifica si una sección ha sido definida por la vista hija (la que
     usa este layout). Si 'page-header' existe, se muestra este bloque de código. --}}

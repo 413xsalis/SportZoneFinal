@@ -144,7 +144,7 @@
 
 <body class="app sidebar-mini">
     <!-- INCLUSIÓN DEL ENCABEZADO ESPECÍFICO PARA GESTIÓN DE USUARIOS -->
-    @include('administrador.Gestion_usuarios.partials.header')
+    @include('administrador.admin.partials.header')
     
     <!-- CONTENEDOR PRINCIPAL DEL CONTENIDO -->
     <div class="app-content">

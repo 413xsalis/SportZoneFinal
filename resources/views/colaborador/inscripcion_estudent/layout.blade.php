@@ -59,7 +59,7 @@
 </head>
 
 <body class="app sidebar-mini">
-    @include('colaborador.inscripcion_estudent.partials.header')
+    @include('colaborador.inicio_colab.partials.header')
 
     <div class="app-content">
         @yield('content')

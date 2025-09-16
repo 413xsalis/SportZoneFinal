@@ -127,7 +127,7 @@
       <li>
         <a class="app-menu__item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
           href="{{ route('admin.dashboard') }}">
-          <i class="bi bi-house-door"></i>
+          <i class="app-menu__icon bi bi-house-door"></i>
           <span class="app-menu__label">Inicio</span>
         </a>
       </li>
@@ -135,7 +135,7 @@
       <li>
         <a class="app-menu__item {{ request()->routeIs('admin.gestion') ? 'active' : '' }}"
           href="{{ route('admin.gestion') }}">
-          <i class="bi bi-people"></i>
+          <i class=" app-menu__icon bi bi-people"></i>
           <span class="app-menu__label">Gestión de Usuarios</span>
         </a>
       </li>

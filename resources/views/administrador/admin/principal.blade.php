@@ -5,16 +5,9 @@
         <div class="container py-5">
             <div class="app-title">
                 <div class="d-flex align-items-center">
-                    @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
-                        <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
-                            class="profile-image-sidebar me-3">
-                    @else
-                        <div class="default-avatar default-avatar-sidebar me-3">
-                            <i class="bi bi-person fs-4"></i>
-                        </div>
-                    @endif
+
                     <div>
-                        <h1 class="mb-1"><i class="bi bi-people me-2"></i>Panel de Administración</h1>
+                        <h1 class="mb-4"><i class="bi bi-people me-2"></i>Panel de Administración</h1>
                         <p class="mb-0">Bienvenido/a, {{ Auth::user()->name }}</p>
                     </div>
                 </div>
@@ -176,6 +169,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </main>
 
     <style>
@@ -243,5 +237,5 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>
-    
+
 @endsection

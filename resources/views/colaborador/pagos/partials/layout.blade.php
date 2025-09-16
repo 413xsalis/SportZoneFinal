@@ -58,13 +58,13 @@
     </style>
 </head>
 
-<body>
-    @include('colaborador.pagos.partials.header')
+<body class="app sidebar-mini">
+    @include('colaborador.inicio_colab.partials.header')
 
-    <main class="py-4" style="margin-left: 250px; margin-top:70px">
-        @yield('contenido')
-    </main>
+    <div class="app-content">
+        @yield('content')
 
+    </div>
     <div class="loader-wrapper" id="loader" style="display: none;">
         <div class="loader"></div>
     </div>

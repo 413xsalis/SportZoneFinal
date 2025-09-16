@@ -199,94 +199,89 @@
   </head>
 
   <body>
-    <main class="content py-5">
-      <div class="app-container">
-        <!-- Encabezado con información de usuario -->
-        <div class="app-title">
-          <div class="d-flex align-items-center">
-            @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
-              <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
-                class="profile-image-sidebar me-3">
-            @else
-              <div class="default-avatar default-avatar-sidebar me-3">
-                <i class="bi bi-person fs-4"></i>
+    <main class="content">
+      <div class="container py-5">
+        <div class="app-container">
+          <!-- Encabezado con información de usuario -->
+          <div class="app-title">
+            <div class="d-flex align-items-center">
+
+              <div>
+                <h1 class="mb-4"><i class="bi bi-clipboard-check me-2"></i> Control de Asistencia</h1>
+                <p class="mb-0">Bienvenido/a, {{ Auth::user()->name }}</p>
               </div>
-            @endif
-            <div>
-              <h1 class="mb-1"><i class="bi bi-clipboard-check me-2"></i> Control de Asistencia</h1>
-              <p class="mb-0">Bienvenido/a, {{ Auth::user()->name }}</p>
             </div>
           </div>
-        </div>
 
-        <!-- Contenido principal -->
-        <div class="card card-modern">
-          <div class="card-header card-header-modern">
-            <h5 class="mb-0"><i class="bi bi-grid me-2"></i> Selecciona un grupo para tomar asistencia</h5>
-          </div>
-          <div class="card-body">
-            @if(isset($grupos) && count($grupos) > 0)
-              <div class="row">
-                @foreach($grupos as $grupo)
-                  <div class="col-md-4 mb-4">
-                    <div class="group-card">
-                      <div class="group-card-header">
-                        {{ $grupo->nombre }}
-                      </div>
-                      <div class="group-card-body">
-                        <div class="group-icon">
-                          <i class="bi bi-people-fill"></i>
+          <!-- Contenido principal -->
+          <div class="card card-modern">
+            <div class="card-header card-header-modern">
+              <h5 class="mb-0"><i class="bi bi-grid me-2"></i> Selecciona un grupo para tomar asistencia</h5>
+            </div>
+            <div class="card-body">
+              @if(isset($grupos) && count($grupos) > 0)
+                <div class="row">
+                  @foreach($grupos as $grupo)
+                    <div class="col-md-4 mb-4">
+                      <div class="group-card">
+                        <div class="group-card-header">
+                          {{ $grupo->nombre }}
                         </div>
-                        <a href="{{ route('asistencia.subgrupos', ['grupo_id' => $grupo->id]) }}"
-                          class="btn btn-success btn-modern">
-                          <i class="bi bi-clipboard-check me-2"></i> Tomar asistencia
-                        </a>
+                        <div class="group-card-body">
+                          <div class="group-icon">
+                            <i class="bi bi-people-fill"></i>
+                          </div>
+                          <a href="{{ route('asistencia.subgrupos', ['grupo_id' => $grupo->id]) }}"
+                            class="btn btn-success btn-modern">
+                            <i class="bi bi-clipboard-check me-2"></i> Tomar asistencia
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                @endforeach
-              </div>
-            @else
-              <div class="empty-state">
-                <i class="bi bi-inbox"></i>
-                <h3>No hay grupos disponibles</h3>
-                <p>Actualmente no tienes grupos asignados para tomar asistencia.</p>
-              </div>
-            @endif
+                  @endforeach
+                </div>
+              @else
+                <div class="empty-state">
+                  <i class="bi bi-inbox"></i>
+                  <h3>No hay grupos disponibles</h3>
+                  <p>Actualmente no tienes grupos asignados para tomar asistencia.</p>
+                </div>
+              @endif
+            </div>
           </div>
-        </div>
 
-        <!-- Pie de página -->
-        <footer>
-          <div class="row">
-            <div class="col-md-6">
-              <h5>SportZone</h5>
-              <p class="text-muted">Sistema de gestión para escuelas deportivas</p>
-              <div class="d-flex">
-                <a href="#" class="social-icon text-muted"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="social-icon text-muted"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="social-icon text-muted"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="social-icon text-muted"><i class="bi bi-youtube"></i></a>
+          <!-- Pie de página -->
+          <footer>
+            <div class="row">
+              <div class="col-md-6">
+                <h5>SportZone</h5>
+                <p class="text-muted">Sistema de gestión para escuelas deportivas</p>
+                <div class="d-flex">
+                  <a href="#" class="social-icon text-muted"><i class="bi bi-facebook"></i></a>
+                  <a href="#" class="social-icon text-muted"><i class="bi bi-instagram"></i></a>
+                  <a href="#" class="social-icon text-muted"><i class="bi bi-twitter"></i></a>
+                  <a href="#" class="social-icon text-muted"><i class="bi bi-youtube"></i></a>
+                </div>
+              </div>
+              <div class="col-md-6 text-md-end">
+                <h5>Contacto</h5>
+                <p class="text-muted mb-0">
+                  <i class="bi bi-envelope me-2"></i> info@sportzone.edu
+                </p>
+                <p class="text-muted mb-0">
+                  <i class="bi bi-telephone me-2"></i> +57 123 456 7890
+                </p>
+                <p class="text-muted mb-0">v1.0.0</p>
+                <p class="text-muted">© {{ date('Y') }} Todos los derechos reservados</p>
               </div>
             </div>
-            <div class="col-md-6 text-md-end">
-              <h5>Contacto</h5>
-              <p class="text-muted mb-0">
-                <i class="bi bi-envelope me-2"></i> info@sportzone.edu
-              </p>
-              <p class="text-muted mb-0">
-                <i class="bi bi-telephone me-2"></i> +57 123 456 7890
-              </p>
-              <p class="text-muted mb-0">v1.0.0</p>
-              <p class="text-muted">© {{ date('Y') }} Todos los derechos reservados</p>
-            </div>
-          </div>
-        </footer>
+          </footer>
+        </div>
       </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/calendar.js') }}"></script> 
+    <script src="{{ asset('js/calendar.js') }}"></script>
 
     <script>
       // Efecto de carga inicial para las tarjetas

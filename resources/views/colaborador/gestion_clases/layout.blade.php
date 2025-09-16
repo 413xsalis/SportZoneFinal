@@ -60,7 +60,7 @@
 </head>
 
 <body class="app sidebar-mini">
-    @include('colaborador.gestion_clases.partials.header')
+    @include('colaborador.inicio_colab.partials.header')
 
 
     <div class="app-content">

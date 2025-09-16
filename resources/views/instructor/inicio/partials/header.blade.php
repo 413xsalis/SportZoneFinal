@@ -60,46 +60,46 @@
     <a class="app-sidebar__toggle no-loader" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
     <!-- Navbar Right Menu-->
     <ul class="navbar-nav ms-auto">
-  <li class="nav-item dropdown">
-    <a class="nav-link d-flex align-items-center" href="#" id="userDropdown" role="button"
-       data-bs-toggle="dropdown" aria-expanded="false">
-      @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
-        <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" 
-             alt="Foto de perfil" 
-             class="rounded-circle shadow-sm border profile-image-nav"
-             style="width: 36px; height: 36px; object-fit: cover;">
+      <li class="nav-item dropdown">
+        <a class="nav-link d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
+            <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
+              class="rounded-circle shadow-sm border profile-image-nav"
+              style="width: 36px; height: 36px; object-fit: cover;">
           @else
             <img
               src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=36&background=0D6EFD&color=fff"
               alt="Avatar por defecto" class="rounded-circle shadow-sm border profile-image-nav"
               style="width: 36px; height: 36px; object-fit: cover;">
           @endif
-      <span class="ms-2 fw-semibold d-none d-md-inline">
-        {{ Auth::user()->name }}
-      </span>
-      <i class="bi bi-caret-down-fill ms-1 small"></i>
-    </a>
+          <span class="ms-2 fw-semibold d-none d-md-inline">
+            {{ Auth::user()->name }}
+          </span>
+          <i class="bi bi-caret-down-fill ms-1 small"></i>
+        </a>
 
-    <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 mt-2"
-        aria-labelledby="userDropdown">
-      <li>
-        <a class="dropdown-item d-flex align-items-center" href="{{ route('perfilinst.edit') }}">
-          <i class="bi bi-person me-2 text-primary"></i> Perfil
-        </a>
+        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 mt-2" aria-labelledby="userDropdown">
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="{{ route('perfilinst.edit') }}">
+              <i class="bi bi-person me-2 text-primary"></i> Perfil
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center text-danger no-loader" href="{{ route('logout') }}"
+              onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+              <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+            </a>
+          </li>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+          </form>
+        </ul>
       </li>
-      <li><hr class="dropdown-divider"></li>
-      <li>
-        <a class="dropdown-item d-flex align-items-center text-danger no-loader" href="{{ route('logout') }}"
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-          <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
-        </a>
-      </li>
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-        @csrf
-      </form>
     </ul>
-  </li>
-</ul>
   </header>
 
   <!-- Sidebar menu-->
@@ -110,28 +110,62 @@
         @if(Auth::user()->foto_perfil && Storage::disk('public')->exists(Auth::user()->foto_perfil))
           <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil"
             class="profile-image-sidebar me-3">
-       @else
+        @else
           <img
-            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=36&background=0D6EFD&color=fff"
-            alt="Avatar por defecto" class="rounded-circle shadow-sm border profile-image-nav"
-            style="width: 36px; height: 36px; object-fit: cover;">
+            src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&size=60&background=0D6EFD&color=fff"
+            alt="Avatar por defecto" class="profile-image-sidebar me-3">
         @endif
+
         <div>
           <p class="mb-0 text-white fw-bold">{{ Auth::user()->name }}</p>
           <small class="text-white-50">Instructor</small>
         </div>
       </div>
-    </div> 
+    </div>
 
     {{-- Lista de enlaces del menú principal --}}
-    <ul class="app-menu">
-      {{-- Enlace de inicio corregido --}}
-      <a class="app-menu__item" href="{{ route('instructor.dashboard') }}"><i class="app-menu__icon bi bi-house"></i><span class="app-menu__label">Inicio</span></a>
 
-      <a class="app-menu__item" href="{{ route('instructor.horarios') }}"><i class="app-menu__icon bi bi-calendar2-week"></i><span class="app-menu__label">Horarios</span></a>
+    <ul class="app-menu mt-3">
+      <li>
+        <a class="app-menu__item {{ request()->routeIs('instructor.dashboard') ? 'active' : '' }}"
+          href="{{ route('instructor.dashboard') }}">
+          <i class="app-menu__icon bi bi-house"></i>
+          <span class="app-menu__label">Inicio</span>
+        </a>
+      </li>
 
-      <a class="app-menu__item" href="{{ route('instructor.asistencia') }}"><i class="app-menu__icon bi bi-person-check"></i><span class="app-menu__label">Asistencia</span></a>
-      
-      <a class="app-menu__item" href="{{ route('instructor.reporte.asistencias') }}"><i class="app-menu__icon bi bi-file-earmark-bar-graph"></i><span class="app-menu__label">Reportes</span></a>
+      <li>
+        <a class="app-menu__item {{ request()->routeIs('instructor.horarios') ? 'active' : '' }}"
+          href="{{ route('instructor.horarios') }}">
+          <i class="app-menu__icon bi bi-calendar2-week"></i>
+          <span class="app-menu__label">Horarios</span>
+        </a>
+      </li>
+
+      <li>
+        <a class="app-menu__item {{ request()->routeIs('instructor.asistencia') ? 'active' : '' }}"
+          href="{{ route('instructor.asistencia') }}">
+          <i class="app-menu__icon bi bi-person-check"></i>
+          <span class="app-menu__label">Asistencia</span>
+        </a>
+      </li>
+
+
+      <li>
+        <a class="app-menu__item {{ request()->routeIs('instructor.reporte.asistencias') ? 'active' : '' }}"
+          href="{{ route('instructor.reporte.asistencias') }}">
+          <i class="app-menu__icon bi bi-file-earmark-bar-graph"></i>
+          <span class="app-menu__label">Reportes</span>
+        </a>
+      </li>
     </ul>
   </aside>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+      tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    });
+  </script>
+</body>
