@@ -67,8 +67,8 @@
 <body>
 
     <header>
-        <img src="{{ public_path('assets/images/logo_escuela.png') }}" alt="Logo Escuela">
-        <h2>Escuela Deportiva Safuka</h2>
+        <img src="{{ public_path('assets/images/logo_escuela.png') }}" style="width: 80px"  alt="Logo Escuela">
+        <h2>Escuela Deportiva </h2>
         <p><strong>Reporte de Pagos</strong></p>
         <p>Desde {{ $inicio }} hasta {{ $fin }}</p>
     </header>
@@ -106,7 +106,7 @@
     </main>
 
     <footer>
-        © {{ date('Y') }} Escuela Deportiva Safuka | Generado el {{ date('d/m/Y H:i') }}
+        © {{ date('Y') }} Escuela Deportiva  | Generado el {{ date('d/m/Y H:i') }}
     </footer>
 
 </body>
