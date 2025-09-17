@@ -9,7 +9,7 @@
 
                     
                     <div>
-                        <h1 class="mb-1"><i class="bi bi-people me-2"></i> Gesti&oacute;n de Usuarios</h1>
+                        <h1 class="mb-4"><i class="bi bi-people me-2"></i> Gesti&oacute;n de Usuarios</h1>
                         <p class="mb-0">Bienvenido/a, {{ Auth::user()->name }}</p> <!-- Saludo personalizado -->
                     </div>
                 </div>
