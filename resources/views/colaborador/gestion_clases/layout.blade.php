@@ -78,30 +78,37 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Mostrar loader solo para enlaces que navegan a otras páginas
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('a').forEach(link => {
-                // Excluir enlaces que no deben activar el loader
-                if (link.hasAttribute('data-toggle') ||
-                    link.hasAttribute('data-bs-toggle') ||
-                    link.getAttribute('href') === '#' ||
-                    link.getAttribute('href') === '' ||
-                    link.classList.contains('no-loader')) {
-                    return;
-                }
+<script>
+    // Mostrar loader solo para enlaces que navegan a otras páginas
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('a').forEach(link => {
+            if (link.hasAttribute('data-toggle') ||
+                link.hasAttribute('data-bs-toggle') ||
+                link.getAttribute('href') === '#' ||
+                link.getAttribute('href') === '' ||
+                link.classList.contains('no-loader')) {
+                return;
+            }
 
-                link.addEventListener('click', function () {
-                    document.getElementById('loader').style.display = 'flex';
-                });
+            link.addEventListener('click', function () {
+                document.getElementById('loader').style.display = 'flex';
             });
         });
+    });
 
-        // Ocultar loader cuando la página termine de cargar
-        window.addEventListener('load', function () {
+    // Ocultar loader cuando la página termine de cargar
+    window.addEventListener('load', function () {
+        document.getElementById('loader').style.display = 'none';
+    });
+
+    // Solución: también ocultar loader al volver con el botón "atrás"
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) {
             document.getElementById('loader').style.display = 'none';
-        });
-    </script>
+        }
+    });
+</script>
+
     @include('colaborador.gestion_clases.partials.footer')
 </body>
 

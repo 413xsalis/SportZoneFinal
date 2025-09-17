@@ -105,6 +105,7 @@
     });
 </script>
 
+
     @include('colaborador.pagos.partials.footer')
 </body>
 

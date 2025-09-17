@@ -161,35 +161,37 @@
 
     <!-- SCRIPTS DE BOOTSTRAP Y FUNCIONALIDAD PERSONALIZADA -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    // CONTROLADOR DEL LOADER/PANTALLA DE CARGA
-    document.addEventListener('DOMContentLoaded', function() {
-        // Añade evento click a todos los enlaces
+<script>
+    // Mostrar loader solo para enlaces que navegan a otras páginas
+    document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('a').forEach(link => {
-            // Excluye enlaces que no deben activar el loader:
-            // - Enlaces con atributos data-toggle (dropdowns, modales, etc.)
-            // - Enlaces vacíos o con # (javascript:void(0))
-            // - Enlaces con la clase no-loader
-            if (link.hasAttribute('data-toggle') || 
-                link.hasAttribute('data-bs-toggle') || 
+            if (link.hasAttribute('data-toggle') ||
+                link.hasAttribute('data-bs-toggle') ||
                 link.getAttribute('href') === '#' ||
                 link.getAttribute('href') === '' ||
                 link.classList.contains('no-loader')) {
                 return;
             }
-            
-            // Muestra el loader al hacer clic en un enlace válido
-            link.addEventListener('click', function() {
+
+            link.addEventListener('click', function () {
                 document.getElementById('loader').style.display = 'flex';
             });
         });
     });
 
-    // Oculta el loader cuando la página termina de cargar completamente
-    window.addEventListener('load', function() {
+    // Ocultar loader cuando la página termine de cargar
+    window.addEventListener('load', function () {
         document.getElementById('loader').style.display = 'none';
     });
-    </script>
+
+    // Solución: también ocultar loader al volver con el botón "atrás"
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) {
+            document.getElementById('loader').style.display = 'none';
+        }
+    });
+</script>
+
 
     <!-- INCLUSIÓN DEL PIE DE PÁGINA ESPECÍFICO PARA GESTIÓN DE USUARIOS -->
     @include('administrador.Gestion_usuarios.partials.footer')

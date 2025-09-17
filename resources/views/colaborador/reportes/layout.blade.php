@@ -73,7 +73,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
- <script>
+<script>
     // Mostrar loader solo para enlaces que navegan a otras páginas
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('a').forEach(link => {
@@ -103,6 +103,7 @@
         }
     });
 </script>
+
 
     @include('colaborador.reportes.partials.footer')
 </body>
