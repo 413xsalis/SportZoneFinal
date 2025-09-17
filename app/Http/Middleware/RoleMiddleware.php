@@ -4,27 +4,34 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 class RoleMiddleware
 {
-    /**
-     * Maneja una solicitud entrante.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string  $role  Rol requerido
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next, $role)
     {
         $user = Auth::user();
+
         if (!$user) {
-            // No autenticado, redirigir a login
+            // No autenticado → login
             return redirect()->route('login');
         }
-        // Verifica si el usuario tiene el rol requerido
+
+        // Si no tiene el rol correcto, redirigir al dashboard que sí le corresponda
         if (!$user->hasRole($role)) {
-            abort(403, 'User  does not have the right roles.');
+            if ($user->hasRole('admin')) {
+                return redirect()->route('admin.dashboard');
+            }
+            if ($user->hasRole('colaborador')) {
+                return redirect()->route('colaborador.dashboard');
+            }
+            if ($user->hasRole('instructor')) {
+                return redirect()->route('instructor.dashboard');
+            }
+
+            // fallback por si acaso
+            return redirect()->route('home');
         }
+
         return $next($request);
     }
 }
