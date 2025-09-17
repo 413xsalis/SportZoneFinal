@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <title>Title</title>
+    <title>Inicia sesion</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -11,6 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="{{ asset('assets/estilos_login.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
 </head>
 
 <body>
@@ -35,6 +37,7 @@
                                         border-radius: 10px; " alt="logo">
 
                                     </div>
+                                    <br><br>
 
                                     @if (session('error'))
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -43,10 +46,13 @@
                                                 aria-label="Close"></button>
                                         </div>
                                     @endif
-
+                                    <h1 class="text-center pt-1 mb-5 pb-1" style="text-align: center;">Inicia sesión en
+                                        tu cuenta
+                                    </h1>
 
                                     <form action="{{ route('login') }}" method="post">
                                         @csrf
+
 
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="email">Correo</label>
@@ -55,34 +61,47 @@
 
                                         </div>
 
-                                        <div data-mdb-input-init class="form-outline mb-4">
+                                        <div class="form-outline mb-4">
                                             <label class="form-label" for="password">Contraseña</label>
-                                            <input type="password" name="password" id="password" class="form-control"
-                                                placeholder="Digita la contraseña" />
-
+                                            <div class="input-group">
+                                                <input type="password" name="password" id="password"
+                                                    class="form-control" placeholder="Digita la contraseña" />
+                                                <span class="input-group-text" onclick="togglePassword()"
+                                                    style="cursor: pointer;">
+                                                    <i class="bi bi-eye-slash" id="togglePasswordIcon"></i>
+                                                </span>
+                                            </div>
                                         </div>
+                                        <br>
+
 
 
                                         <div class="text-center pt-1 mb-5 pb-1">
                                             <button data-mdb-button-init data-mdb-ripple-init
-                                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                                type="submit">Ingresar</button><br>
+                                                class="btn btn-primary btn-block fa-lg gradient-custom-2 w-100"
+                                                type="submit">
+                                                Ingresar
+                                            </button>
+                                            <br><br>
 
                                             <a class="text-muted" href="{{ route('password.request') }}">¿Olvidaste tu
                                                 contraseña?</a>
                                         </div>
 
+
+                                        <!-- <div class="text-center pt-1 mb-5 pb-1">
+                                            <button data-mdb-button-init data-mdb-ripple-init
+                                                href="{{ route('welcome') }}"
+                                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">
+                                                <i class="bi bi-arrow-left-circle me-1"></i> Volver a la pagina
+                                                principal
+                                            </button>
+                                        </div> -->
+
                                         <div class="d-flex align-items-center justify-content-center pb-4">
                                             <p class="mb-0 me-2">¿No tienes cuenta?</p>
                                             <a href="{{ route('register') }}" data-mdb-button-init
-                                                class="btn btn-outline-danger" data-mdb-ripple-init>Registrate</a>
-                                        </div>
-
-                                        <div class="text-center mt-4">
-                                            <a href="{{ route('welcome') }}" class="text-decoration-none">
-                                                <i class="bi bi-arrow-left-circle me-1"></i> Volver a la pagina
-                                                principal
-                                            </a>
+                                                class="">Registrate</a>
                                         </div>
 
 
@@ -110,6 +129,20 @@
         </div>
     </section>
 
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const icon = document.getElementById("togglePasswordIcon");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.classList.replace("bi-eye-slash", "bi-eye");
+            } else {
+                passwordInput.type = "password";
+                icon.classList.replace("bi-eye", "bi-eye-slash");
+            }
+        }
+    </script>
 
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

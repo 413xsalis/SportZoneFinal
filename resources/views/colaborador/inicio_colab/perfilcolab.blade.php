@@ -286,7 +286,7 @@
                                 </h5>
                             </div>
                             <div class="card-body p-4">
-                                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('perfilcolab.update') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
 
@@ -348,7 +348,7 @@
                                 </h5>
                             </div>
                             <div class="card-body p-4">
-                                <form action="{{ route('profile.uploadDocument') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('perfilcolab.uploadDocument') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="mb-4">
                                         <label for="foto_documento" class="form-label fw-semibold">Foto del documento <span class="text-danger">*</span></label>
@@ -385,7 +385,7 @@
                                 </h5>
                             </div>
                             <div class="card-body p-4">
-                                <form action="{{ route('profile.changePassword') }}" method="POST">
+                                <form action="{{ route('perfilcolab.changePassword') }}" method="POST">
                                     @csrf
                                     <div class="mb-4">
                                         <label for="current_password" class="form-label fw-semibold">Contraseña actual</label>
@@ -423,7 +423,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('perfilinst.uploadLogo') }}" method="POST" enctype="multipart/form-data" id="logoForm">
+                    <form action="{{ route('perfilcolab.uploadLogo') }}" method="POST" enctype="multipart/form-data" id="logoForm">
                         @csrf
                         <div class="mb-3">
                             <label for="logo" class="form-label fw-semibold">Seleccionar imagen</label>

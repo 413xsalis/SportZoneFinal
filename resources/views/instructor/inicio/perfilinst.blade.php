@@ -288,7 +288,7 @@
                                 </h5>
                             </div>
                             <div class="card-body p-4">
-                                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('perfilinst.update') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
 
@@ -350,7 +350,7 @@
                                 </h5>
                             </div>
                             <div class="card-body p-4">
-                                <form action="{{ route('profile.uploadDocument') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('perfilinst.uploadDocument') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="mb-4">
                                         <label for="foto_documento" class="form-label fw-semibold">Foto del documento <span class="text-danger">*</span></label>
@@ -387,7 +387,7 @@
                                 </h5>
                             </div>
                             <div class="card-body p-4">
-                                <form action="{{ route('profile.changePassword') }}" method="POST">
+                                <form action="{{ route('perfilinst.changePassword') }}" method="POST">
                                     @csrf
                                     <div class="mb-4">
                                         <label for="current_password" class="form-label fw-semibold">Contraseña actual</label>

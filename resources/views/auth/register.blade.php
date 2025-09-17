@@ -9,10 +9,22 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <style>
+        :root {
+            --primary-color: #00274D;
+            --secondary-color: #77DAB5;
+            --error-color: #dc3545;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         .gradient-custom-2 {
-            background: linear-gradient(to right, #00274D, #77DAB5);
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
         }
 
         @media (min-width: 768px) {
@@ -58,53 +70,162 @@
 
         /* Estilos para validación */
         .form-control.is-invalid {
-            border-color: #dc3545;
+            border-color: var(--error-color);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.8 3.6.4.4.4-.4'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(0.375em + 0.1875rem) center;
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
         }
 
         .invalid-feedback {
             display: none;
-            color: #dc3545;
+            color: var(--error-color);
+            font-size: 0.875em;
+            margin-top: 0.25rem;
         }
 
         .was-validated .form-control:invalid~.invalid-feedback,
-        .is-invalid~.invalid-feedback {
+        .form-control.is-invalid~.invalid-feedback {
             display: block;
         }
+
+        .password-mismatch {
+            display: none;
+            color: var(--error-color);
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
+
+        .logo-container {
+            width: 150px;
+            padding: 10px;
+            opacity: 0.8;
+            background: radial-gradient(circle at 20% 30%, rgb(3, 23, 138), transparent),
+                radial-gradient(circle at 70% 80%, rgb(5, 92, 24), transparent);
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .password-strength {
+            height: 5px;
+            margin-top: 0.5rem;
+            border-radius: 5px;
+            background-color: #e9ecef;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .input-group-text {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .input-group-text:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .alert-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+            min-width: 300px;
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .success-alert {
+            background: linear-gradient(to right, #d4edda, #c3e6cb);
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+
+        .error-alert {
+            background: linear-gradient(to right, #f8d7da, #f5c6cb);
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+
+        .info-alert {
+            background: linear-gradient(to right, #d1ecf1, #bee5eb);
+            border-left: 4px solid #17a2b8;
+            color: #0c5460;
+        }
+
+
     </style>
 </head>
 
 <body>
-    <!-- Alertas -->
-    <div id="message-box" class="position-fixed top-0 start-50 translate-middle-x p-3"
-        style="z-index: 1050; display: none;">
-        <div id="alert-message" class="alert alert-dismissible fade show" role="alert">
-            <span id="message-text"></span>
-            <button type="button" class="btn-close"
-                onclick="document.getElementById('message-box').style.display='none';"></button>
+    <!-- Alertas flotantes -->
+    <div id="alert-box" class="alert-box" style="display: none;">
+        <div class="alert alert-dismissible fade show" role="alert">
+            <span id="alert-message"></span>
+            <button type="button" class="btn-close" onclick="hideAlert()"></button>
         </div>
     </div>
 
-    <section class="h-100 gradient-form"
-        style="background-image: url('Fondodeporte.jpeg'); background-size: cover; background-position: center;">
+    <section class="h-100 gradient-form background-custom">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-10">
-                    <div class="card animated-card">
+                    <div class="card rounded-3 text-black animated-card shadow">
                         <div class="row g-0">
-                            <!-- Formulario -->
                             <div class="col-lg-6">
                                 <div class="card-body p-md-5 mx-md-4">
                                     <div class="text-center">
-                                        <img src="{{ asset('assets/logo_sportzone-edit.png') }}"
-                                            style="width: 150px; padding: 10px; opacity: 0.8; border-radius: 10px;"
-                                            alt="logo">
-                                    </div>
+                                        <img src="{{ asset('assets/logo_sportzone-edit.png') }}" style="width: 150px;
+                                        padding: 10px; opacity: 0.4; background: radial-gradient(circle at 20% 30%, rgb(3, 23, 138), transparent), 
+                                        radial-gradient(circle at 70% 80%, rgb(5, 92, 24), transparent);
+                                        border-radius: 10px; " alt="logo">
 
- <form id="registroForm" action="{{ route('register') }}" method="POST" novalidate>
-    @csrf
+                                    </div>
+                                    <br>
+                                    <h3 class="text-center mb-4">Crea tu cuenta</h3>
+
+                                    <form id="registroForm" action="{{ route('register') }}" method="POST" novalidate>
+
+                                        @csrf 
     <!-- Nombre -->
     <div class="form-outline mb-4">
-    <label class="form-label" for="name">Nombre</label>
+    <label class="form-label" for="name">Nombre Completo</label>
         <input type="text" name="name" id="name" 
                class="form-control @error('name') is-invalid @enderror"
                value="{{ old('name') }}" placeholder="Digita tu nombre" required>
@@ -115,7 +236,7 @@
         @enderror
     </div>
 
-    <!-- Email -->
+                                        <!-- Email -->
     <div class="form-outline mb-4">
         <label class="form-label" for="email">Correo Electrónico</label>
         <input type="email" name="email" id="email" 
@@ -127,48 +248,56 @@
             <div class="invalid-feedback">Introduce un correo válido.</div>
         @enderror
     </div>
+                                        <!-- Password -->
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="password">Contraseña</label>
+                                            <div class="input-group">
+                                                <input type="password" name="password" id="password"
+                                                    class="form-control" placeholder="Mínimo 8 caracteres" required
+                                                    minlength="8">
+                                                <span class="input-group-text"
+                                                    onclick="togglePassword('password','togglePasswordIcon1')">
+                                                    <i class="bi bi-eye-slash" id="togglePasswordIcon1"></i>
+                                                </span>
+                                            </div>
+                                            <div class="password-strength">
+                                                <div class="password-strength-bar" id="password-strength-bar"></div>
+                                            </div>
+                                            <div class="invalid-feedback" id="password-error">La contraseña debe tener
+                                                al menos 8 caracteres.</div>
+                                        </div>
 
-    <!-- Password -->
-    <div class="form-outline mb-4">
-        <label class="form-label" for="password">Contraseña</label>
-
-        <input type="password" name="password" id="password" 
-               class="form-control @error('password') is-invalid @enderror"
-               placeholder="Digita la contraseña" required>
-        @error('password')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @else
-            <div class="invalid-feedback">La contraseña debe tener al menos 8 caracteres.</div>
-        @enderror
-    </div>
-
-    <!-- Confirmación -->
-    <div class="form-outline mb-4">
-        <label class="form-label mb-6" for="password_confirmation">Confirmar Contraseña</label>
-        <input type="password" name="password_confirmation" id="password_confirmation"
-               class="form-control" placeholder="Confirma la contraseña" required>
-        <div class="invalid-feedback">Las contraseñas no coinciden.</div>
-    </div>
-
-
+                                        <!-- Confirmación -->
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="password_confirmation">Confirma la
+                                                contraseña</label>
+                                            <div class="input-group">
+                                                <input type="password" name="password_confirmation"
+                                                    id="password_confirmation" class="form-control"
+                                                    placeholder="Repite tu contraseña" required>
+                                                <span class="input-group-text"
+                                                    onclick="togglePassword('password_confirmation','togglePasswordIcon2')">
+                                                    <i class="bi bi-eye-slash" id="togglePasswordIcon2"></i>
+                                                </span>
+                                            </div>
+                                            <div class="invalid-feedback">Las contraseñas no coinciden.</div>
+                                            <div id="password-mismatch-error" class="password-mismatch">
+                                                Las contraseñas no coinciden. Por favor, verifica que ambas contraseñas
+                                                sean iguales.
+                                            </div>
+                                        </div>
 
                                         <div class="text-center pt-1 mb-5 pb-1">
-                                            <button class="btn btn-primary btn-block gradient-custom-2 mb-3"
-                                                type="submit">Continuar</button>
+                                            <button class="btn btn-primary btn-block fa-lg w-100" type="submit">
+                                                Crear cuenta
+                                            </button>
                                         </div>
-
 
                                         <div class="d-flex align-items-center justify-content-center pb-4">
-                                                <p class="mb-0 me-2">¿Tienes cuenta?</p>
-                                            <a href="{{ route('login') }}" data-mdb-button-init
-                                                class="btn btn-outline-danger" data-mdb-ripple-init>Inicia Sesion</a>
-                                        </div>
-
-                                        <div class="text-center mt-4">
-                                            <a href="{{ route('welcome') }}" class="text-decoration-none">
-                                                <i class="bi bi-arrow-left-circle me-1"></i> Volver a la página
-                                                principal
-                                            </a>
+                                            <p class="mb-0 me-2">¿Ya tienes cuenta?</p>
+                                            <a href="{{ route('login') }}"
+                                                style="color: var(--primary-color); font-weight: 500;">Inicia
+                                                Sesión</a>
                                         </div>
                                     </form>
                                 </div>
@@ -177,11 +306,13 @@
                             <!-- Texto lateral -->
                             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
                                 <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                                    <h1 class="mb-4" style="text-align: center;">¡Bienvenidos!</h1>
-                                    <p class="fs-5 mb-0" style="text-align: center;">
-                                        Regístrate para acceder a tu panel. El administrador definirá tu rol
-                                        (colaborador o instructor).
+                                    <h1 class="mb-4 text-center">¡Bienvenido!</h1>
+                                    <p class="fs-5 mb-0 text-center">
+                                        Regístrate para acceder a tu panel personalizado. El administrador definirá tu
+                                        rol
+                                        (colaborador o instructor) una vez verifiques tu correo electrónico.
                                     </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -195,21 +326,111 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('registroForm');
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
             const passwordInput = document.getElementById('password');
             const passwordConfirmationInput = document.getElementById('password_confirmation');
-            const emailFeedback = document.getElementById('email-feedback');
+            const passwordMismatchError = document.getElementById('password-mismatch-error');
+            const passwordError = document.getElementById('password-error');
+            const emailError = document.getElementById('email-error');
+            const passwordStrengthBar = document.getElementById('password-strength-bar');
+
+            // Verificar coincidencia de contraseñas en tiempo real
+            passwordConfirmationInput.addEventListener('input', function () {
+                validatePasswordMatch();
+                checkPasswordStrength(this.value);
+            });
+
+            passwordInput.addEventListener('input', function () {
+                validatePasswordMatch();
+                checkPasswordStrength(this.value);
+            });
+
+            emailInput.addEventListener('blur', function () {
+                checkEmailAvailability(this.value);
+            });
 
             form.addEventListener('submit', function (event) {
-                if (!validateForm()) {
-                    event.preventDefault();
-                    event.stopPropagation();
+                if (validateForm()) {
+                    showAlert('¡Registro exitoso! Tu cuenta ha sido creada correctamente.', 'success');
+                    // Aquí normalmente enviarías el formulario
+                    setTimeout(() => {
+                        form.reset();
+                        form.classList.remove('was-validated');
+                        passwordStrengthBar.style.width = '0%';
+                        passwordStrengthBar.className = 'password-strength-bar';
+                    }, 2000);
+                } else {
                     form.classList.add('was-validated');
                 }
             });
+
+            function checkEmailAvailability(email) {
+                if (!email) return;
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    emailInput.classList.add('is-invalid');
+                    emailError.textContent = 'Introduce un correo válido.';
+                    return;
+                }
+
+                // Simulamos una verificación asíncrona con el servidor
+                setTimeout(() => {
+                    if (registeredEmails.includes(email)) {
+                        emailInput.classList.add('is-invalid');
+                        emailError.textContent = 'Este correo electrónico ya está registrado.';
+                        showAlert('Este correo electrónico ya está registrado. Por favor, utiliza otro.', 'error');
+                    } else {
+                        emailInput.classList.remove('is-invalid');
+                    }
+                }, 800);
+            }
+
+            function checkPasswordStrength(password) {
+                let strength = 0;
+                if (password.length >= 8) strength += 20;
+                if (password.length >= 10) strength += 20;
+                if (/[A-Z]/.test(password)) strength += 20;
+                if (/[0-9]/.test(password)) strength += 20;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+
+                passwordStrengthBar.style.width = strength + '%';
+
+                if (strength < 40) {
+                    passwordStrengthBar.style.backgroundColor = '#dc3545';
+                } else if (strength < 80) {
+                    passwordStrengthBar.style.backgroundColor = '#ffc107';
+                } else {
+                    passwordStrengthBar.style.backgroundColor = '#28a745';
+                }
+            }
+
+            function validatePasswordMatch() {
+                if (passwordInput.value !== passwordConfirmationInput.value && passwordConfirmationInput.value !== '') {
+                    passwordConfirmationInput.classList.add('is-invalid');
+                    passwordMismatchError.style.display = 'block';
+                    return false;
+                } else {
+                    passwordConfirmationInput.classList.remove('is-invalid');
+                    passwordMismatchError.style.display = 'none';
+                    return true;
+                }
+            }
+
+            function validatePasswordLength() {
+                if (passwordInput.value.length < 8) {
+                    passwordInput.classList.add('is-invalid');
+                    passwordError.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+                    return false;
+                } else {
+                    passwordInput.classList.remove('is-invalid');
+                    return true;
+                }
+            }
 
             function validateForm() {
                 let valid = true;
@@ -233,7 +454,74 @@
 
                 return valid;
             }
-        });
+                });
+            function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+
+            if (!input || !icon) {
+                console.warn('togglePassword: elemento no encontrado', inputId, iconId);
+                return;
+            }
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            }
+        }
+
+
+        function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+
+            if (!input || !icon) {
+                console.warn('togglePassword: elemento no encontrado', inputId, iconId);
+                return;
+            }
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            }
+        }
+
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alert-box');
+            const alertMessage = document.getElementById('alert-message');
+
+            alertBox.style.display = 'block';
+            alertMessage.textContent = message;
+
+            // Configurar el tipo de alerta
+            const alertDiv = alertBox.querySelector('.alert');
+            alertDiv.className = 'alert alert-dismissible fade show';
+
+            if (type === 'success') {
+                alertDiv.classList.add('alert-success');
+            } else if (type === 'error') {
+                alertDiv.classList.add('alert-danger');
+            } else {
+                alertDiv.classList.add('alert-info');
+            }
+
+            // Ocultar automáticamente después de 5 segundos
+            setTimeout(hideAlert, 5000);
+        }
+
+        function hideAlert() {
+            document.getElementById('alert-box').style.display = 'none';
+        }
     </script>
 </body>
 
