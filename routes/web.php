@@ -37,7 +37,7 @@ Route::group([
 
 
 // ========================= ADMIN ========================= //
-Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin',\App\Http\Middleware\PreventBackHistory::class])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'principal'])->name('admin.dashboard');
 
     // Gestión de usuarios
@@ -54,7 +54,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
 
 
 // ========================= COLABORADOR ========================= //
-Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(function () {
+Route::prefix('colaborador')->middleware(['auth', 'role:colaborador',\App\Http\Middleware\PreventBackHistory::class])->group(function () {
     Route::get('/dashboard', [ColaboradorController::class, 'principal'])->name('colaborador.dashboard');
     Route::get('/gestion', [ColaboradorController::class, 'gestion'])->name('colaborador.gestion');
     Route::get('/inscripcion', [ColaboradorController::class, 'inscripcion'])->name('colaborador.inscripcion');
@@ -72,6 +72,55 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
     Route::get('/reportes/pagos/excel', [ReporteController::class, 'pagosExcel'])->name('reportes.pagos.excel');
 
     Route::get('/reportes/pagos', [ReporteController::class, 'pagosPDF'])->name('reportes.pagos');
+// ================= ESTUDIANTES =================
+
+// Crear estudiante
+Route::get('/estudiantes/create', [EstudianteController::class, 'create'])
+    ->name('estudiantes.create');
+
+// Guardar estudiante
+Route::post('/inscripcion_estudiante', [EstudianteController::class, 'store'])
+    ->name('estudiantes.store');
+
+// Editar estudiante
+Route::get('/inscripcion_estudiante/{estudiante:documento}/edit', [EstudianteController::class, 'edit'])
+    ->name('estudiantes.edit');
+
+// Actualizar estudiante
+Route::put('/inscripcion_estudiante/{estudiante:documento}', [EstudianteController::class, 'update'])
+    ->name('estudiantes.update');
+
+// Cambiar estado (activar/inactivar)
+Route::patch('/estudiantes/{documento}/cambiar-estado', [EstudianteController::class, 'cambiarEstado'])
+    ->name('estudiantes.cambiarEstado');
+
+// Listar estudiantes inactivos
+Route::get('/estudiantes/inactivos', [EstudianteController::class, 'inactivos'])
+    ->name('estudiantes.inactivos');
+
+Route::get('/colaborador/inscripcion', [EstudianteController::class, 'index'])
+    ->name('colaborador.inscripcion');
+
+Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
+    Route::get('/', [PagoController::class, 'principal'])->name('dashboard');
+
+    // Inscripciones
+    Route::get('/inscripciones', [PagoController::class, 'inscripciones'])->name('inscripciones.index');
+    Route::post('/inscripciones', [PagoController::class, 'storeInscripcion'])->name('inscripciones.store');
+
+    // Mensualidades
+    Route::get('/mensualidades', [PagoController::class, 'mensualidades'])->name('mensualidades.index');
+    Route::post('/mensualidades', [PagoController::class, 'storeMensualidad'])->name('mensualidades.store');
+    Route::get('/mensualidades/{id}/edit', [PagoController::class, 'edit'])->name('mensualidades.edit');
+
+    // General pagos (opcional: solo si necesitas las rutas CRUD)
+    Route::resource('pagos', PagoController::class);
+
+    // SoftDeletes: pagos eliminados y restauración
+    Route::get('/eliminados', [PagoController::class, 'eliminados'])->name('eliminados');
+    Route::patch('/{id}/restaurar', [PagoController::class, 'restaurar'])->name('restaurar');
+
+});
 
 });
 
@@ -79,7 +128,7 @@ Route::prefix('colaborador')->middleware(['auth', 'role:colaborador'])->group(fu
 
 
 // ========================= INSTRUCTOR ========================= //
-Route::prefix('instructor')->middleware(['auth', 'role:instructor'])->group(function () {
+Route::prefix('instructor')->middleware(['auth', 'role:instructor',\App\Http\Middleware\PreventBackHistory::class])->group(function () {
     Route::get('/dashboard', [InstrucController::class, 'index'])->name('instructor.dashboard');
 
     // Horarios
@@ -111,7 +160,7 @@ Route::prefix('instructor')->middleware(['auth', 'role:instructor'])->group(func
 
 
 // ========================= PERFILES ========================= //
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth',\App\Http\Middleware\PreventBackHistory::class])->group(function () {
     // Perfil ADMIN
     Route::prefix('perfil/admin')->name('profile.')->group(function () {
         Route::get('/', [PerfilAdminController::class, 'edit'])->name('edit');
@@ -145,57 +194,8 @@ Route::middleware(['auth'])->group(function () {
 
 
 //
-Route::prefix('colaborador/pagos')->name('pagos.')->group(function () {
-    Route::get('/', [PagoController::class, 'principal'])->name('dashboard');
-
-    // Inscripciones
-    Route::get('/inscripciones', [PagoController::class, 'inscripciones'])->name('inscripciones.index');
-    Route::post('/inscripciones', [PagoController::class, 'storeInscripcion'])->name('inscripciones.store');
-
-    // Mensualidades
-    Route::get('/mensualidades', [PagoController::class, 'mensualidades'])->name('mensualidades.index');
-    Route::post('/mensualidades', [PagoController::class, 'storeMensualidad'])->name('mensualidades.store');
-    Route::get('/mensualidades/{id}/edit', [PagoController::class, 'edit'])->name('mensualidades.edit');
-
-    // General pagos (opcional: solo si necesitas las rutas CRUD)
-    Route::resource('pagos', PagoController::class);
-
-    // SoftDeletes: pagos eliminados y restauración
-    Route::get('/eliminados', [PagoController::class, 'eliminados'])->name('eliminados');
-    Route::patch('/{id}/restaurar', [PagoController::class, 'restaurar'])->name('restaurar');
-
-});
 
 
-
-// ================= ESTUDIANTES =================
-
-// Crear estudiante
-Route::get('/estudiantes/create', [EstudianteController::class, 'create'])
-    ->name('estudiantes.create');
-
-// Guardar estudiante
-Route::post('/inscripcion_estudiante', [EstudianteController::class, 'store'])
-    ->name('estudiantes.store');
-
-// Editar estudiante
-Route::get('/inscripcion_estudiante/{estudiante:documento}/edit', [EstudianteController::class, 'edit'])
-    ->name('estudiantes.edit');
-
-// Actualizar estudiante
-Route::put('/inscripcion_estudiante/{estudiante:documento}', [EstudianteController::class, 'update'])
-    ->name('estudiantes.update');
-
-// Cambiar estado (activar/inactivar)
-Route::patch('/estudiantes/{documento}/cambiar-estado', [EstudianteController::class, 'cambiarEstado'])
-    ->name('estudiantes.cambiarEstado');
-
-// Listar estudiantes inactivos
-Route::get('/estudiantes/inactivos', [EstudianteController::class, 'inactivos'])
-    ->name('estudiantes.inactivos');
-
-Route::get('/colaborador/inscripcion', [EstudianteController::class, 'index'])
-    ->name('colaborador.inscripcion');
 
 
 
