@@ -24,16 +24,10 @@ class Asistencia extends Model
         'estado'
     ];
 
-public function grupo()
+// En Asistencia.php
+public function getGrupoAttribute()
 {
-    return $this->hasOneThrough(
-        Grupo::class,
-        Subgrupo::class,
-        'grupo_id',       // foreign key en Subgrupo
-        'id',             // foreign key en Grupo
-        'subgrupo_id',    // local key en Asistencia
-        'id'              // local key en Subgrupo
-    );
+    return $this->subgrupo ? $this->subgrupo->grupo : null;
 }
 
 
