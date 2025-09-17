@@ -24,17 +24,17 @@ class Asistencia extends Model
         'estado'
     ];
 
-    public function grupo()
-    {
-        return $this->hasOneThrough(
-            Grupo::class,
-            Subgrupo::class,
-            'id', // Foreign key on Subgrupo table
-            'id', // Foreign key on Grupo table
-            'subgrupo_id', // Local key on Asistencia table
-            'grupo_id' // Local key on Subgrupo table
-        );
-    }
+    // public function grupo()
+    // {
+    //     return $this->hasOneThrough(
+    //         Grupo::class,
+    //         Subgrupo::class,
+    //         'id', // Foreign key on Subgrupo table
+    //         'id', // Foreign key on Grupo table
+    //         'subgrupo_id', // Local key on Asistencia table
+    //         'grupo_id' // Local key on Subgrupo table
+    //     );
+    // }
 
     public function estudiante()
     {

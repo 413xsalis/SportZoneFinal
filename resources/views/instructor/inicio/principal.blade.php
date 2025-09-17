@@ -331,11 +331,12 @@
                                             <p class="mb-1">Estudiante: <strong>{{ $asistencia->estudiante->nombre_1 }}
                                                     {{ $asistencia->estudiante->apellido_1 }}</strong></p>
                                             <p class="mb-1">Grupo:
-                                                <strong>{{ $asistencia->subgrupo->grupo->nombre ?? 'N/A' }}</strong>
+                                                <strong>{{ optional($asistencia->subgrupo->grupo)->nombre ?? 'N/A' }}</strong>
                                             </p>
                                             <p class="mb-1">Subgrupo:
-                                                <strong>{{ $asistencia->subgrupo->nombre ?? 'N/A' }}</strong>
+                                                <strong>{{ optional($asistencia->subgrupo)->nombre ?? 'N/A' }}</strong>
                                             </p>
+
                                             <small class="text-muted">Estado:
                                                 <span
                                                     class="badge {{ $asistencia->estado == 'asistió' ? 'bg-success' : 'bg-danger' }}">
@@ -355,49 +356,15 @@
                     </div>
                 </div>
 
-                {{-- Footer --}}
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <div class="card card-modern">
-                            <div class="card-body">
-                                <h5>SportZone</h5>
-                                <p class="text-muted">Sistema de gestión para escuelas deportivas</p>
-                                <div class="d-flex">
-                                    <a href="#" class="me-3 text-primary"><i class="bi bi-facebook"></i></a>
-                                    <a href="#" class="me-3 text-primary"><i class="bi bi-instagram"></i></a>
-                                    <a href="#" class="me-3 text-primary"><i class="bi bi-twitter"></i></a>
-                                    <a href="#" class="text-primary"><i class="bi bi-youtube"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card card-modern">
-                            <div class="card-body">
-                                <h5>Contacto</h5>
-                                <p class="text-muted mb-2">
-                                    <i class="bi bi-envelope me-2"></i> info@sportzone.edu
-                                </p>
-                                <p class="text-muted mb-2">
-                                    <i class="bi bi-telephone me-2"></i> +57 123 456 7890
-                                </p>
-                                <p class="text-muted mb-0">v1.0.0</p>
-                                <p class="text-muted">© {{ date('Y') }} Todos los derechos reservados</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
 
-    <!-- Incluir Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-    <!-- Scripts -->
-    <script src="{{ asset('assets/js/calendar.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="app.js"></script>
+                <!-- Incluir Bootstrap Icons -->
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+                <!-- Scripts -->
+                <script src="{{ asset('assets/js/calendar.js') }}"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="app.js"></script>
 
 @endsection
