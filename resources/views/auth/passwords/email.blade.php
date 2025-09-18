@@ -18,7 +18,7 @@
                     @if (session('status'))
                         <div class="alert alert-success d-flex align-items-center" role="alert">
                             <i class="bi bi-check-circle-fill me-2"></i>
-                            <span>¡Listo! Te hemos enviado un enlace para restablecer tu contraseña. Revisa tu correo 📬</span>
+                            <span>¡Listo! Te hemos enviado un enlace para restablecer tu contraseña. Revisa tu correo</span>
                         </div>
                     @endif
 
