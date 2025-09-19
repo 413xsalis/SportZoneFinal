@@ -230,7 +230,9 @@
                class="form-control @error('name') is-invalid @enderror"
                value="{{ old('name') }}" placeholder="Digita tu nombre" required>
         @error('name')
-            <div class="invalid-feedback">{{ $message }}</div>
+<div class="invalid-feedback">
+    El nombre no puede contener números y cada palabra debe comenzar con mayúscula (ejemplo: Juan Pérez).
+</div>
         @else
             <div class="invalid-feedback">El nombre es requerido.</div>
         @enderror
@@ -334,7 +336,18 @@
         const passwordMismatchError = document.getElementById('password-mismatch-error');
         const passwordError = document.getElementById('password-error');
         const passwordStrengthBar = document.getElementById('password-strength-bar');
+    function validateName() {
+    const regex = /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$/;
+    const value = nameInput.value.trim();
 
+    if (!regex.test(value)) {
+        nameInput.classList.add('is-invalid');
+        return false;
+    } else {
+        nameInput.classList.remove('is-invalid');
+        return true;
+    }
+}
         // Validación en tiempo real
         passwordInput.addEventListener('input', function () {
             validatePasswordComplexity();
@@ -409,9 +422,8 @@
         function validateForm() {
             let valid = true;
 
-            if (nameInput.value.trim() === '') {
-                nameInput.classList.add('is-invalid'); valid = false;
-            } else { nameInput.classList.remove('is-invalid'); }
+if (!validateName()) valid = false;
+
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(emailInput.value)) {
@@ -457,6 +469,8 @@
     function hideAlert() {
         document.getElementById('alert-box').style.display = 'none';
     }
+
+
 </script>
 
 </body>
