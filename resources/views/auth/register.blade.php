@@ -253,7 +253,7 @@
                                             <label class="form-label" for="password">Contraseña</label>
                                             <div class="input-group">
                                                 <input type="password" name="password" id="password"
-                                                    class="form-control" placeholder="Mínimo 8 caracteres" required
+                                                    class="form-control" placeholder="La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial" required
                                                     minlength="8">
                                                 <span class="input-group-text"
                                                     onclick="togglePassword('password','togglePasswordIcon1')">
@@ -263,8 +263,7 @@
                                             <div class="password-strength">
                                                 <div class="password-strength-bar" id="password-strength-bar"></div>
                                             </div>
-                                            <div class="invalid-feedback" id="password-error">La contraseña debe tener
-                                                al menos 8 caracteres.</div>
+                                            <div class="invalid-feedback" id="password-error">La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial (ej: ! @ # $ % & *).</div>
                                         </div>
 
                                         <!-- Confirmación -->
@@ -325,204 +324,141 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('registroForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const passwordConfirmationInput = document.getElementById('password_confirmation');
+        const passwordMismatchError = document.getElementById('password-mismatch-error');
+        const passwordError = document.getElementById('password-error');
+        const passwordStrengthBar = document.getElementById('password-strength-bar');
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('registroForm');
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-            const passwordConfirmationInput = document.getElementById('password_confirmation');
-            const passwordMismatchError = document.getElementById('password-mismatch-error');
-            const passwordError = document.getElementById('password-error');
-            const emailError = document.getElementById('email-error');
-            const passwordStrengthBar = document.getElementById('password-strength-bar');
+        // Validación en tiempo real
+        passwordInput.addEventListener('input', function () {
+            validatePasswordComplexity();
+            validatePasswordMatch();
+            checkPasswordStrength(this.value);
+        });
 
-            // Verificar coincidencia de contraseñas en tiempo real
-            passwordConfirmationInput.addEventListener('input', function () {
-                validatePasswordMatch();
-                checkPasswordStrength(this.value);
-            });
+        passwordConfirmationInput.addEventListener('input', function () {
+            validatePasswordMatch();
+        });
 
-            passwordInput.addEventListener('input', function () {
-                validatePasswordMatch();
-                checkPasswordStrength(this.value);
-            });
-
-            emailInput.addEventListener('blur', function () {
-                checkEmailAvailability(this.value);
-            });
-
-            form.addEventListener('submit', function (event) {
-                if (validateForm()) {
-                    showAlert('¡Registro exitoso! Tu cuenta ha sido creada correctamente.', 'success');
-                    // Aquí normalmente enviarías el formulario
-                    setTimeout(() => {
-                        form.reset();
-                        form.classList.remove('was-validated');
-                        passwordStrengthBar.style.width = '0%';
-                        passwordStrengthBar.className = 'password-strength-bar';
-                    }, 2000);
-                } else {
-                    form.classList.add('was-validated');
-                }
-            });
-
-            function checkEmailAvailability(email) {
-                if (!email) return;
-
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    emailInput.classList.add('is-invalid');
-                    emailError.textContent = 'Introduce un correo válido.';
-                    return;
-                }
-
-                // Simulamos una verificación asíncrona con el servidor
-                setTimeout(() => {
-                    if (registeredEmails.includes(email)) {
-                        emailInput.classList.add('is-invalid');
-                        emailError.textContent = 'Este correo electrónico ya está registrado.';
-                        showAlert('Este correo electrónico ya está registrado. Por favor, utiliza otro.', 'error');
-                    } else {
-                        emailInput.classList.remove('is-invalid');
-                    }
-                }, 800);
+        form.addEventListener('submit', function (event) {
+            if (!validateForm()) {
+                event.preventDefault(); // ❌ Bloquea el envío si no cumple requisitos
+                form.classList.add('was-validated');
+                showAlert('La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, un número y un carácter especial.', 'error');
             }
+        });
 
-            function checkPasswordStrength(password) {
-                let strength = 0;
-                if (password.length >= 8) strength += 20;
-                if (password.length >= 10) strength += 20;
-                if (/[A-Z]/.test(password)) strength += 20;
-                if (/[0-9]/.test(password)) strength += 20;
-                if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+        function validatePasswordComplexity() {
+            const password = passwordInput.value;
+            const regexMayus = /[A-Z]/;
+            const regexNum = /[0-9]/;
+            const regexEspecial = /[^A-Za-z0-9]/;
 
-                passwordStrengthBar.style.width = strength + '%';
-
-                if (strength < 40) {
-                    passwordStrengthBar.style.backgroundColor = '#dc3545';
-                } else if (strength < 80) {
-                    passwordStrengthBar.style.backgroundColor = '#ffc107';
-                } else {
-                    passwordStrengthBar.style.backgroundColor = '#28a745';
-                }
-            }
-
-            function validatePasswordMatch() {
-                if (passwordInput.value !== passwordConfirmationInput.value && passwordConfirmationInput.value !== '') {
-                    passwordConfirmationInput.classList.add('is-invalid');
-                    passwordMismatchError.style.display = 'block';
-                    return false;
-                } else {
-                    passwordConfirmationInput.classList.remove('is-invalid');
-                    passwordMismatchError.style.display = 'none';
-                    return true;
-                }
-            }
-
-            function validatePasswordLength() {
-                if (passwordInput.value.length < 8) {
-                    passwordInput.classList.add('is-invalid');
-                    passwordError.textContent = 'La contraseña debe tener al menos 8 caracteres.';
-                    return false;
-                } else {
-                    passwordInput.classList.remove('is-invalid');
-                    return true;
-                }
-            }
-
-            function validateForm() {
-                let valid = true;
-
-                if (nameInput.value.trim() === '') {
-                    nameInput.classList.add('is-invalid'); valid = false;
-                } else { nameInput.classList.remove('is-invalid'); }
-
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(emailInput.value)) {
-                    emailInput.classList.add('is-invalid'); valid = false;
-                } else { emailInput.classList.remove('is-invalid'); }
-
-                if (passwordInput.value.length < 8) {
-                    passwordInput.classList.add('is-invalid'); valid = false;
-                } else { passwordInput.classList.remove('is-invalid'); }
-
-                if (passwordConfirmationInput.value !== passwordInput.value) {
-                    passwordConfirmationInput.classList.add('is-invalid'); valid = false;
-                } else { passwordConfirmationInput.classList.remove('is-invalid'); }
-
-                return valid;
-            }
-                });
-            function togglePassword(inputId, iconId) {
-            const input = document.getElementById(inputId);
-            const icon = document.getElementById(iconId);
-
-            if (!input || !icon) {
-                console.warn('togglePassword: elemento no encontrado', inputId, iconId);
-                return;
-            }
-
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('bi-eye-slash');
-                icon.classList.add('bi-eye');
+            if (
+                password.length >= 8 &&
+                regexMayus.test(password) &&
+                regexNum.test(password) &&
+                regexEspecial.test(password)
+            ) {
+                passwordInput.classList.remove('is-invalid');
+                return true;
             } else {
-                input.type = 'password';
-                icon.classList.remove('bi-eye');
-                icon.classList.add('bi-eye-slash');
+                passwordInput.classList.add('is-invalid');
+                passwordError.textContent =
+                    'La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, un número y un carácter especial.';
+                return false;
             }
         }
 
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength += 20;
+            if (/[A-Z]/.test(password)) strength += 20;
+            if (/[0-9]/.test(password)) strength += 20;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+            if (password.length >= 12) strength += 20;
 
-        function togglePassword(inputId, iconId) {
-            const input = document.getElementById(inputId);
-            const icon = document.getElementById(iconId);
-
-            if (!input || !icon) {
-                console.warn('togglePassword: elemento no encontrado', inputId, iconId);
-                return;
-            }
-
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('bi-eye-slash');
-                icon.classList.add('bi-eye');
+            passwordStrengthBar.style.width = strength + '%';
+            if (strength < 40) {
+                passwordStrengthBar.style.backgroundColor = '#dc3545';
+            } else if (strength < 80) {
+                passwordStrengthBar.style.backgroundColor = '#ffc107';
             } else {
-                input.type = 'password';
-                icon.classList.remove('bi-eye');
-                icon.classList.add('bi-eye-slash');
+                passwordStrengthBar.style.backgroundColor = '#28a745';
             }
         }
 
-        function showAlert(message, type) {
-            const alertBox = document.getElementById('alert-box');
-            const alertMessage = document.getElementById('alert-message');
-
-            alertBox.style.display = 'block';
-            alertMessage.textContent = message;
-
-            // Configurar el tipo de alerta
-            const alertDiv = alertBox.querySelector('.alert');
-            alertDiv.className = 'alert alert-dismissible fade show';
-
-            if (type === 'success') {
-                alertDiv.classList.add('alert-success');
-            } else if (type === 'error') {
-                alertDiv.classList.add('alert-danger');
+        function validatePasswordMatch() {
+            if (passwordInput.value !== passwordConfirmationInput.value && passwordConfirmationInput.value !== '') {
+                passwordConfirmationInput.classList.add('is-invalid');
+                passwordMismatchError.style.display = 'block';
+                return false;
             } else {
-                alertDiv.classList.add('alert-info');
+                passwordConfirmationInput.classList.remove('is-invalid');
+                passwordMismatchError.style.display = 'none';
+                return true;
             }
-
-            // Ocultar automáticamente después de 5 segundos
-            setTimeout(hideAlert, 5000);
         }
 
-        function hideAlert() {
-            document.getElementById('alert-box').style.display = 'none';
+        function validateForm() {
+            let valid = true;
+
+            if (nameInput.value.trim() === '') {
+                nameInput.classList.add('is-invalid'); valid = false;
+            } else { nameInput.classList.remove('is-invalid'); }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                emailInput.classList.add('is-invalid'); valid = false;
+            } else { emailInput.classList.remove('is-invalid'); }
+
+            if (!validatePasswordComplexity()) valid = false;
+            if (!validatePasswordMatch()) valid = false;
+
+            return valid;
         }
-    </script>
+    });
+
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function showAlert(message, type) {
+        const alertBox = document.getElementById('alert-box');
+        const alertMessage = document.getElementById('alert-message');
+
+        alertBox.style.display = 'block';
+        alertMessage.textContent = message;
+
+        const alertDiv = alertBox.querySelector('.alert');
+        alertDiv.className = 'alert alert-dismissible fade show';
+        alertDiv.classList.add(type === 'success' ? 'alert-success' : 'alert-danger');
+
+        setTimeout(hideAlert, 5000);
+    }
+
+    function hideAlert() {
+        document.getElementById('alert-box').style.display = 'none';
+    }
+</script>
+
 </body>
 
 </html>
