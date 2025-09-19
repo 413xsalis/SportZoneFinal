@@ -404,9 +404,11 @@
                     toast.show();
 
                     // Guarda la información en localStorage para la notificación del dashboard
+                    // Guarda la información en localStorage para la notificación del dashboard
                     localStorage.setItem("attendanceSaved", "true");
-                    localStorage.setItem("attendanceGroup", "{{ $grupo->nombre }}");
-                    localStorage.setItem("attendanceSubgroup", "{{ $subgrupo->nombre }}");
+                    localStorage.setItem("attendanceGroup", "{{ session('attendanceGroup') }}");
+                    localStorage.setItem("attendanceSubgroup", "{{ session('attendanceSubgroup') }}");
+
                 });
             </script>
         @endif

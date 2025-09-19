@@ -47,43 +47,46 @@ class AsistenciaController extends Controller
     }
 
     // Procesa y guarda la asistencia de los estudiantes. (Mejora con updateOrCreate)
-    public function guardar(Request $request)
-    {
-        $request->validate([
-            'subgrupo_id' => 'required|exists:subgrupos,id',
-            'fecha' => 'required|date',
-            'asistencia' => 'required|array',
-            'asistencia.*' => 'required|in:presente,ausente,justificado'
-        ]);
+public function guardar(Request $request)
+{
+    $request->validate([
+        'subgrupo_id' => 'required|exists:subgrupos,id',
+        'fecha' => 'required|date',
+        'asistencia' => 'required|array',
+        'asistencia.*' => 'required|in:presente,ausente,justificado'
+    ]);
 
-        $subgrupoId = $request->input('subgrupo_id');
-        $fecha = $request->input('fecha');
-        $asistencias = $request->input('asistencia');
+    $subgrupoId = $request->input('subgrupo_id');
+    $fecha = $request->input('fecha');
+    $asistencias = $request->input('asistencia');
 
-
-
-
-        foreach ($asistencias as $documento => $estado) {
-            try {
-                Asistencia::updateOrCreate(
-                    [
-                        'estudiante_documento' => $documento,
-                        'fecha' => $fecha,
-                    ],
-                    [
-                        'subgrupo_id' => $subgrupoId,
-                        'estado' => $estado,
-                    ]
-                );
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Error al guardar asistencia: ' . $e->getMessage());
-            }
+    foreach ($asistencias as $documento => $estado) {
+        try {
+            Asistencia::updateOrCreate(
+                [
+                    'estudiante_documento' => $documento,
+                    'fecha' => $fecha,
+                ],
+                [
+                    'subgrupo_id' => $subgrupoId,
+                    'estado' => $estado,
+                ]
+            );
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error al guardar asistencia: ' . $e->getMessage());
         }
-
-        return back()->with('success', '¡Asistencia guardada correctamente!');
     }
 
-    // Muestra un reporte de asistencias con opciones de filtrado. (Mejora en la consulta)
+    // 🔹 Obtener el subgrupo y su grupo asociado
+$subgrupo = Subgrupo::with('grupo')->find($subgrupoId);
+
+return back()->with([
+    'success' => '¡Asistencia guardada correctamente!',
+    'attendanceGroup' => $subgrupo->grupo->nombre ?? 'N/A',
+    'attendanceSubgroup' => $subgrupo->nombre ?? 'N/A'
+]);
+
+}    // Muestra un reporte de asistencias con opciones de filtrado. (Mejora en la consulta)
     public function reporteAsistencias(Request $request)
     {
         $query = Asistencia::with([

@@ -58,7 +58,7 @@
                         </div>
                         <!-- BOTÓN PARA ACCEDER A LA PAPELERA DE USUARIOS ELIMINADOS -->
                         <a href="{{ route('usuarios.trashed') }}" class="btn btn-warning">
-                            <i class="bi bi-trash me-1"></i> Usuario inactivos ({{ $inactiveUsers }})
+                            <i class="bi bi-trash me-1"></i> Usuarios inactivos ({{ $inactiveUsers }})
                         </a>
                     </div>
                 </div>
