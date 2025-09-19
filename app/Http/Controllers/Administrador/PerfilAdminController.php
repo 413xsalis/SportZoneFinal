@@ -55,32 +55,37 @@ class PerfilAdminController extends Controller
         return redirect()->route('profile.edit')->with('success', 'Documento subido correctamente.');
     }
 
-    public function uploadLogo(Request $request)
-    {
-        $user = Auth::user();
+public function uploadLogo(Request $request)
+{
+    $user = Auth::user();
 
-        // Si se pidió eliminar la foto
-        if ($request->has('remove_profile_image')) {
-            if ($user->foto_perfil && \Storage::exists('public/' . $user->foto_perfil)) {
-                \Storage::delete('public/' . $user->foto_perfil);
-            }
-            $user->foto_perfil = null;
-            $user->save();
-
-            return back()->with('success', 'Imagen eliminada. Se usará el avatar por defecto.');
+    // Si se pidió eliminar la foto
+    if ($request->has('remove_profile_image')) {
+        if ($user->foto_perfil && \Storage::exists('public/' . $user->foto_perfil)) {
+            \Storage::delete('public/' . $user->foto_perfil);
         }
+        $user->foto_perfil = null;
+        $user->save();
 
-        // Si se sube nueva imagen
-        if ($request->hasFile('logo')) {
-            $path = $request->file('logo')->store('perfiles', 'public');
-            $user->foto_perfil = $path;
-            $user->save();
-
-            return back()->with('success', 'Imagen actualizada correctamente.');
-        }
-
-        return back()->with('warning', 'No se subió ninguna imagen.');
+        return back()->with('success', 'Imagen eliminada. Se usará el avatar por defecto.');
     }
+
+    // Validar y subir nueva imagen
+    if ($request->hasFile('logo')) {
+        $request->validate([
+            'logo' => 'required|mimes:jpeg,png,jpg,gif,webp,avif|max:5120', 
+            // aquí defines los tipos de archivo aceptados y el tamaño máx (5 MB en este ejemplo)
+        ]);
+
+        $path = $request->file('logo')->store('perfiles', 'public');
+        $user->foto_perfil = $path;
+        $user->save();
+
+        return back()->with('success', 'Imagen actualizada correctamente.');
+    }
+
+    return back()->with('warning', 'No se subió ninguna imagen.');
+}
     public function changePassword(Request $request)
     {
         $request->validate([
