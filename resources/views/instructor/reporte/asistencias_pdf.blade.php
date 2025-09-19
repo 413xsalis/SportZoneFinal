@@ -313,7 +313,7 @@
         @endif
 
         <footer>
-            © {{ date('Y') }} Escuela Deportiva Safuka | Generado el {{ date('d/m/Y H:i') }} | Página <span class="page-number"></span>
+            © {{ date('Y') }} Escuela Deportiva | Generado el {{ date('d/m/Y H:i') }} | Página <span class="page-number"></span>
         </footer>
     </div>
 
