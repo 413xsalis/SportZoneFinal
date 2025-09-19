@@ -9,7 +9,7 @@
       <div class="modal-body">
         <p><strong>Documento:</strong> {{ $estudiante->documento }}</p>
         <p><strong>Teléfono:</strong> {{ $estudiante->telefono }}</p>
-        <p><strong>Acudiente:</strong> {{ $estudiante->acudiente }}</p>
+        <p><strong>Acudiente:</strong> {{ $estudiante->nombre_contacto }}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
