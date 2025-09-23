@@ -201,3 +201,9 @@ Route::middleware(['auth',\App\Http\Middleware\PreventBackHistory::class])->grou
 
 // ========================= CONTACTO ========================= //
 Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto.store');
+
+
+// Fallback: si la ruta no existe, redirigir al login
+Route::fallback(function () {
+    return redirect()->route('login');
+});
