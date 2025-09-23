@@ -471,6 +471,7 @@
             document.querySelector('.page-number').textContent = "1 de " + totalPages;
         }
     </script>
+    
 </body>
 
 </html>
