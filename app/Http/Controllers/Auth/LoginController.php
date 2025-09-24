@@ -73,6 +73,6 @@ public function login(Request $request)
 
     $request->session()->regenerateToken(); // Esto regenera el token CSRF para evitar ataques
 
-    return redirect('/'); // Redirige al usuario a la página de inicio de sesión
+    return redirect('/login'); // Redirige al usuario a la página de inicio de sesión
 }
 }
