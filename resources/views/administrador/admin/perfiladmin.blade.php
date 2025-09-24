@@ -514,6 +514,7 @@
                 }
             });
 
+
             // Fix for tab switching issue
             document.addEventListener('DOMContentLoaded', function () {
                 // Initialize all tab panes with proper display
@@ -576,4 +577,38 @@
                 });
             });
         </script>
+        <script>
+    document.getElementById('logo').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Tamaño máximo permitido (ejemplo: 3 MB)
+            const maxSize = 3 * 1024 * 1024; 
+
+            // Tipos permitidos
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/avif'];
+
+            // Validar tamaño
+            if (file.size > maxSize) {
+                alert('⚠️ La imagen supera el tamaño máximo permitido de 3 MB.');
+                e.target.value = ''; // limpia el input
+                return;
+            }
+
+            // Validar tipo de archivo
+            if (!allowedTypes.includes(file.type)) {
+                alert('⚠️ Solo se permiten imágenes en formato JPEG, JPG, PNG, GIF, WEBP o AVIF.');
+                e.target.value = ''; // limpia el input
+                return;
+            }
+
+            // Previsualización si pasa validaciones
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('profileAvatar').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
 @endsection
