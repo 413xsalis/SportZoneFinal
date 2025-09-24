@@ -7,15 +7,14 @@
         <!-- Card principal -->
         <div class="card shadow-lg rounded-3 border-0">
             <div class="card-header bg-gradient-primary text-white d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-calendar-event"></i> Editar Horario: {{ $horario->dia }} -
-                    {{ $horario->fecha }}</span>
+                <span><i class="bi bi-calendar-event"></i> Editar Horario: {{ $horario->dia }} - {{ $horario->fecha }}</span>
                 <a href="{{ route('horarios.index') }}" class="btn btn-secondary btn-sm">
                     <i class="bi bi-arrow-left"></i> Volver
                 </a>
             </div>
 
             <div class="card-body">
-                <form action="{{ route('horarios.update', $horario->id) }}" method="POST">
+                <form id="horarioForm" action="{{ route('horarios.update', $horario->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -24,20 +23,13 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="dia" class="form-label">Día *</label>
-                            <select name="dia" id="dia" class="form-control" required>
-                                <option value="">Seleccione un día</option>
-                                @foreach($dias as $dia)
-                                    <option value="{{ $dia }}" {{ strtolower($horario->dia) == strtolower($dia) ? 'selected' : '' }}>
-                                        {{ ucfirst($dia) }}
-                                    </option>
-                                @endforeach
-                            </select>
-
+                            <input type="text" id="dia_mostrar" class="form-control" value="{{ ucfirst($horario->dia) }}" readonly>
+                            <input type="hidden" name="dia" id="dia" value="{{ $horario->dia }}">
                         </div>
                         <div class="col-md-6">
                             <label for="fecha" class="form-label">Fecha *</label>
-                            <input type="date" class="form-control" id="fecha" name="fecha" value="{{ $horario->fecha }}"
-                                required>
+                            <input type="date" class="form-control" id="fecha" name="fecha"
+                                   value="{{ $horario->fecha }}" min="{{ date('Y-m-d') }}" required>
                         </div>
                     </div>
 
@@ -45,12 +37,12 @@
                         <div class="col-md-6">
                             <label for="hora_inicio" class="form-label">Hora Inicio *</label>
                             <input type="time" class="form-control" id="hora_inicio" name="hora_inicio"
-                                value="{{ $horario->hora_inicio }}" required>
+                                   value="{{ $horario->hora_inicio }}" required>
                         </div>
                         <div class="col-md-6">
                             <label for="hora_fin" class="form-label">Hora Fin *</label>
                             <input type="time" class="form-control" id="hora_fin" name="hora_fin"
-                                value="{{ $horario->hora_fin }}" required>
+                                   value="{{ $horario->hora_fin }}" required>
                         </div>
                     </div>
 
@@ -98,7 +90,32 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fechaInput = document.getElementById('fecha');
+            const diaHidden = document.getElementById('dia');
+            const diaMostrar = document.getElementById('dia_mostrar');
+
+            const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+            function actualizarDia(fechaStr) {
+                if (!fechaStr) return;
+                const [y, m, d] = fechaStr.split('-');
+                const fecha = new Date(y, m - 1, d);
+                const diaSemana = diasSemana[fecha.getDay()];
+                diaHidden.value = diaSemana;
+                diaMostrar.value = diaSemana;
+            }
+
+            // Al cambiar la fecha
+            fechaInput.addEventListener('change', function () {
+                actualizarDia(this.value);
+            });
+
+            // Al cargar, si ya hay fecha
+            if (fechaInput.value) {
+                actualizarDia(fechaInput.value);
+            }
+        });
+    </script>
 @endsection

@@ -234,7 +234,8 @@
                     <div class="card-header card-header-modern d-flex justify-content-between align-items-center">
                         <h5 class="mb-0"><i class="bi bi-table me-2"></i> Resultados del Reporte</h5>
                         <div class="d-flex">
-                            <form action="{{ route('instructor.reporte.asistencias.pdf') }}" method="GET">
+                            <form action="{{ route('instructor.reporte.asistencias.pdf') }}" method="GET" target="_blank"
+                                class="row g-3">
                                 <input type="hidden" name="grupo_id" value="{{ request('grupo_id') }}">
                                 <input type="hidden" name="subgrupo_id" value="{{ request('subgrupo_id') }}">
                                 <input type="hidden" name="fecha" value="{{ request('fecha') }}">

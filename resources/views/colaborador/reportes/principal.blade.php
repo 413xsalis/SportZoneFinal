@@ -170,7 +170,8 @@
                                 <div class="col-md-8">
                                     <p class="mb-3">Genera un reporte en PDF con todas las inscripciones realizadas en un
                                         rango de fechas específico.</p>
-                                    <form action="{{ route('reportes.inscripciones') }}" method="GET" class="row g-3">
+                                    <form action="{{ route('reportes.inscripciones') }}" method="GET" target="_blank"
+                                        class="row g-3">
                                         <div class="col-md-5">
                                             <label for="fecha_inicio" class="form-label">Fecha Inicio</label>
                                             <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio"
@@ -210,7 +211,9 @@
                                 <div class="col-md-8">
                                     <p class="mb-3">Genera reportes de pagos filtrados por tipo y fecha. Exporta en formato
                                         PDF o Excel.</p>
-                                    <form action="{{ route('reportes.pagos') }}" method="GET" class="row g-3">
+                                    <form action="{{ route('reportes.pagos') }}" method="GET" target="_blank"
+                                        class="row g-3">
+
                                         <div class="col-md-3">
                                             <label for="tipo" class="form-label">Tipo de Pago</label>
                                             <select name="tipo" id="tipo" class="form-select">
@@ -282,87 +285,87 @@
             });
         </script>
         <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Establecer fechas por defecto (mes actual)
-        const today = new Date();
-        const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-        const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            document.addEventListener('DOMContentLoaded', function () {
+                // Establecer fechas por defecto (mes actual)
+                const today = new Date();
+                const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
-        // Formatear fechas como YYYY-MM-DD
-        function formatDate(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
+                // Formatear fechas como YYYY-MM-DD
+                function formatDate(date) {
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                }
 
-        // Establecer valores por defecto para los campos de fecha
-        document.getElementById('fecha_inicio').value = formatDate(firstDayOfMonth);
-        document.getElementById('fecha_fin').value = formatDate(lastDayOfMonth);
-        document.getElementById('fecha_inicio_p').value = formatDate(firstDayOfMonth);
-        document.getElementById('fecha_fin_p').value = formatDate(lastDayOfMonth);
+                // Establecer valores por defecto para los campos de fecha
+                document.getElementById('fecha_inicio').value = formatDate(firstDayOfMonth);
+                document.getElementById('fecha_fin').value = formatDate(lastDayOfMonth);
+                document.getElementById('fecha_inicio_p').value = formatDate(firstDayOfMonth);
+                document.getElementById('fecha_fin_p').value = formatDate(lastDayOfMonth);
 
-        // Función para la validación de las fechas
-        function validateDates() {
-            const fechaInicio = document.getElementById('fecha_inicio').value;
-            const fechaFin = document.getElementById('fecha_fin').value;
+                // Función para la validación de las fechas
+                function validateDates() {
+                    const fechaInicio = document.getElementById('fecha_inicio').value;
+                    const fechaFin = document.getElementById('fecha_fin').value;
 
-            if (new Date(fechaInicio) > new Date(fechaFin)) {
-                alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
-                return false;
+                    if (new Date(fechaInicio) > new Date(fechaFin)) {
+                        alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+                        return false;
+                    }
+                    return true;
+                }
+
+                // Agregar validación antes de enviar el formulario
+                const formInscripciones = document.querySelector('form[action="{{ route('reportes.inscripciones') }}"]');
+                formInscripciones.addEventListener('submit', function (e) {
+                    if (!validateDates()) {
+                        e.preventDefault(); // Evita el envío del formulario
+                    }
+                });
+
+                // Función para exportación a Excel
+                document.getElementById("btnExcel").addEventListener("click", function () {
+                    let tipo = document.getElementById("tipo").value;
+                    let inicio = document.getElementById("fecha_inicio_p").value;
+                    let fin = document.getElementById("fecha_fin_p").value;
+
+                    // Construir la URL para exportar a Excel
+                    let url = "{{ route('reportes.pagos.excel') }}" + "?tipo=" + tipo + "&fecha_inicio=" + inicio + "&fecha_fin=" + fin;
+                    window.location.href = url;
+                });
+            });
+            // Función para la validación de las fechas
+            function validateDates() {
+                const fechaInicio = document.getElementById('fecha_inicio').value;
+                const fechaFin = document.getElementById('fecha_fin').value;
+
+                if (new Date(fechaInicio) > new Date(fechaFin)) {
+                    alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+                    return false;
+                }
+                return true;
             }
-            return true;
-        }
 
-        // Agregar validación antes de enviar el formulario
-        const formInscripciones = document.querySelector('form[action="{{ route('reportes.inscripciones') }}"]');
-        formInscripciones.addEventListener('submit', function (e) {
-            if (!validateDates()) {
-                e.preventDefault(); // Evita el envío del formulario
-            }
-        });
+            // Agregar validación antes de enviar el formulario de inscripciones
+            const formInscripciones = document.querySelector('form[action="{{ route('reportes.inscripciones') }}"]');
+            formInscripciones.addEventListener('submit', function (e) {
+                if (!validateDates()) {
+                    e.preventDefault(); // Evita el envío del formulario
+                }
+            });
+            // Validación para el formulario de pagos
+            const formPagos = document.querySelector('form[action="{{ route('reportes.pagos') }}"]');
+            formPagos.addEventListener('submit', function (e) {
+                const fechaInicioPago = document.getElementById('fecha_inicio_p').value;
+                const fechaFinPago = document.getElementById('fecha_fin_p').value;
 
-        // Función para exportación a Excel
-        document.getElementById("btnExcel").addEventListener("click", function () {
-            let tipo = document.getElementById("tipo").value;
-            let inicio = document.getElementById("fecha_inicio_p").value;
-            let fin = document.getElementById("fecha_fin_p").value;
+                if (new Date(fechaInicioPago) > new Date(fechaFinPago)) {
+                    alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
+                    e.preventDefault(); // Evita el envío del formulario
+                }
+            });
 
-            // Construir la URL para exportar a Excel
-            let url = "{{ route('reportes.pagos.excel') }}" + "?tipo=" + tipo + "&fecha_inicio=" + inicio + "&fecha_fin=" + fin;
-            window.location.href = url;
-        });
-    });
-    // Función para la validación de las fechas
-function validateDates() {
-    const fechaInicio = document.getElementById('fecha_inicio').value;
-    const fechaFin = document.getElementById('fecha_fin').value;
-
-    if (new Date(fechaInicio) > new Date(fechaFin)) {
-        alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
-        return false;
-    }
-    return true;
-}
-
-// Agregar validación antes de enviar el formulario de inscripciones
-const formInscripciones = document.querySelector('form[action="{{ route('reportes.inscripciones') }}"]');
-formInscripciones.addEventListener('submit', function (e) {
-    if (!validateDates()) {
-        e.preventDefault(); // Evita el envío del formulario
-    }
-});
-// Validación para el formulario de pagos
-const formPagos = document.querySelector('form[action="{{ route('reportes.pagos') }}"]');
-formPagos.addEventListener('submit', function (e) {
-    const fechaInicioPago = document.getElementById('fecha_inicio_p').value;
-    const fechaFinPago = document.getElementById('fecha_fin_p').value;
-
-    if (new Date(fechaInicioPago) > new Date(fechaFinPago)) {
-        alert("La fecha de inicio no puede ser mayor que la fecha de fin.");
-        e.preventDefault(); // Evita el envío del formulario
-    }
-});
-
-</script>
+        </script>
 @endsection

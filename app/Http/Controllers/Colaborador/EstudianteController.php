@@ -16,7 +16,9 @@ class EstudianteController extends Controller
     {
         $estudiantes = Estudiante::with('grupo')
             ->where('estado', 1)  // Filtrar solo estudiantes activos
+            ->orderBy('created_at', 'desc') // Últimos primero
             ->paginate(10);
+
 
         $grupos = Grupo::all(); // Asegúrate de obtener los grupos
 
@@ -35,17 +37,28 @@ class EstudianteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'documento' => 'required|integer|unique:estudiantes,documento',
+            'documento' => 'required|digits:10|unique:estudiantes,documento',
             'nombre_1' => 'required|string|max:255',
-            'nombre_2' => 'required|string|max:255',
+            'nombre_2' => 'nullable|string|max:255',
             'apellido_1' => 'required|string|max:255',
-            'apellido_2' => 'required|string|max:255',
+            'apellido_2' => 'nullable|string|max:255',
             'telefono' => 'nullable|string|max:20',
             'nombre_contacto' => 'nullable|string|max:255',
             'telefono_contacto' => 'nullable|string|max:20',
             'eps' => 'nullable|string|max:255',
             'grupo_id' => 'required|exists:grupos,id',
             'id_subgrupo' => 'nullable|exists:subgrupos,id',
+        ], [
+            'documento.required' => 'El campo Documento es obligatorio.',
+            'documento.digits' => 'El Documento debe tener exactamente 10 dígitos.',
+            'documento.unique' => 'Este Documento ya está registrado.',
+            'nombre_1.required' => 'El Primer Nombre es obligatorio.',
+            'apellido_1.required' => 'El Primer Apellido es obligatorio.',
+            'telefono.max' => 'El Teléfono no puede superar los 20 caracteres.',
+            'telefono_contacto.max' => 'El Teléfono de Contacto no puede superar los 20 caracteres.',
+            'grupo_id.required' => 'Debes seleccionar un Grupo.',
+            'grupo_id.exists' => 'El Grupo seleccionado no es válido.',
+            'id_subgrupo.exists' => 'El Subgrupo seleccionado no es válido.',
         ]);
 
         Estudiante::create($request->only([
@@ -62,13 +75,9 @@ class EstudianteController extends Controller
             'id_subgrupo',
         ]));
 
-
-        //Estudiante::create($request->all());
         return redirect()->route('colaborador.inscripcion')
             ->with('success', 'Usuario creado exitosamente.');
-
     }
-
 
     public function edit(Estudiante $estudiante)
     {
@@ -81,10 +90,9 @@ class EstudianteController extends Controller
         $validated = $request->validate([
             'documento' => [
                 'required',
-                'integer',
+                'digits:10',
                 Rule::unique('estudiantes')->ignore($estudiante->documento, 'documento'),
             ],
-
             'nombre_1' => 'required|string|max:255',
             'nombre_2' => 'nullable|string|max:255',
             'apellido_1' => 'required|string|max:255',
@@ -94,13 +102,22 @@ class EstudianteController extends Controller
             'telefono_contacto' => 'nullable|string|max:20',
             'eps' => 'nullable|string|max:255',
             'grupo_id' => 'required|exists:grupos,id',
-
+        ], [
+            'documento.required' => 'El campo Documento es obligatorio.',
+            'documento.digits' => 'El Documento debe tener exactamente 10 dígitos.',
+            'documento.unique' => 'Este Documento ya está registrado.',
+            'nombre_1.required' => 'El Primer Nombre es obligatorio.',
+            'apellido_1.required' => 'El Primer Apellido es obligatorio.',
+            'telefono.max' => 'El Teléfono no puede superar los 20 caracteres.',
+            'telefono_contacto.max' => 'El Teléfono de Contacto no puede superar los 20 caracteres.',
+            'grupo_id.required' => 'Debes seleccionar un Grupo.',
+            'grupo_id.exists' => 'El Grupo seleccionado no es válido.',
         ]);
 
         $estudiante->update($validated);
 
         return redirect()->route('colaborador.inscripcion')
-            ->with('success', 'Estudiante actualizado');
+            ->with('success', '✅ Estudiante actualizado correctamente.');
     }
 
 

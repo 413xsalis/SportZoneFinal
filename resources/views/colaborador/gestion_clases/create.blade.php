@@ -105,7 +105,7 @@
         <div class="app-container">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="mb-0">Crear Horario de Clases</h2>
-                <a href="{{ route('colaborador.dashboard') }}" class="btn btn-secondary btn-modern">
+                <a href="{{ route('colaborador.gestion') }}" class="btn btn-secondary btn-modern">
                     <i class="bi bi-arrow-left me-1"></i> Volver
                 </a>
             </div>
@@ -260,4 +260,69 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('horarioForm');
+            const horaInicio = document.getElementById('hora_inicio');
+            const horaFin = document.getElementById('hora_fin');
+            const fechaInput = document.getElementById('fecha');
+            const diaSelect = document.getElementById('dia');
+
+            const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+            // Convierte "YYYY-MM-DD" a Date sin problema de zona horaria
+            function setDiaFromFecha(val) {
+                if (!val) return;
+                const parts = val.split('-');
+                if (parts.length !== 3) return;
+                const year = parseInt(parts[0], 10);
+                const monthIndex = parseInt(parts[1], 10) - 1; // 0-based
+                const day = parseInt(parts[2], 10);
+                const fecha = new Date(year, monthIndex, day); // evita interpretar como UTC
+                const diaSemana = diasSemana[fecha.getDay()];
+
+                // Seleccionar la opción que coincida (respeta acentos y mayúsculas)
+                for (let option of diaSelect.options) {
+                    option.selected = (option.value === diaSemana);
+                }
+            }
+
+            // Actualiza el select al cambiar la fecha
+            fechaInput.addEventListener('change', function () {
+                setDiaFromFecha(this.value);
+            });
+
+            // Si hay valor al cargar la página (edición / old value), lo seteamos
+            if (fechaInput.value) {
+                setDiaFromFecha(fechaInput.value);
+            }
+
+            // Validaciones anteriores (hora y fecha)
+            form.addEventListener('submit', function (e) {
+                // Validar que la hora de fin sea posterior a la hora de inicio
+                if (horaInicio.value && horaFin.value && horaInicio.value >= horaFin.value) {
+                    e.preventDefault();
+                    alert('La hora de fin debe ser posterior a la hora de inicio');
+                    horaFin.focus();
+                    return;
+                }
+
+                // Validar que la fecha no sea anterior a hoy
+                const today = new Date();
+                // normalizar a YYYY-MM-DD para comparación sencilla
+                const todayStr = today.toISOString().split('T')[0];
+                if (fechaInput.value < todayStr) {
+                    e.preventDefault();
+                    alert('La fecha no puede ser anterior al día de hoy');
+                    fechaInput.focus();
+                    return;
+                }
+            });
+
+            // Valores por defecto para horas
+            if (!horaInicio.value) horaInicio.value = '08:00';
+            if (!horaFin.value) horaFin.value = '09:00';
+        });
+    </script>
+
 @endsection
