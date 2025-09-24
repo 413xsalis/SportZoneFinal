@@ -26,55 +26,55 @@ class PagoController extends Controller
     }
 
     // Guardar un nuevo pago de inscripción
-public function storeInscripcion(Request $request)
-{
-    $request->validate([
-        'tipo' => 'required|in:inscripción',
-        'valor' => 'required|numeric|min:10000',
-        'fecha_pago' => 'required|date',
-        'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
-        'estudiante_documento' => 'required|exists:estudiantes,documento',
-    ], [
-        'valor.min' => 'El valor debe ser mayor a 10000 pesos.',
-        'medio_pago.in' => 'El medio de pago seleccionado no es válido.',
-        'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
-    ]);
+    public function storeInscripcion(Request $request)
+    {
+        $request->validate([
+            'tipo' => 'required|in:inscripción',
+            'valor' => 'required|numeric|min:10000',
+            'fecha_pago' => 'required|date',
+            'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
+            'estudiante_documento' => 'required|exists:estudiantes,documento',
+        ], [
+            'valor.min' => 'El valor debe ser mayor a 10000 pesos.',
+            'medio_pago.in' => 'El medio de pago seleccionado no es válido.',
+            'estudiante_documento.exists' => 'El estudiante no existe en la base de datos.'
+        ]);
 
-    try {
-        $pago = Pago::firstOrCreate(
-            [
-                'tipo' => 'inscripción',
-                'estudiante_documento' => $request->estudiante_documento,
-            ],
-            [
-                'valor' => $request->valor,
-                'fecha_pago' => $request->fecha_pago,
-                'medio_pago' => $request->medio_pago,
-                'estado' => 'Pagado',
-            ]
-        );
+        try {
+            $pago = Pago::firstOrCreate(
+                [
+                    'tipo' => 'inscripción',
+                    'estudiante_documento' => $request->estudiante_documento,
+                ],
+                [
+                    'valor' => $request->valor,
+                    'fecha_pago' => $request->fecha_pago,
+                    'medio_pago' => $request->medio_pago,
+                    'estado' => 'Pagado',
+                ]
+            );
 
-        if (!$pago->wasRecentlyCreated) {
-            return redirect()->back()
-                ->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])
-                ->withInput();
+            if (!$pago->wasRecentlyCreated) {
+                return redirect()->back()
+                    ->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])
+                    ->withInput();
+            }
+
+            return redirect()->route('pagos.inscripciones.index')
+                ->with('success', 'Pago de inscripción registrado correctamente');
+
+        } catch (QueryException $e) {
+            // Si el error es por UNIQUE, lo manejamos
+            if ($e->getCode() === "23000") {
+                return redirect()->back()
+                    ->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])
+                    ->withInput();
+            }
+
+            // Otros errores de base de datos
+            throw $e;
         }
-
-        return redirect()->route('pagos.inscripciones.index')
-            ->with('success', 'Pago de inscripción registrado correctamente');
-
-    } catch (QueryException $e) {
-        // Si el error es por UNIQUE, lo manejamos
-        if ($e->getCode() === "23000") {
-            return redirect()->back()
-                ->withErrors(['estudiante_documento' => 'Este estudiante ya tiene un pago de inscripción registrado.'])
-                ->withInput();
-        }
-
-        // Otros errores de base de datos
-        throw $e;
     }
-}
 
 
     // Vista de mensualidades (la desarrollamos después)
@@ -135,10 +135,10 @@ public function storeInscripcion(Request $request)
         $pago = Pago::findOrFail($id);
 
         $request->validate([
-            'valor' => 'required|numeric|min:0',
+            'valor' => 'required|integer|min:1|max:10000000',
             'fecha_pago' => 'required|date',
-            'medio_pago' => 'required|string',
-            'estado' => 'required|string',
+            'medio_pago' => 'required|in:efectivo,nequi,daviplata,transferencia',
+            'estado' => 'required|string|in:Pagado,Pendiente',
             'estudiante_documento' => 'required|exists:estudiantes,documento',
             'mes' => 'nullable|integer|min:1|max:12',
             'año' => 'nullable|integer|min:2023|max:2100',
@@ -146,7 +146,7 @@ public function storeInscripcion(Request $request)
 
         $pago->update([
             'concepto' => $request->concepto,
-            'valor' => $request->valor,
+            'valor' => $request->valor, // ✅ ahora se guarda el valor real
             'fecha_pago' => $request->fecha_pago,
             'medio_pago' => $request->medio_pago,
             'estado' => $request->estado,
@@ -154,6 +154,7 @@ public function storeInscripcion(Request $request)
             'mes' => $request->mes,
             'año' => $request->año,
         ]);
+
         if ($pago->tipo === 'inscripción') {
             return redirect()->route('pagos.inscripciones.index')->with('success', 'El pago fue actualizado correctamente.');
         } else {

@@ -45,7 +45,8 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Valor</label>
-                                <input type="number" name="valor" class="form-control" value="{{ $pago->valor }}" required>
+                                <input type="number" name="valor" id="valor" class="form-control" value="{{ $pago->valor }}"
+                                    min="0" max="10000000" required>
                             </div>
 
                             <div class="mb-3">
@@ -103,6 +104,27 @@
         </div>
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector("form");
+            const valorInput = document.getElementById("valor");
+
+            form.addEventListener("submit", function (e) {
+                const valor = parseInt(valorInput.value);
+
+                if (isNaN(valor) || valor <= 0) {
+                    e.preventDefault();
+                    alert("El valor debe ser mayor a 0");
+                    valorInput.focus();
+                } else if (valor > 10000000) {
+                    e.preventDefault();
+                    alert("El valor no puede superar los 10,000,000");
+                    valorInput.focus();
+                }
+            });
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>
