@@ -502,6 +502,38 @@
         </div>
     </section>
 
+<!-- Sección Contacto -->
+<section id="contacto" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="heading text-center display-4 fw-bold mb-5">Contáctanos</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form class="contact-form bg-white shadow-sm p-4 rounded">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="name" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" placeholder="Tu correo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="phone" placeholder="Tu teléfono">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Mensaje</label>
+                        <textarea class="form-control" id="message" rows="5" placeholder="Escribe tu mensaje..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fas fa-paper-plane me-2"></i> Enviar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-5">
@@ -516,7 +548,7 @@
             <hr class="my-4">
             
             <div class="text-center">
-                <p class="mb-0">&copy; {{ date('Y') }} Grupo J.A.R.D. Todos los derechos reservados.</p>
+                <p class="mb-0">&copy; {{ date('Y') }} Grupo J.R.D. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
